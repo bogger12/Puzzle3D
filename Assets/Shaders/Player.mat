@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shadowed
-  m_Shader: {fileID: 4800000, guid: 5d3416a12de4e824cbdd6d4e9d66f1b6, type: 3}
+  m_Name: Player
+  m_Shader: {fileID: 4800000, guid: 2d6bd4e75af038045acec335e1ec9af3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,9 +29,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DitherValue: 0.34
+    - _DitherValue: 0.19
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DitheredColor: {r: 0, g: 0, b: 0, a: 1}
+    - _DitheredColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
