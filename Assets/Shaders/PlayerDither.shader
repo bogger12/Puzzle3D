@@ -5,6 +5,8 @@ Shader "Lit/Player Dithered Lit"
         [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
         _DitherValue ("DitherValue", Float) = 0.5
         _DitheredColor ("DitheredColor", Color) = (1,1,1,1)
+        _ShadeThreshold ("ShadeThreshold", Float) = 0.3
+        _HighlightThreshold ("HighlightThreshold", Float) = 0.8
     }
     SubShader
     {
@@ -40,24 +42,23 @@ Shader "Lit/Player Dithered Lit"
             {
                 float2 uv : TEXCOORD0;
                 SHADOW_COORDS(1) // put shadows data into TEXCOORD1
-                fixed3 diff : COLOR0;
-                fixed3 ambient : COLOR1;
+                // fixed3 diff : COLOR0;
+                // fixed3 ambient : COLOR1;
                 float4 pos : SV_POSITION;
                 float4 screenPos : TEXCOORD2;
-
+                float3 normal : NORMAL;
+                float3 wPos : TEXCOORD3;
             };
             v2f vert (MeshData v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
-                half3 worldNormal = UnityObjectToWorldNormal(v.normal);
-                half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
-                o.diff = nl * _LightColor0.rgb;
-                o.ambient = ShadeSH9(half4(worldNormal,1));
+                o.normal = UnityObjectToWorldNormal(v.normal);
                 // compute shadows data
                 TRANSFER_SHADOW(o);
                 o.screenPos = ComputeScreenPos(o.pos);
+                o.wPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
 
@@ -65,6 +66,10 @@ Shader "Lit/Player Dithered Lit"
             sampler2D _CameraDepthTexture;
             float _DitherValue;
             float4 _DitheredColor;
+
+            // Cel Shading
+            float _ShadeThreshold;
+            float _HighlightThreshold;
 
             static const float4x4 bayer_matrix_4x4 = {
                 float4(0.0/16, 8.0/16, 2.0/16, 10.0/16),
@@ -98,8 +103,36 @@ Shader "Lit/Player Dithered Lit"
                 // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
                 fixed shadow = SHADOW_ATTENUATION(i);
                 // darken light's illumination with shadow, keep ambient intact
-                fixed3 lighting = i.diff * shadow + i.ambient;
-                col.rgb *= lighting;
+
+                // Lighting calculation
+                
+                float3 N = normalize(i.normal);
+                float3 L = _WorldSpaceLightPos0.xyz; // vector from surface to light source
+                float3 lambert = saturate(dot( N, L));
+                float3 diff = lambert * _LightColor0.xyz;
+
+                // specular lighting
+                float3 V = normalize(_WorldSpaceCameraPos - i.wPos);
+                float3 H = normalize(L + V);
+                // float3 R = reflect(-L, N); // used for Phong
+
+                float3 spec = saturate(dot(H,N)) * (lambert > 0); // Blinn-Phong
+
+                float specularExponent = exp2(0.5*8) + 2;
+                spec = pow(spec, specularExponent);
+                spec *= _LightColor0.rgb;
+
+                float3 ambient = 0.1;
+
+                float3 lighting = (diff * shadow + ambient + spec * shadow);
+                float lightingGrey = (0.299 * lighting.r) + (0.587 * lighting.g) + (0.114 * lighting.b);
+
+                // Cel Shading Quantization
+                if (lightingGrey < _ShadeThreshold) lightingGrey = 0.1;
+                else if (lightingGrey >= _HighlightThreshold) lightingGrey = 1;
+                else lightingGrey = 0.5;
+
+                col.rgb *= lightingGrey;
                 return col;
             }
             ENDHLSL
