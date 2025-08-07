@@ -78,12 +78,19 @@ Shader "Lit/Player Dithered Lit"
                 float4(15.0/16, 7.0/16, 13.0/16, 5.0/16)
             };
 
+            float CorrectDepth(float rawDepth)
+            {
+                float persp = LinearEyeDepth(rawDepth);
+                float ortho = (_ProjectionParams.z-_ProjectionParams.y)*(1-rawDepth)+_ProjectionParams.y;
+                return lerp(persp,ortho,unity_OrthoParams.w);
+            }
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 screenUV = i.screenPos.xy / i.screenPos.w;
                 float sceneDepth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, screenUV);
-                float sceneLinear = LinearEyeDepth(sceneDepth);
-                float myLinearDepth = LinearEyeDepth(i.screenPos.z / i.screenPos.w);
+                float sceneLinear = CorrectDepth(sceneDepth);
+                float myLinearDepth = CorrectDepth(i.screenPos.z / i.screenPos.w);
 
                 // return float4(myLinearDepth.xxx, 1);
 
