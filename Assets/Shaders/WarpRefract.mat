@@ -29,9 +29,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fresnel: 6.52
-    - _RefractionStrength: 0.043
-    - _WarpTiling: 12.24
+    - _Fresnel: 1
+    - _RefractionStrength: 0.033
+    - _WarpTiling: 9.76
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

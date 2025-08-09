@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DitherValue: 0.19
+    - _DitherValue: 0.13
     - _HighlightThreshold: 0.9
     - _ShadeThreshold: 0.3
     - __HighlightThreshold: 0.4
