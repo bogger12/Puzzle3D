@@ -26,7 +26,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _NormalVSWorldSpace: 0
-    - _OutlineWidth: 0.106
+    - _OutlineWidth: 0.085
     m_Colors:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
