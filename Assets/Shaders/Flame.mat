@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InverseHullSharp
-  m_Shader: {fileID: 4800000, guid: 66e329346f87fc44db304fdbebbf4931, type: 3}
+  m_Name: Flame
+  m_Shader: {fileID: 4800000, guid: 8e12256b8e4435f429185b764bcf03b1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -22,12 +22,21 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _FlameTex:
+        m_Texture: {fileID: 2800000, guid: 4db00b6eeb68b1644a58c08b3c27843d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 95f89ba022bf9b844930238ef6de0057, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NormalVSWorldSpace: 1
-    - _OutlineWidth: 0.085
+    - _ScaleX: 0.1
+    - _ScaleY: 0.13
     m_Colors:
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color1: {r: 0.9528302, g: 0.33141917, b: 0, a: 1}
+    - _Color2: {r: 1, g: 0.9345745, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

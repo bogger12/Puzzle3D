@@ -1,4 +1,4 @@
-Shader "Unlit/InvertedHull2"
+Shader "Unlit/InverseHull"
 {
     Properties
     {
