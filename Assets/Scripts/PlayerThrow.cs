@@ -13,6 +13,9 @@ public class PlayerThrow : MonoBehaviour
     public float throwForceMult = 1;
     public float minThrowSeconds = 0.1f;
     public float maxThrowSeconds = 2;
+    public float waitBeforeReenablePhysicsSeconds = 0.2f;
+    [Range(0, 1)]
+    public float parentBodyVelocityAddFactor = 0;
 
 
     [Header("Circlecast")]
@@ -49,24 +52,21 @@ public class PlayerThrow : MonoBehaviour
             if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
             {
                 heldBody = nearest.attachedRigidbody;
+                // Make body docile
                 heldBody.position = holdAnchor.position;
-                heldBody.useGravity = false;
-                heldBodyOriginalMass = heldBody.mass;
-                heldBody.mass = 0;
+                SetBodyDocile(heldBody, true);
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
                 Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
                 float throwForce = throwForceMult * timeSincePressed;
-                // Restore mass before throw
-                heldBody.mass = heldBodyOriginalMass;
+                // Reset body vars before throw
+                SetBodyDocile(heldBody, false);
+                heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
 
-                // Make body docile
-                heldBody.useGravity = true;
                 timeSincePressed = 0;
                 heldBody = null;
-
             }
         }
 
@@ -76,10 +76,8 @@ public class PlayerThrow : MonoBehaviour
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
             Debug.DrawRay(rb.position, throwDirection * timeSincePressed, Color.red);
             timeSincePressed += Time.deltaTime;
-            // Update Throw Progress
-
-            if (heldBody != null)
-            {
+            // Update Throw Progress in Material
+            if (heldBody != null) {
                 float progress = timeSincePressed / maxThrowSeconds;
                 UIThrowProgressImage.enabled = true;
                 UIThrowProgressImage.material.SetFloat("_Progress", progress);
@@ -136,5 +134,31 @@ public class PlayerThrow : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    void SetBodyDocile(Rigidbody heldBody, bool docile)
+    {
+        Collider c = heldBody.GetComponent<Collider>();
+        
+        heldBody.useGravity = !docile;
+
+        if (docile) {
+            heldBodyOriginalMass = heldBody.mass;
+            Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
+            Debug.Log("Iignoring physics");
+        }
+        else {
+            heldBody.mass = heldBodyOriginalMass;
+            StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
+        }
+    }
+
+    private IEnumerator<WaitForSeconds> SetIgnoreCollisionAfter(float duration, Collider c)
+    {
+        // Eventual code to execute right as the function is called
+        yield return new WaitForSeconds(duration);
+        // The code from here will be executed after **duration** seconds
+        Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
+        Debug.Log("Unignoring physics");
     }
 }

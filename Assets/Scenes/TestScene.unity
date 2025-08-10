@@ -307,6 +307,8 @@ MonoBehaviour:
   throwForceMult: 5
   minThrowSeconds: 0.1
   maxThrowSeconds: 2
+  waitBeforeReenablePhysicsSeconds: 0.2
+  parentBodyVelocityAddFactor: 0.5
   castLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -2391,7 +2393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anchor: {fileID: 391215087}
   sceneCamera: {fileID: 330585545}
-  offset2D: {x: 23.1, y: 20.24}
+  offset2D: {x: 35, y: 24.5}
 --- !u!114 &850013988
 MonoBehaviour:
   m_ObjectHideFlags: 0

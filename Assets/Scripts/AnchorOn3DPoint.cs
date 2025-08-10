@@ -10,17 +10,19 @@ public class AnchorOn3DPoint : MonoBehaviour
     public Vector2 offset2D;
 
     RectTransform rt;
+    Canvas canvas;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rt = GetComponent<RectTransform>();
+        canvas = transform.GetComponentInParent<Canvas>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector2 screenPoint = sceneCamera.WorldToScreenPoint(anchor.position);
-        rt.position = screenPoint + offset2D;
+        rt.position = screenPoint + offset2D * canvas.scaleFactor;
     }
 }
