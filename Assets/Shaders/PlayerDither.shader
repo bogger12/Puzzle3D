@@ -16,7 +16,7 @@ Shader "Lit/Player Dithered Lit"
         {
             
 
-            ZTest Always
+            // ZTest Always
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -141,6 +141,69 @@ Shader "Lit/Player Dithered Lit"
 
                 col.rgb *= lightingGrey;
                 return col;
+            }
+            ENDHLSL
+        }
+        Pass
+        {
+            
+
+            ZTest Greater
+            // This tests if 10 is Greater than the current value of the stencil buffer
+            Stencil
+            {
+                Ref 10
+                Comp Greater
+                Pass Replace
+            } 
+
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
+            #include "Lighting.cginc"
+
+            // compile shader into multiple variants, with and without shadows
+            // (we don't care about any lightmaps yet, so skip these variants)
+            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
+            // shadow helper functions and macros
+            #include "AutoLight.cginc"
+
+
+            struct MeshData // per vertex data
+            {
+                float4 vertex : POSITION; // vertex position
+            };
+
+            struct v2f
+            {
+                float4 pos : SV_POSITION;
+            };
+            v2f vert (MeshData v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                return o;
+            }
+
+            float _DitherValue;
+            float4 _DitheredColor;
+
+            static const float4x4 bayer_matrix_4x4 = {
+                float4(0.0/16, 8.0/16, 2.0/16, 10.0/16),
+                float4(12.0/16, 4.0/16, 14.0/16, 6.0/16),
+                float4(3.0/16, 11.0/16, 1.0/16, 9.0/16),
+                float4(15.0/16, 7.0/16, 13.0/16, 5.0/16)
+            };
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float color = _DitherValue;
+                float2 pixelxy = i.pos.xy;
+                float threshold = bayer_matrix_4x4[int(pixelxy.y)%4][int(pixelxy.x)%4];
+
+                if (color < threshold) discard;
+                return _DitheredColor;
             }
             ENDHLSL
         }

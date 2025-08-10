@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     // public TextMeshProUGUI debugText;
 
     private Rigidbody rb;
-    private bool isGrounded;
+    public bool IsGrounded { get; private set; }
     private Vector3 moveDirection;
 
     Vector3 upAxis, rightAxis, forwardAxis;
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        isGrounded = CheckIsGrounded();
+        IsGrounded = CheckIsGrounded();
 
 
         Vector2 playerInput;
@@ -123,8 +123,8 @@ public class PlayerMovement : MonoBehaviour
         float currentZ = Vector3.Dot(rb.linearVelocity, zAxis);
 
         bool isDecelerating = desiredVelocity.magnitude < rb.linearVelocity.magnitude;
-        float acceleration = isDecelerating ? (isGrounded ? maxDeceleration : maxAirDeceleration) :
-            (isGrounded ? maxAcceleration : maxAirAcceleration);
+        float acceleration = isDecelerating ? (IsGrounded ? maxDeceleration : maxAirDeceleration) :
+            (IsGrounded ? maxAcceleration : maxAirAcceleration);
         float maxSpeedChange = acceleration * Time.deltaTime;
 
         float newX =
@@ -159,18 +159,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (isGrounded)
+            if (IsGrounded)
             {
                 p.numJumps = playerValues.numJumps;
                 p.timeSinceJump = 0;
             }
-            if (!isGrounded && verticalSpeed > 0)
+            if (!IsGrounded && verticalSpeed > 0)
             {
                 // Add extra acceleration down
                 rb.AddForce(-upAxis * jumpExtraAcceleration, ForceMode.Acceleration);
             }
         }
-        if (!isGrounded) p.timeSinceJump += Time.fixedDeltaTime;
+        if (!IsGrounded) p.timeSinceJump += Time.fixedDeltaTime;
     }
 
     void RotateCharacter()

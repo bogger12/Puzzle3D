@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 33029090}
   - component: {fileID: 33029087}
   - component: {fileID: 33029094}
+  - component: {fileID: 33029095}
   - component: {fileID: 33029092}
   - component: {fileID: 33029093}
   m_Layer: 6
@@ -314,6 +315,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   UIThrowProgressImage: {fileID: 850013988}
+--- !u!114 &33029095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33029085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6128a43ecfd414151a77543ae8b81f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkParticleSystem: {fileID: 225490918}
+  particleEmissionMultiplier: 4
 --- !u!1 &139193407
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +800,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cd27d224ac9ceee48bd8e1748101e358, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -829,7 +844,7 @@ ParticleSystemRenderer:
   m_VertexStreams: 00010304
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: be6a309a40a9deb4bb49649acff7acb6, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -974,7 +989,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1092,7 +1107,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1552,9 +1567,9 @@ ParticleSystem:
     m_TextureColorAffectsParticles: 1
     m_TextureAlphaAffectsParticles: 1
     m_TextureBilinearFiltering: 0
-    randomDirectionAmount: 0
+    randomDirectionAmount: 1
     sphericalDirectionAmount: 0
-    randomPositionAmount: 0
+    randomPositionAmount: 0.24
     radius:
       value: 0.2
       mode: 0
@@ -1675,7 +1690,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1785,28 +1800,46 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 0.9685943
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
+          value: 0
+          inSlope: 10.523492
+          outSlope: 10.523492
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.11720221
+        - serializedVersion: 3
+          time: 0.30472362
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 0.02110282
+          outSlope: 0.02110282
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.13411704
+        - serializedVersion: 3
+          time: 0.6154369
+          value: 0.56608444
+          inSlope: -1.0250409
+          outSlope: -1.0250409
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.4459459
-          inSlope: -1.2666438
-          outSlope: -1.2666438
+          value: 0
+          inSlope: -2.677849
+          outSlope: -2.677849
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.07522941
+          inWeight: 0.24765302
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -7441,7 +7474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 82b0d98d16081d74ea8b8d97ccbb358b, type: 2}
+  m_Material: {fileID: 2100000, guid: 30f04e4f866e4f4458edd8d6c36b9dc6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -7567,7 +7600,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3033667219593020291, guid: a29ff7cbb9a4a8844bbb3172c4e27c6b, type: 3}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 2100000, guid: 46d6684742c6f3649af59c8cfdc31234, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
