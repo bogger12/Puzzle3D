@@ -1,10 +1,12 @@
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField]
-	Transform playerInputSpace = default;
+    Transform playerInputSpace = default;
     public float movementSpeed = 5f;
     public float rotationSpeed = 10f;
 
@@ -17,9 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public float groundDetectionDistance = 1;
 
     [SerializeField, Range(0f, 500f)]
-	float maxAcceleration = 10f, maxAirAcceleration = 1f;
+    float maxAcceleration = 10f, maxAirAcceleration = 1f;
     [SerializeField, Range(0f, 500f)]
-	float maxDeceleration = 10f, maxAirDeceleration = 1f;
+    float maxDeceleration = 10f, maxAirDeceleration = 1f;
 
     // [Header("Debug References")]
     // public Image groundedIndicator;
@@ -34,15 +36,18 @@ public class PlayerMovement : MonoBehaviour
     bool desiredJump;
 
     [System.Serializable]
-    public class PlayerValues {
+    public class PlayerValues
+    {
         public float numJumps = 1;
     }
     public PlayerValues playerValues = new PlayerValues();
 
-    private class TrackingValues {
+    private class TrackingValues
+    {
         public float timeSinceJump = 0f;
         public float numJumps = 1;
-        public TrackingValues(PlayerValues playerValues) {
+        public TrackingValues(PlayerValues playerValues)
+        {
             this.numJumps = playerValues.numJumps;
         }
     }
@@ -66,67 +71,70 @@ public class PlayerMovement : MonoBehaviour
 
         AdjustVelocity();
 
-		Jump(verticalSpeed);
+        Jump(verticalSpeed);
 
         RotateCharacter();
 
         rb.linearVelocity += gravity * Time.deltaTime;
-        
+
     }
-    void Update() 
+    void Update()
     {
         isGrounded = CheckIsGrounded();
 
 
         Vector2 playerInput;
-		playerInput.x = Input.GetAxis("Horizontal");
-		playerInput.y = Input.GetAxis("Vertical");
-		playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+        playerInput.x = Input.GetAxis("Horizontal");
+        playerInput.y = Input.GetAxis("Vertical");
+        playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        
-        if (playerInputSpace) {
-			rightAxis = Vector3.ProjectOnPlane(playerInputSpace.right, upAxis);
-			forwardAxis = Vector3.ProjectOnPlane(playerInputSpace.forward, upAxis);
-		}
-		else {
-			rightAxis = Vector3.ProjectOnPlane(Vector3.right, upAxis);
-			forwardAxis = Vector3.ProjectOnPlane(Vector3.forward, upAxis);
-		}
-		
+
+        if (playerInputSpace)
+        {
+            rightAxis = Vector3.ProjectOnPlane(playerInputSpace.right, upAxis);
+            forwardAxis = Vector3.ProjectOnPlane(playerInputSpace.forward, upAxis);
+        }
+        else
+        {
+            rightAxis = Vector3.ProjectOnPlane(Vector3.right, upAxis);
+            forwardAxis = Vector3.ProjectOnPlane(Vector3.forward, upAxis);
+        }
+
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
-		
-		desiredJump |= Input.GetButtonDown("Jump");
+
+        desiredJump |= Input.GetButtonDown("Jump");
 
         Debug.DrawLine(transform.position, transform.position + upAxis * 5, Color.yellow);
         Debug.DrawRay(transform.position + upAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
-    } 
+    }
 
-    void AdjustVelocity () {
-		Vector3 xAxis = Vector3.ProjectOnPlane(rightAxis, upAxis).normalized;
-		Vector3 zAxis = Vector3.ProjectOnPlane(forwardAxis, upAxis).normalized;
+    void AdjustVelocity()
+    {
+        Vector3 xAxis = Vector3.ProjectOnPlane(rightAxis, upAxis).normalized;
+        Vector3 zAxis = Vector3.ProjectOnPlane(forwardAxis, upAxis).normalized;
 
         Debug.DrawRay(transform.position, xAxis * 5, Color.red);
         Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
 
 
-		float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
-		float currentZ = Vector3.Dot(rb.linearVelocity, zAxis);
+        float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
+        float currentZ = Vector3.Dot(rb.linearVelocity, zAxis);
 
         bool isDecelerating = desiredVelocity.magnitude < rb.linearVelocity.magnitude;
-		float acceleration = isDecelerating ? (isGrounded ? maxDeceleration : maxAirDeceleration) : 
+        float acceleration = isDecelerating ? (isGrounded ? maxDeceleration : maxAirDeceleration) :
             (isGrounded ? maxAcceleration : maxAirAcceleration);
-		float maxSpeedChange = acceleration * Time.deltaTime;
+        float maxSpeedChange = acceleration * Time.deltaTime;
 
-		float newX =
-			Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
-		float newZ =
-			Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
+        float newX =
+            Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
+        float newZ =
+            Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
 
-		rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
-        
-	}
+        rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
+
+    }
 
     private bool CheckIsGrounded()
     {
@@ -135,22 +143,29 @@ public class PlayerMovement : MonoBehaviour
         return didHit;
     }
 
-    void Jump(float verticalSpeed) {
-        if (Input.GetButton("Jump")) {
+    void Jump(float verticalSpeed)
+    {
+        if (Input.GetButton("Jump"))
+        {
 
-            if (p.numJumps > 0 && desiredJump) { // Jumping from ground
+            if (p.numJumps > 0 && desiredJump)
+            { // Jumping from ground
                 rb.linearVelocity -= verticalSpeed * upAxis; // Reset vertical velocity of player
                 rb.AddForce(upAxis * jumpForce, ForceMode.Impulse);
                 p.numJumps--;
                 p.timeSinceJump = 0;
                 desiredJump = false;
             }
-        } else {
-            if (isGrounded) {
+        }
+        else
+        {
+            if (isGrounded)
+            {
                 p.numJumps = playerValues.numJumps;
                 p.timeSinceJump = 0;
-            } 
-            if (!isGrounded && verticalSpeed > 0) {
+            }
+            if (!isGrounded && verticalSpeed > 0)
+            {
                 // Add extra acceleration down
                 rb.AddForce(-upAxis * jumpExtraAcceleration, ForceMode.Acceleration);
             }
@@ -158,8 +173,10 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded) p.timeSinceJump += Time.fixedDeltaTime;
     }
 
-    void RotateCharacter() {
-        if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f) {
+    void RotateCharacter()
+    {
+        if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
+        {
             Quaternion targetRotationMove = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(desiredVelocity, Vector3.up);
             Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
 

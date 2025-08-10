@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerThrow : MonoBehaviour
 {
 
@@ -9,11 +11,15 @@ public class PlayerThrow : MonoBehaviour
     public Transform holdAnchor;
     public Vector3 throwDirectionForward = new Vector3(0, 0.5f, 0.5f);
     public float throwForceMult = 1;
-    public float minThrowSeconds = 2;
+    public float minThrowSeconds = 0.1f;
+    public float maxThrowSeconds = 2;
 
 
     [Header("Circlecast")]
     public LayerMask castLayerMask;
+
+    [Header("Throw Progress UI")]
+    public Image UIThrowProgressImage;
 
     private Rigidbody rb;
 
@@ -34,7 +40,7 @@ public class PlayerThrow : MonoBehaviour
 
         // Get near items and nearest
         List<Collider> collidersList = OutlineNearItems();
-        Collider nearest = collidersList.Count>0 ? GetNearestCollider(collidersList) : null;
+        Collider nearest = collidersList.Count > 0 ? GetNearestCollider(collidersList) : null;
 
 
         // Checking key up first so timeSincePressed = 0 not done before keydown
@@ -70,8 +76,20 @@ public class PlayerThrow : MonoBehaviour
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
             Debug.DrawRay(rb.position, throwDirection * timeSincePressed, Color.red);
             timeSincePressed += Time.deltaTime;
+            // Update Throw Progress
+
+            if (heldBody != null)
+            {
+                float progress = timeSincePressed / maxThrowSeconds;
+                UIThrowProgressImage.enabled = true;
+                UIThrowProgressImage.material.SetFloat("_Progress", progress);
+            }
         }
-        else timeSincePressed = 0;
+        else
+        {
+            UIThrowProgressImage.enabled = false;
+            timeSincePressed = 0;
+        }
 
 
         if (heldBody != null) heldBody.position = holdAnchor.position;
@@ -84,16 +102,20 @@ public class PlayerThrow : MonoBehaviour
         // Do phyisic cast to find items within radius
         float castRadius = 2f;
         Collider[] colliders = Physics.OverlapSphere(rb.position, castRadius, castLayerMask);
-        foreach (Collider c in colliders) {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript)) {
+        foreach (Collider c in colliders)
+        {
+            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            {
                 outlineScript.Enabled = true;
             }
         }
         List<Collider> collidersList = colliders.ToList<Collider>();
         var collidersExitedRange = lastColliders.Except(collidersList); // Any Colliders left over from last frame that aren't within range this frame
         lastColliders = collidersList;
-        foreach (Collider c in collidersExitedRange) {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript)) {
+        foreach (Collider c in collidersExitedRange)
+        {
+            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            {
                 outlineScript.Enabled = false;
             }
         }
@@ -104,9 +126,11 @@ public class PlayerThrow : MonoBehaviour
     {
         Collider closest = collidersList[0];
         float minDistance = 0;
-        foreach (Collider c in collidersList) {
+        foreach (Collider c in collidersList)
+        {
             float distance = Vector3.Distance(rb.position, c.gameObject.transform.position);
-            if (minDistance == 0 || distance < minDistance) {
+            if (minDistance == 0 || distance < minDistance)
+            {
                 minDistance = distance;
                 closest = c;
             }
