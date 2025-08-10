@@ -40,7 +40,7 @@ Shader "Unlit/InverseHull"
             v2f vert (appdata v)
             {
                 v2f o;
-                float4 objectPos = (v.vertex + v.vertex * _OutlineWidth)*(_NormalVSWorldSpace) + (v.vertex + float4(v.normal * _OutlineWidth, 1)) * (1-_NormalVSWorldSpace);
+                float4 objectPos = (v.vertex + v.vertex * _OutlineWidth)*(_NormalVSWorldSpace) + (v.vertex + float4(normalize(v.normal) * _OutlineWidth, 1)) * (1-_NormalVSWorldSpace);
                 o.pos = UnityObjectToClipPos(objectPos);
                 return o;
             }

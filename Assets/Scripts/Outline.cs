@@ -9,18 +9,22 @@ public class Outline : MonoBehaviour
     private new bool enabled;
     public bool Enabled { get { return enabled; } set { enabled = SetOutline(value); } }
 
-    private MeshRenderer meshRenderer;
+    public MeshRenderer[] meshRenderers;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     bool SetOutline(bool isenabled)
     {
-        Material[] newMaterials = { meshRenderer.materials[0], isenabled ? outlineMaterial : null };
-        meshRenderer.materials = newMaterials;
+        foreach (MeshRenderer renderer in meshRenderers)
+        {
+            Material[] outlineMaterialsSet = { renderer.materials[0], outlineMaterial };
+            Material[] regularMaterialsSet = { renderer.materials[0] };
+            renderer.materials = isenabled ? outlineMaterialsSet :  regularMaterialsSet;
+        }
         return isenabled;
     }
 

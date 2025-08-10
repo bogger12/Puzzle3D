@@ -55,6 +55,7 @@ public class PlayerThrow : MonoBehaviour
                 // Make body docile
                 heldBody.position = holdAnchor.position;
                 SetBodyDocile(heldBody, true);
+                heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
@@ -77,7 +78,8 @@ public class PlayerThrow : MonoBehaviour
             Debug.DrawRay(rb.position, throwDirection * timeSincePressed, Color.red);
             timeSincePressed += Time.deltaTime;
             // Update Throw Progress in Material
-            if (heldBody != null) {
+            if (heldBody != null)
+            {
                 float progress = timeSincePressed / maxThrowSeconds;
                 UIThrowProgressImage.enabled = true;
                 UIThrowProgressImage.material.SetFloat("_Progress", progress);
@@ -90,7 +92,13 @@ public class PlayerThrow : MonoBehaviour
         }
 
 
-        if (heldBody != null) heldBody.position = holdAnchor.position;
+        if (heldBody != null) {
+            heldBody.position = holdAnchor.position;
+            if (Vector3.Magnitude(heldBody.angularVelocity) < 0.1f)
+            {
+                heldBody.AddTorque((Vector3.up) * 1f);
+            }
+        }
 
     }
 

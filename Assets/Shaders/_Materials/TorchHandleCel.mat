@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InverseHull
-  m_Shader: {fileID: 4800000, guid: 66e329346f87fc44db304fdbebbf4931, type: 3}
+  m_Name: TorchHandleCel
+  m_Shader: {fileID: 4800000, guid: 49bbf5ca8679c384a9c873574e8afed8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -27,14 +27,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
+    m_Ints:
+    - _UseDiffuse: 1
     m_Floats:
-    - _Glossiness: 0.5
-    - _Metallic: 0
-    - _NormalVSWorldSpace: 0
-    - _OutlineWidth: 0.05
+    - _Fresnel: 1
+    - _Threshold: 0.3
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+    - _ShadowColor: {r: 0.0754717, g: 0.010323961, b: 0.010323961, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

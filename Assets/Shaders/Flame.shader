@@ -50,18 +50,18 @@ Shader "Unlit/Flame"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                // o.vertex = UnityObjectToClipPos(v.vertex + float3(0,_ScaleX,));
+
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 float4 camPos = float4(UnityObjectToViewPos(vect3Zero).xyz, 1.0);    // UnityObjectToViewPos(pos) is equivalent to mul(UNITY_MATRIX_MV, float4(pos, 1.0)).xyz,
                                                                                     // This gives us the camera's origin in 3D space (the position (0,0,0) in Camera Space)
 
-                float4 viewDir = float4(v.vertex.x, v.vertex.z, 0.0, 0.0) * float4(_ScaleX, _ScaleY, 1.0, 1.0);            // Since w is 0.0, in homogeneous coordinates this represents a vector direction instead of a position
+                float4 viewDir = float4(v.vertex.x, v.vertex.y-0.5, 0.0, 0.0) * float4(_ScaleX, _ScaleY, 1.0, 1.0);            // Since w is 0.0, in homogeneous coordinates this represents a vector direction instead of a position
                 float4 outPos = mul(UNITY_MATRIX_P, camPos - viewDir);            // Add the camera position and direction, then multiply by UNITY_MATRIX_P to get the new projected vert position
 
                 o.vertex = outPos;
                 o.uv = v.uv;
 
-                return o;
                 return o;
             }
             
