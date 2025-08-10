@@ -37,6 +37,15 @@ public class PlayerThrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void LateUpdate()
+    {
+        if (heldBody != null)
+        {
+            Vector3 targetPos = holdAnchor.position;
+            heldBody.MovePosition(targetPos);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -54,8 +63,8 @@ public class PlayerThrow : MonoBehaviour
                 heldBody = nearest.attachedRigidbody;
                 // Make body docile
                 heldBody.position = holdAnchor.position;
-                SetBodyDocile(heldBody, true);
                 heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
+                SetBodyDocile(heldBody, true);
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
@@ -90,16 +99,6 @@ public class PlayerThrow : MonoBehaviour
             UIThrowProgressImage.enabled = false;
             timeSincePressed = 0;
         }
-
-
-        if (heldBody != null) {
-            heldBody.position = holdAnchor.position;
-            if (Vector3.Magnitude(heldBody.angularVelocity) < 0.1f)
-            {
-                heldBody.AddTorque((Vector3.up) * 1f);
-            }
-        }
-
     }
 
 
@@ -152,11 +151,13 @@ public class PlayerThrow : MonoBehaviour
 
         if (docile) {
             heldBodyOriginalMass = heldBody.mass;
+            heldBody.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
             Debug.Log("Iignoring physics");
         }
         else {
             heldBody.mass = heldBodyOriginalMass;
+            heldBody.interpolation = RigidbodyInterpolation.None;
             StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
         }
     }
