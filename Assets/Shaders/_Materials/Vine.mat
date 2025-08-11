@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ThrowProgressUI
-  m_Shader: {fileID: 4800000, guid: b8f4a97162c28b6448ade798981eb0be, type: 3}
+  m_Name: Vine
+  m_Shader: {fileID: 4800000, guid: ede5fd504b8f54575b1ac6c3b5cf6de1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,15 +23,21 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BurnTexture:
+        m_Texture: {fileID: 2800000, guid: 347380c7a5982493f99a9f5b33f29d9a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f7a1a8e36ad4043c7ab6efe067afe34e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Progress: 0.39120117
+    - _BaseVSBurnTex: 0.512
+    - _BurnAmount: 0
+    - _Glossiness: 0
+    - _Metallic: 0
     m_Colors:
-    - _ColorEmpty: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _ColorFilled: {r: 0, g: 1, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
