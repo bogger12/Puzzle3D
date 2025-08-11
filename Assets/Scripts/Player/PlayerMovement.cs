@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
             if (p.numJumps > 0 && desiredJump)
             { // Jumping from ground
                 rb.linearVelocity -= verticalSpeed * upAxis; // Reset vertical velocity of player
-                rb.AddForce(upAxis * jumpForce, ForceMode.Impulse);
+                rb.AddForce(upAxis * jumpForce, ForceMode.VelocityChange);
                 p.numJumps--;
                 p.timeSinceJump = 0;
                 desiredJump = false;
