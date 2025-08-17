@@ -7,6 +7,7 @@ Shader "Unlit/Waterfall"
         _NoiseTex ("Noise Texture", 2D) = "white" {}
         _FoamWidth ("Foam Width", Float) = 0.1
         _FoamColor ("Foam Color", Color) = (1,1,1,1)
+        _SolidFoam ("Foam is Solid", Range(0,1)) = 0
         _WiggleIntensity ("Wiggle Intensity", Float) = 1
         _WiggleLength ("Wiggle Length", Float) = 1
         _WiggleSpeed ("Wiggle Speed", Float) = 100
@@ -63,6 +64,7 @@ Shader "Unlit/Waterfall"
 
             float _FoamWidth;
             float3 _FoamColor;
+            float _SolidFoam;
             float _WiggleIntensity;
             float _WiggleLength;
             float _WiggleSpeed;
@@ -87,8 +89,10 @@ Shader "Unlit/Waterfall"
                 return o;
             }
 
-            bool withinDisplacementArea(float3 objectDistance, float maxDistance) {
-                return step(length(objectDistance),maxDistance) || (objectDistance.y > 0 && step(length(objectDistance.xz),maxDistance));
+            float withinDisplacementArea(float3 objectDistance, float maxDistance) {
+                float displacementMask = smoothstep(maxDistance, 0, length(objectDistance)) * (objectDistance.y <= 0) + 
+                    smoothstep(maxDistance, 0, length(objectDistance.xz)) * (objectDistance.y > 0);
+                return saturate(displacementMask);
             }
 
             fixed4 frag (v2f i) : SV_Target
@@ -97,8 +101,11 @@ Shader "Unlit/Waterfall"
                 float waterNoiseMask = smoothstep(0,1,saturate((_TopMaskLevel-abs(1-i.uv.y))*(1/_TopMaskLevel))) + smoothstep(_BottomMaskLevel,0,i.uv.y);
 
                 // return float4(waterNoiseMask.xxx,1);
+                float horizontalOffset = sin(i.uv.x+_Time.x*_WiggleSpeed*100+i.wPos.y*_WiggleLength)*_WiggleIntensity;;
+
 
                 i.uv.y += _Time.x * _FlowSpeed;
+                i.uv.x += horizontalOffset*0.1;
                 float3 noise = tex2D(_NoiseTex, TRANSFORM_TEX(i.uv, _NoiseTex));
 
 
@@ -106,18 +113,23 @@ Shader "Unlit/Waterfall"
 
 
                 float waterMask = 0;
-                
-                float3 newWorldPos = i.wPos.xyz + i.tangent*sin(i.uv.x+_Time.x*_WiggleSpeed*100+i.wPos.y*_WiggleLength)*_WiggleIntensity;
+
+                float3 newWorldPos = i.wPos.xyz + i.tangent*horizontalOffset;
 
                 for (int ob=0; ob<NUM_OBJECTS; ob++) {
                     float3 objectDistance = _DisplacementObjects[ob].xyz-newWorldPos;
                     float displacementDistance = 0.7;
-                    bool insideDisplacedWater = withinDisplacementArea(objectDistance, displacementDistance);
-                    bool insideDisplacedWaterFoam = withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth);
-                    if (withinDisplacementArea(objectDistance, displacementDistance)) return float4(0,0,0,0); // Transparent
-                    else if (withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth)) { waterMask = 1; break; }
+                    float insideDisplacedWater = withinDisplacementArea(objectDistance, displacementDistance);
+                    float insideDisplacedWaterFoam = withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth);
+                    // return float4(insideDisplacedWater.xxx, 1);
+                    float withinBelowWater = withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth);
+                    if (withinDisplacementArea(objectDistance, displacementDistance)>0) return float4(0,0,0,0); // Transparent
+                    else if (withinBelowWater>0) { 
+                        waterMask = max(smoothstep(_SolidFoam, _FoamWidth/2, withinBelowWater), waterMask); 
+                    }
                 }
                 
+                // return float4(waterMask.xxx, 1);
                 fixed4 output = float4(lerp(lerp(_SecondaryColor, _MainColor, noise),_FoamColor, waterMask), 1);
                 
 

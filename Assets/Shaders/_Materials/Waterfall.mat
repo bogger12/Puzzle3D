@@ -35,14 +35,16 @@ Material:
     m_Floats:
     - _BottomMaskLevel: 1
     - _FlowSpeed: 40
-    - _FoamWidth: 0.1
+    - _FoamWidth: 0.15
+    - _SolidFoam: 1
     - _TopMaskLevel: 0.18
     - _WiggleIntensity: 0.1
     - _WiggleLength: 2
     - _WiggleSpeed: 4
     m_Colors:
+    - _FoamColor: {r: 0.5235849, g: 1, b: 0.9800454, a: 1}
     - _MainColor: {r: 0.14929691, g: 0.5096398, b: 0.5754717, a: 1}
-    - _SecondaryColor: {r: 0, g: 0.9361291, b: 1, a: 1}
+    - _SecondaryColor: {r: 0.25, g: 1, b: 0.9693792, a: 1}
     - _StepLevels: {r: 1.11, g: 0.39, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -35,6 +35,7 @@ public class WaterfallDisplacement : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name + " Entered waterfall");
+        if (other.isTrigger || other.attachedRigidbody == null) return;
         if ((displacingTypes.value & (1 << other.transform.gameObject.layer)) > 0) // Is correct layer
         {
             insideWaterfall.Add(other.transform);
@@ -43,6 +44,7 @@ public class WaterfallDisplacement : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        if (other.isTrigger || other.attachedRigidbody == null) return;
         if ((displacingTypes.value & (1 << other.transform.gameObject.layer)) > 0) // Is correct layer
         {
             insideWaterfall.Remove(other.transform); // Remove Item from list
