@@ -153,7 +153,7 @@ public class PlayerThrow : MonoBehaviour
             heldBodyOriginalMass = heldBody.mass;
             heldBody.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
-            Debug.Log("Iignoring physics");
+            // Debug.Log("Iignoring physics");
         }
         else {
             heldBody.mass = heldBodyOriginalMass;
@@ -168,6 +168,6 @@ public class PlayerThrow : MonoBehaviour
         yield return new WaitForSeconds(duration);
         // The code from here will be executed after **duration** seconds
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
-        Debug.Log("Unignoring physics");
+        // Debug.Log("Unignoring physics");
     }
 }
