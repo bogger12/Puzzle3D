@@ -32,6 +32,7 @@ Shader "Unlit/Waterfall"
             Blend SrcAlpha OneMinusSrcAlpha 
             ZTest LEqual
             ZWrite Off
+            Cull Off
 
             CGPROGRAM
             #pragma vertex vert

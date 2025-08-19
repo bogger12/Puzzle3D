@@ -31,6 +31,7 @@ Material:
     - _UseDiffuse: 1
     m_Floats:
     - _Fresnel: 1
+    - _ShadowIntensity: 0
     - _Threshold: 0.3
     m_Colors:
     - _LightColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
