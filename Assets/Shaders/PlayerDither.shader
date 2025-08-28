@@ -206,7 +206,7 @@ Shader "Lit/Player Dithered Lit"
         }
         Pass
         {
-            Tags {"RenderType"="Transparent" }
+            Tags {"LightMode"="Always" "Queue"="Transparent+1"}
             ZWrite Off
             ZTest Greater
             // This tests if 10 is Greater than the current value of the stencil buffer

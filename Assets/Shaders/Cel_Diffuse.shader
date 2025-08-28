@@ -47,7 +47,8 @@ Shader "Lit/Diffuse"
                 float2 uv : TEXCOORD0;
                 float4 pos : SV_POSITION;
                 float3 normal : NORMAL;
-                float3 wPos : TEXCOORD1;
+                SHADOW_COORDS(1) // put shadows data into TEXCOORD1
+                float3 wPos : TEXCOORD2;
             };
 
             sampler2D _MainTex;
@@ -65,12 +66,16 @@ Shader "Lit/Diffuse"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 o.wPos = mul(unity_ObjectToWorld, v.vertex);
-
+                // compute shadows data
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
+
+                fixed shadow = SHADOW_ATTENUATION(i);
+
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
                 float3 N = normalize(i.normal);
@@ -80,7 +85,9 @@ Shader "Lit/Diffuse"
                 float lambert = (dot( N, L)) * fresnel;
                 if (!_UseDiffuse) lambert = fresnel;
                 // return float4(fresnel.xxx, 1);
-                return lambert >= _Threshold ? float4(_LightColor,1) : float4(_ShadowColor,1);
+
+                if (!any(_LightColor0)) return float4(0,0,0,0); // Black when no light
+                return lambert*shadow >= _Threshold ? float4(_LightColor,1) : float4(_ShadowColor,1);
             }
             ENDHLSL
         }

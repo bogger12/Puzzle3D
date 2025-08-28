@@ -81,6 +81,39 @@ Shader "Lit/Cel Shade"
             }
             ENDHLSL
         }
-        UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+        
+        // Shadow pass that only shadows for main directional light
+        Pass
+        {
+            Tags {"LightMode"="ShadowCaster"}
+
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_shadowcaster
+            #include "UnityCG.cginc"
+
+            struct v2f { 
+                V2F_SHADOW_CASTER;
+            };
+
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                return o;
+            }
+
+            float4 frag(v2f i) : SV_Target
+            {
+                // Kill if this shadowmap render is for a point light
+                #ifdef SHADOWS_CUBE
+                    discard;
+                #endif
+
+                SHADOW_CASTER_FRAGMENT(i)
+            }
+            ENDHLSL
+        }
     }
 }

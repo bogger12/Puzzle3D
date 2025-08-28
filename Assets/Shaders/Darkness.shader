@@ -72,6 +72,7 @@ Shader "Unlit/Darkness"
         Pass
         {
             Tags { "LightMode"="ForwardAdd" }
+            Blend One One
 
             CGPROGRAM
             #pragma vertex vert
