@@ -13,7 +13,8 @@ Shader "Lit/Player Dithered Lit"
 
         Pass
         {
-            Tags {"LightMode"="ForwardBase" "Queue"="Geometry+1"}
+            Tags {"LightMode"="ForwardBase" "Queue"="Geometry"}
+            ZWrite On
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -107,7 +108,8 @@ Shader "Lit/Player Dithered Lit"
 
         Pass
         {
-            Tags {"LightMode"="ForwardAdd" "Queue"="Geometry+1"}
+            Tags {"LightMode"="ForwardAdd" "Queue"="Geometry"}
+            ZWrite On
             Blend One One
             BlendOp Max
 
@@ -204,8 +206,8 @@ Shader "Lit/Player Dithered Lit"
         }
         Pass
         {
-            
-
+            Tags {"RenderType"="Transparent" }
+            ZWrite Off
             ZTest Greater
             // This tests if 10 is Greater than the current value of the stencil buffer
             Stencil
@@ -219,14 +221,6 @@ Shader "Lit/Player Dithered Lit"
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
-            #include "Lighting.cginc"
-
-            // compile shader into multiple variants, with and without shadows
-            // (we don't care about any lightmaps yet, so skip these variants)
-            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
-            // shadow helper functions and macros
-            #include "AutoLight.cginc"
-
 
             struct MeshData // per vertex data
             {

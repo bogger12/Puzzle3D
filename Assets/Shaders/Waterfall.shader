@@ -20,18 +20,18 @@ Shader "Unlit/Waterfall"
     }
     SubShader
     {
-        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Tags { "Queue"="Geometry" "RenderType"="Opaque" }
 
-        Pass {
-            ZWrite On
-            ColorMask 0
-        }
+        // Pass {
+        //     ZWrite On
+        //     ColorMask 0
+        // }
 
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha 
+            // Blend SrcAlpha OneMinusSrcAlpha 
             ZTest LEqual
-            ZWrite Off
+            ZWrite On
             Cull Off
 
             CGPROGRAM
@@ -124,7 +124,7 @@ Shader "Unlit/Waterfall"
                     float insideDisplacedWaterFoam = withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth);
                     // return float4(insideDisplacedWater.xxx, 1);
                     float withinBelowWater = withinDisplacementArea(objectDistance, displacementDistance + _FoamWidth);
-                    if (withinDisplacementArea(objectDistance, displacementDistance)>0) return float4(0,0,0,0); // Transparent
+                    if (withinDisplacementArea(objectDistance, displacementDistance)>0) discard; // Transparent
                     else if (withinBelowWater>0) { 
                         waterMask = max(smoothstep(_SolidFoam, _FoamWidth/2, withinBelowWater), waterMask); 
                     }

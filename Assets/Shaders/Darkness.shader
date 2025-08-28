@@ -13,6 +13,8 @@ Shader "Unlit/Darkness"
         {
             Tags { "LightMode"="ForwardBase" }
 
+            ZWrite On
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
