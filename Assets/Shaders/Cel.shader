@@ -8,6 +8,7 @@ Shader "Lit/Cel Shade"
         _ShadowColor ("ShadowColor", Color) = (0,0,0,1)
         _Fresnel ("Fresnel", Float) = 1
         _UseDiffuse ("Use Diffuse", Integer) = 1
+        _IgnoreForwardAddShadow ("Ignore Forward Add Shadow", Integer) = 1
     }
     SubShader
     {
@@ -49,7 +50,7 @@ Shader "Lit/Cel Shade"
             float3 _ShadowColor;
             float _Threshold;
             float _Fresnel;
-            float _UseDiffuse;
+            int _UseDiffuse;
 
             v2f vert (appdata v)
             {
@@ -104,11 +105,13 @@ Shader "Lit/Cel Shade"
                 return o;
             }
 
+            int _IgnoreForwardAddShadow;
+
             float4 frag(v2f i) : SV_Target
             {
                 // Kill if this shadowmap render is for a point light
                 #ifdef SHADOWS_CUBE
-                    discard;
+                    if (_IgnoreForwardAddShadow) discard;
                 #endif
 
                 SHADOW_CASTER_FRAGMENT(i)

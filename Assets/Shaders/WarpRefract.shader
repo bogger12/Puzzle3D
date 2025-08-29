@@ -20,6 +20,7 @@ Shader "Unlit/WarpRefract"
 
         Pass
         {
+            Tags { "LightMode"="ForwardBase" }
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -78,7 +79,7 @@ Shader "Unlit/WarpRefract"
                 
 
 
-                return tex2D(_GrabTexture, screenUV);
+                return saturate(tex2D(_GrabTexture, screenUV));
             }
             ENDCG
         }
