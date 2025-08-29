@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ActivateOnPress : MonoBehaviour
+public class RemoteActivate : MonoBehaviour
 {
 
     public Activateable activateable;
