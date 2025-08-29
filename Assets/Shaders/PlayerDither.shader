@@ -7,6 +7,8 @@ Shader "Lit/Player Dithered Lit"
         _DitheredColor ("DitheredColor", Color) = (1,1,1,1)
         _ShadeThreshold ("ShadeThreshold", Float) = 0.3
         _HighlightThreshold ("HighlightThreshold", Float) = 0.8
+
+        _ForwardAddMultiplier ("Forward Add Multiplier", Float) = 10
     }
     SubShader
     {
@@ -138,13 +140,13 @@ Shader "Lit/Player Dithered Lit"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                SHADOW_COORDS(1) // put shadows data into TEXCOORD1
+                LIGHTING_COORDS(1,2) // adds light attenuation coords
                 // fixed3 diff : COLOR0;
                 // fixed3 ambient : COLOR1;
                 float4 pos : SV_POSITION;
-                float4 screenPos : TEXCOORD2;
+                float4 screenPos : TEXCOORD3;
                 float3 normal : NORMAL;
-                float3 wPos : TEXCOORD3;
+                float3 wPos : TEXCOORD4;
             };
             v2f vert (MeshData v)
             {
@@ -153,7 +155,7 @@ Shader "Lit/Player Dithered Lit"
                 o.uv = v.uv;
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 // compute shadows data
-                TRANSFER_SHADOW(o);
+                TRANSFER_VERTEX_TO_FRAGMENT(o); // needed for attenuation
                 o.screenPos = ComputeScreenPos(o.pos);
                 o.wPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
@@ -165,14 +167,14 @@ Shader "Lit/Player Dithered Lit"
             float _ShadeThreshold;
             float _HighlightThreshold;
 
+            float _ForwardAddMultiplier;
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 screenUV = i.screenPos.xy / i.screenPos.w;
 
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION(i);
-                // darken light's illumination with shadow, keep ambient intact
 
                 // Lighting calculation
                 
@@ -192,7 +194,12 @@ Shader "Lit/Player Dithered Lit"
 
                 float3 ambient = 0.1;
 
-                float lighting = (diff * shadow + ambient + spec * shadow);
+                fixed atten = saturate(LIGHT_ATTENUATION(i)*_ForwardAddMultiplier);
+                fixed shadow = SHADOW_ATTENUATION(i);
+                // darken light's illumination with shadow, keep ambient intact
+
+
+                float lighting = (diff * shadow * atten + ambient + spec * shadow * atten);
 
                 // Cel Shading Quantization
                 if (lighting < _ShadeThreshold) lighting = 0.1;
