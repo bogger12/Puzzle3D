@@ -7,8 +7,14 @@ public class GetClosestGrab : MonoBehaviour
 
     [Range(0,1)]
     public float moveSpeed;
+    
+    [Range(0,1)]
+    public float yInfluence;
+
+    public AnimationCurve sizeVsDistance;
 
 
+    private Transform playerCameraSpace;
     private Vector3 currentPos;
     private Vector3 targetPos;
 
@@ -17,7 +23,7 @@ public class GetClosestGrab : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        playerCameraSpace = transform.parent.GetComponent<PlayerMovement>().playerInputSpace;
     }
 
     // Update is called once per frame
@@ -25,11 +31,16 @@ public class GetClosestGrab : MonoBehaviour
     {
         if (grabPoints.childCount == 0) return;
         Transform closestPoint = grabPoints.GetChild(0);
-
-        Transform[] points = grabPoints.GetComponentsInChildren<Transform>();
-        foreach (Transform point in points)
+        for (int i = 1; i < grabPoints.childCount; i++)
         {
-            if (Vector3.Distance(transform.position, point.position) < Vector3.Distance(transform.position, closestPoint.position))
+            Transform point = grabPoints.GetChild(i);
+
+            Vector3 cameraToPoint = point.position - playerCameraSpace.position;
+            cameraToPoint.y *= yInfluence;
+            Vector3 cameraToClosestPoint = closestPoint.position - playerCameraSpace.position;
+            cameraToClosestPoint.y *= yInfluence;
+
+            if (Vector3.Dot(playerCameraSpace.forward, Vector3.Normalize(cameraToPoint)) > Vector3.Dot(playerCameraSpace.forward, Vector3.Normalize(cameraToClosestPoint)))
             {
                 closestPoint = point;
             }
@@ -38,6 +49,6 @@ public class GetClosestGrab : MonoBehaviour
         if (closestPoint.position != targetPos) targetPos = closestPoint.position;
         currentPos = Vector3.Lerp(currentPos, targetPos, moveSpeed);
         anchorObject.SetAnchorPos(currentPos);
-        // anchorObject.anchor = closestPoint;
+        anchorObject.sizeMultiplier = sizeVsDistance.Evaluate(Vector3.Distance(playerCameraSpace.position, currentPos));
     }
 }

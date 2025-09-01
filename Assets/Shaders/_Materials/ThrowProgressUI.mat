@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ThrowProgressUI
-  m_Shader: {fileID: 4800000, guid: a6d8b70c0548549318d54f67d8adff9b, type: 3}
-  m_Parent: {fileID: 2100000, guid: 9407d00033e6b42bf968fb4e7769a4b1, type: 2}
+  m_Shader: {fileID: 4800000, guid: b8f4a97162c28b6448ade798981eb0be, type: 3}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,13 +22,16 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CenterRadius: 0.1
-    - _FocusAmount: 0
-    - _FocusWidth: 0.1
-    - _OscillationSpeed: 10
-    m_Colors: []
+    - _Progress: 1.0615427
+    m_Colors:
+    - _ColorEmpty: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _ColorFilled: {r: 0, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

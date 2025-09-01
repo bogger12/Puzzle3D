@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField]
-    Transform playerInputSpace = default;
+    public Transform playerInputSpace = default;
     public float movementSpeed = 5f;
     public float rotationSpeed = 10f;
 

@@ -12683,6 +12683,7 @@ MonoBehaviour:
   sceneCamera: {fileID: 330585545}
   offset2D: {x: 35, y: 24.5}
   lockToScreenBounds: 0
+  sizeMultiplier: 0
 --- !u!114 &850013988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12695,7 +12696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 30f04e4f866e4f4458edd8d6c36b9dc6, type: 2}
+  m_Material: {fileID: 2100000, guid: f2b58036c80824bc99e65c151f33e393, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -15811,6 +15812,31 @@ MonoBehaviour:
   grabPoints: {fileID: 1971110925}
   anchorObject: {fileID: 2066177138}
   moveSpeed: 0.1
+  yInfluence: 0.2
+  sizeVsDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 12
+      value: 0.80047196
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 25
+      value: 0.35002065
+      inSlope: -0.10466944
+      outSlope: -0.10466944
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.047368124
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1144708775
 GameObject:
   m_ObjectHideFlags: 0
@@ -24779,6 +24805,7 @@ MonoBehaviour:
   sceneCamera: {fileID: 330585545}
   offset2D: {x: 0, y: 0}
   lockToScreenBounds: 0
+  sizeMultiplier: 0
 --- !u!114 &2066177139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24791,7 +24818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 30f04e4f866e4f4458edd8d6c36b9dc6, type: 2}
+  m_Material: {fileID: 2100000, guid: 9407d00033e6b42bf968fb4e7769a4b1, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

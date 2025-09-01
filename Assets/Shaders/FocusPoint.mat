@@ -29,9 +29,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CenterRadius: 0.29
+    - _CenterRadius: 0.1
     - _FocusAmount: 0
-    - _FocusWidth: 0.05
+    - _FocusWidth: 0.1
     - _OscillationSpeed: 10
     m_Colors: []
   m_BuildTextureStacks: []
