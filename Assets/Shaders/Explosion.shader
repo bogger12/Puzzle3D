@@ -71,7 +71,7 @@ Shader "Unlit/Explosion"
             {
                 v2f o;
                 float vertexExtrude = lerp(_MinSize, _MaxSize, _ExplodeProgress);
-                o.vertex = UnityObjectToClipPos(v.vertex * vertexExtrude);
+                o.vertex = UnityObjectToClipPos(float4(normalize(v.vertex.xyz) * vertexExtrude, 1));
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 o.wPos = mul(unity_ObjectToWorld, v.vertex);

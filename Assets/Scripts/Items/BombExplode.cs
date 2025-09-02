@@ -46,14 +46,14 @@ public class BombExplode : MonoBehaviour
     }
 
 
-    public void StartFuse()
+    public void StartFuse(float time = 0)
     {
-        timeUntilExplode = fuseTime;
+        timeUntilExplode = time!=0 ? time : fuseTime ;
         bombState = BombState.BurningFuse;
         Debug.Log("Fuse Started...");
     }
 
-    private void Explode()
+    public void Explode()
     {
         Debug.Log("Explode!");
         GameObject explosion = GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);

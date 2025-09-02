@@ -5,7 +5,7 @@ public class DestructibleBlock : MonoBehaviour
 
     public GameObject particles;
 
-    public void DestroyBlock(Vector3 bombPosition)
+    public void DestroyBlockFrom(Vector3 bombPosition)
     {
         GameObject blockParticles = Instantiate(particles, transform.position, Quaternion.identity);
         ParticleSystem destructibleBlockParticles = blockParticles.GetComponent<ParticleSystem>();

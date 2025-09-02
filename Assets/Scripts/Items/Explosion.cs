@@ -63,9 +63,13 @@ public class Explosion : MonoBehaviour
                             if (bodyDistance <= currentRadius)
                             {
                                 body.AddExplosionForce(blastStrength, transform.position, explodeRadius, explodeUpwardsModifier, ForceMode.Impulse);
-                                if (c != null && c.gameObject.TryGetComponent<DestructibleBlock>(out DestructibleBlock destructibleBlock))
+                                if (c.gameObject.TryGetComponent<DestructibleBlock>(out DestructibleBlock destructibleBlock))
                                 {
-                                    destructibleBlock.DestroyBlock(transform.position);
+                                    destructibleBlock.DestroyBlockFrom(transform.position);
+                                }
+                                if (c.gameObject.TryGetComponent<BombExplode>(out BombExplode bomb))
+                                {
+                                    bomb.StartFuse(0.05f);
                                 }
                             }
                         }
