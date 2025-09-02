@@ -8,13 +8,15 @@ public class Outline : MonoBehaviour
     [SerializeField]
     private new bool enabled;
     public bool Enabled { get { return enabled; } set { enabled = SetOutline(value); } }
+    public bool applyToChildren = true;
 
     public MeshRenderer[] meshRenderers;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        if (applyToChildren) meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        else meshRenderers = new MeshRenderer[] { GetComponent<MeshRenderer>() };
     }
 
     bool SetOutline(bool isenabled)

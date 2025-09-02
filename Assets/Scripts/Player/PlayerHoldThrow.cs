@@ -65,6 +65,9 @@ public class PlayerThrow : MonoBehaviour
                 heldBody.position = holdAnchor.position;
                 heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
                 SetBodyDocile(heldBody, true);
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
+                    holdable.SetIsHeld(true);
+                }
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
@@ -72,6 +75,9 @@ public class PlayerThrow : MonoBehaviour
                 float throwForce = throwForceMult * timeSincePressed;
                 // Reset body vars before throw
                 SetBodyDocile(heldBody, false);
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
+                    holdable.SetIsHeld(false);
+                }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
 
@@ -119,7 +125,7 @@ public class PlayerThrow : MonoBehaviour
         lastColliders = collidersList;
         foreach (Collider c in collidersExitedRange)
         {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            if (c!=null && c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
             {
                 outlineScript.Enabled = false;
             }
@@ -167,6 +173,7 @@ public class PlayerThrow : MonoBehaviour
         // Eventual code to execute right as the function is called
         yield return new WaitForSeconds(duration);
         // The code from here will be executed after **duration** seconds
+        if (transform == null) yield break;
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
         // Debug.Log("Unignoring physics");
     }
