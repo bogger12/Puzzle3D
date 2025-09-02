@@ -19,11 +19,18 @@ public class Explosion : MonoBehaviour
 
     private ExplosionState explosionState = ExplosionState.Exploding;
 
+    private float blastStrength;
+    private float explodeRadius;
+    private float explodeUpwardsModifier;
+    private LayerMask explosionMoveMask;
+
+    Collider[] surroundingBodies;
+
     void Start()
     {
         explosionMesh = GetComponent<MeshRenderer>();
     }
-    
+
     void Update()
     {
         timePassed += Time.deltaTime;
@@ -31,30 +38,60 @@ public class Explosion : MonoBehaviour
         switch (explosionState)
         {
             case ExplosionState.Exploding:
-            {
-                float endTime = sizeOverExplosionTime[sizeOverExplosionTime.keys.Length - 1].time;
-                if (endTime <= timePassed)
                 {
-                    explosionState = ExplosionState.Fading;
-                    timePassed = 0;
-                    break;
-                }
+                    float endTime = sizeOverExplosionTime[sizeOverExplosionTime.keys.Length - 1].time;
+                    if (endTime <= timePassed)
+                    {
+                        explosionState = ExplosionState.Fading;
+                        timePassed = 0;
+                        break;
+                    }
+                    float progress = sizeOverExplosionTime.Evaluate(timePassed);
+                    explosionMesh.material.SetFloat("_ExplodeProgress", progress);
 
-                explosionMesh.material.SetFloat("_ExplodeProgress", sizeOverExplosionTime.Evaluate(timePassed));
-                break;
-            }
-            case ExplosionState.Fading:
-            {
-                float endTime = alphaAfterExplosion[alphaAfterExplosion.keys.Length - 1].time;
-                if (endTime <= timePassed)
-                {
-                    GameObject.Destroy(this.gameObject);
+                    // Affect Surrounding Rigidbodies
+
+                    if (surroundingBodies==null) surroundingBodies = Physics.OverlapSphere(transform.position, explodeRadius, explosionMoveMask);
+
+                    float currentRadius = explodeRadius * progress;
+
+                    foreach (Collider c in surroundingBodies)
+                    {
+                        if (c!=null && c.gameObject.TryGetComponent<Rigidbody>(out Rigidbody body))
+                        {
+                            float bodyDistance = Vector3.Distance(body.position, transform.position);
+                            if (bodyDistance <= currentRadius)
+                            {
+                                body.AddExplosionForce(blastStrength, transform.position, explodeRadius, explodeUpwardsModifier, ForceMode.Impulse);
+                                if (c != null && c.gameObject.TryGetComponent<DestructibleBlock>(out DestructibleBlock destructibleBlock))
+                                {
+                                    destructibleBlock.DestroyBlock(transform.position);
+                                }
+                            }
+                        }
+                    }
                     break;
                 }
-                explosionMesh.material.SetFloat("_TransparencyFade", alphaAfterExplosion.Evaluate(timePassed));
-                break;
-            }
+            case ExplosionState.Fading:
+                {
+                    float endTime = alphaAfterExplosion[alphaAfterExplosion.keys.Length - 1].time;
+                    if (endTime <= timePassed)
+                    {
+                        GameObject.Destroy(this.gameObject);
+                        break;
+                    }
+                    explosionMesh.material.SetFloat("_TransparencyFade", alphaAfterExplosion.Evaluate(timePassed));
+                    break;
+                }
         }
     }
 
+
+    public void InitialiseExplosionVariables(float blastStrength, float explodeRadius, float explodeUpwardsModifier, LayerMask explosionMoveMask)
+    {
+        this.blastStrength = blastStrength;
+        this.explodeRadius = explodeRadius;
+        this.explodeUpwardsModifier = explodeUpwardsModifier;
+        this.explosionMoveMask = explosionMoveMask;
+    }
 }

@@ -62,24 +62,7 @@ public class BombExplode : MonoBehaviour
         explosionMesh.material.SetFloat("_TransparencyFade", 1);
         explosionMesh.material.SetFloat("_MaxSize", explodeRadius);
 
-        // Affect Surrounding Rigidbodies
-
-        Collider[] surrounding = Physics.OverlapSphere(rb.position, explodeRadius, explosionMoveMask);
-
-        foreach (Collider c in surrounding)
-        {
-            if (c.gameObject.TryGetComponent<DestructibleBlock>(out DestructibleBlock destructibleBlock))
-            {
-                destructibleBlock.DestroyBlock(rb.position);
-            }
-            if (c.gameObject.TryGetComponent<Rigidbody>(out Rigidbody body))
-            {
-                // Vector3 explodeCenterToBody = Vector3.Normalize(body.position - rb.position);
-                body.AddExplosionForce(blastStrength, rb.position, explodeRadius, explodeUpwardsModifier, ForceMode.Impulse);
-            }
-        }
-
-
+        explosion.GetComponent<Explosion>().InitialiseExplosionVariables(blastStrength, explodeRadius, explodeUpwardsModifier, explosionMoveMask);
 
         GameObject.Destroy(this.gameObject);
     }

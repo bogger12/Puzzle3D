@@ -809,8 +809,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -8706,8 +8706,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -9095,8 +9095,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -10237,8 +10237,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -17478,8 +17478,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -17666,8 +17666,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -20459,8 +20459,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -21047,8 +21047,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -27067,8 +27067,8 @@ MonoBehaviour:
   fuseTime: 3
   explosionEffect: {fileID: 1544368146988453495, guid: d410497f7aa264b09b020ede2a7540e9, type: 3}
   explodeRadius: 5
-  blastStrength: 15
-  explodeUpwardsModifier: 5
+  blastStrength: 6
+  explodeUpwardsModifier: 2
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
