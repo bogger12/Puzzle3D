@@ -42,7 +42,6 @@ public class BombExplode : MonoBehaviour
             case BombState.BurningFuse:
                 {
                     float fuseProgress = 1 - (timeUntilExplode / fuseTime);
-                    Debug.Log("Setting fuse progress to " + fuseProgress);
                     bombMesh.materials[1].SetFloat("_FuseProgress", fuseProgress);
                     if (timeUntilExplode <= 0) Explode();
                     break;

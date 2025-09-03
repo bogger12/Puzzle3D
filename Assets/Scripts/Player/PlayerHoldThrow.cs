@@ -66,7 +66,7 @@ public class PlayerThrow : MonoBehaviour
                 heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
                 SetBodyDocile(heldBody, true);
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
-                    holdable.SetIsHeld(true);
+                    holdable.HeldBy(rb);
                 }
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
@@ -76,7 +76,7 @@ public class PlayerThrow : MonoBehaviour
                 // Reset body vars before throw
                 SetBodyDocile(heldBody, false);
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
-                    holdable.SetIsHeld(false);
+                    holdable.NotHeld();
                 }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);

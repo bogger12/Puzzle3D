@@ -11,7 +11,7 @@ public class Outline : MonoBehaviour
     public bool Enabled { get { return enabled; } set { enabled = SetOutline(value); } }
     public bool applyToChildren = true;
 
-    public MeshRenderer[] meshRenderers;
+    private MeshRenderer[] meshRenderers;
 
     private Dictionary<MeshRenderer, Material[]> initialMaterials = new Dictionary<MeshRenderer, Material[]>();
 

@@ -9,9 +9,9 @@ public class HoldableBomb : Holdable
     {
         bombExplode = GetComponent<BombExplode>();
     }
-    public override void SetIsHeld(bool held)
+    public override void HeldBy(Rigidbody holdingBody)
     {
-        isHeld = held;
-        if (held) bombExplode.StartFuse();
+        isHeld = true;
+        bombExplode.StartFuse();
     }
 }

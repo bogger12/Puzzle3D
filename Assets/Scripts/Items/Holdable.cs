@@ -1,10 +1,19 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Outline))]
 public abstract class Holdable : MonoBehaviour
 {
-    public bool isHeld;
-    public virtual void SetIsHeld(bool held)
+    protected bool isHeld;
+    protected Rigidbody holdingBody;
+    public virtual void HeldBy(Rigidbody holdingBody)
     {
-        isHeld = held;
+        isHeld = true;
+        this.holdingBody = holdingBody;
+    }
+
+    public virtual void NotHeld()
+    {
+        isHeld = false;
+        holdingBody = null;
     }
 }
