@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public Transform playerInputSpace = default;
     public float movementSpeed = 5f;
-    public float rotationSpeed = 10f;
+    public float groundedRotationSpeed = 10f;
+    public float airRotationSpeed = 10f;
 
     public float gravityAcceleration = 9.81f;
 
@@ -18,10 +19,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundDetectionLayer;
     public float groundDetectionDistance = 1;
 
-    [SerializeField, Range(0f, 500f)]
-    float maxAcceleration = 10f, maxAirAcceleration = 1f;
-    [SerializeField, Range(0f, 500f)]
-    float maxDeceleration = 10f, maxAirDeceleration = 1f;
+    [SerializeField, Range(0f, 50)]
+    public float maxAcceleration = 10f, maxAirAcceleration = 1f;
+    [SerializeField, Range(0f, 50)]
+    public float maxDeceleration = 10f, maxAirDeceleration = 1f;
 
     // [Header("Debug References")]
     // public Image groundedIndicator;
@@ -177,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
         {
+            float rotationSpeed = IsGrounded ? groundedRotationSpeed : airRotationSpeed;
             Quaternion targetRotationMove = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(desiredVelocity, Vector3.up);
             Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
 

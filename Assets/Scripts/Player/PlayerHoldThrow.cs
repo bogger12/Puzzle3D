@@ -65,8 +65,12 @@ public class PlayerThrow : MonoBehaviour
                 heldBody.position = holdAnchor.position;
                 heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
                 SetBodyDocile(heldBody, true);
-                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                {
                     holdable.HeldBy(rb);
+                    if (holdable.allowRotationCarryOver) heldBody.linearVelocity = Vector3.zero;
+                    heldBody.freezeRotation = holdable.FreezeRotationDuringCarry;
+                    if (holdable.customHeldRotation) heldBody.rotation = holdable.heldRotation;
                 }
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
@@ -77,6 +81,7 @@ public class PlayerThrow : MonoBehaviour
                 SetBodyDocile(heldBody, false);
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable)) {
                     holdable.NotHeld();
+                    heldBody.freezeRotation = false;
                 }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);

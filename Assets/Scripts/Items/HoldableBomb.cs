@@ -11,7 +11,7 @@ public class HoldableBomb : Holdable
     }
     public override void HeldBy(Rigidbody holdingBody)
     {
-        isHeld = true;
+        base.HeldBy(holdingBody);
         bombExplode.StartFuse();
     }
 }

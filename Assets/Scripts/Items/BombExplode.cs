@@ -12,7 +12,7 @@ enum BombState
 public class BombExplode : MonoBehaviour
 {
 
-
+    [Header("Bomb Variables")]
     public float fuseTime;
     public GameObject explosionEffect;
     [Header("Explosion Affects Surroundings")]

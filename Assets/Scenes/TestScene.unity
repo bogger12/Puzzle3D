@@ -604,7 +604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputSpace: {fileID: 330585546}
   movementSpeed: 5
-  rotationSpeed: 20
+  groundedRotationSpeed: 10
+  airRotationSpeed: 10
   gravityAcceleration: 19.62
   jumpForce: 10
   jumpExtraAcceleration: 10
@@ -827,6 +828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &35096409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8724,6 +8729,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &370350360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9113,6 +9122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &471019599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9983,7 +9996,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &518350761
 MonoBehaviour:
@@ -9997,11 +10010,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fe9eb7532be4bafbf1b68bc1703513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 1
+  customHeldRotation: 1
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
   playerUpwardsGravityMult: 0.4
   selfUpwardsGravityMult: 0.5
   playerMaxDownwardVelocity: 0.3
   selfMaxDownwardVelocity: 0
   boostDuringJumpUp: 1
+  playerAirAccelerationMult: 0.8
+  playerAirDecelerationMult: 0.5
+  playerAirRotationSpeedMult: 0.8
 --- !u!114 &518350762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10425,6 +10445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &577919791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17666,6 +17690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &1088584825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17854,6 +17882,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &1095334014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20647,6 +20679,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &1338106897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21235,6 +21271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &1423162858
 GameObject:
   m_ObjectHideFlags: 0
@@ -27255,6 +27295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98957a05460249f29defbdcaa27d213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  FreezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &1901260872
 MonoBehaviour:
   m_ObjectHideFlags: 0
