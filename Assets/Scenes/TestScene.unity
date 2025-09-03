@@ -814,6 +814,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &35096408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +916,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8711,6 +8713,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &370350359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8812,6 +8815,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9100,6 +9104,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &471019598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9201,6 +9206,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10242,6 +10248,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &577919790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10343,6 +10350,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17483,6 +17491,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &1088584824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17584,6 +17593,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17671,6 +17681,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &1095334013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17772,6 +17783,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20464,6 +20476,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &1338106896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20565,6 +20578,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20945,6 +20959,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21052,6 +21067,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &1366225077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27072,6 +27088,7 @@ MonoBehaviour:
   explosionMoveMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fuseTimeRangeOfAffectedBomb: {x: 0.05, y: 0.2}
 --- !u!114 &1901260871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27173,6 +27190,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 068128cf44541429392f7922b04bb6f5, type: 2}
+  - {fileID: 2100000, guid: 043a1e333562e42daafab0ebcf9b2e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

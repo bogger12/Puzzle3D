@@ -20,16 +20,18 @@ public class BombExplode : MonoBehaviour
     public float blastStrength = 1;
     public float explodeUpwardsModifier = 0;
     public LayerMask explosionMoveMask;
+    public Vector2 fuseTimeRangeOfAffectedBomb = new Vector2(0.05f, 0.2f);
 
 
 
     private float timeUntilExplode = 0;
     private BombState bombState = BombState.Inactive;
-    private Rigidbody rb;
+
+    private MeshRenderer bombMesh;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        bombMesh = GetComponent<MeshRenderer>();
     }
     // Update is called once per frame
     void Update()
@@ -39,6 +41,9 @@ public class BombExplode : MonoBehaviour
         {
             case BombState.BurningFuse:
                 {
+                    float fuseProgress = 1 - (timeUntilExplode / fuseTime);
+                    Debug.Log("Setting fuse progress to " + fuseProgress);
+                    bombMesh.materials[1].SetFloat("_FuseProgress", fuseProgress);
                     if (timeUntilExplode <= 0) Explode();
                     break;
                 }
@@ -48,6 +53,7 @@ public class BombExplode : MonoBehaviour
 
     public void StartFuse(float time = 0)
     {
+        if (bombState == BombState.BurningFuse) return;
         timeUntilExplode = time!=0 ? time : fuseTime ;
         bombState = BombState.BurningFuse;
         Debug.Log("Fuse Started...");
@@ -55,6 +61,7 @@ public class BombExplode : MonoBehaviour
 
     public void Explode()
     {
+        bombState = BombState.Inactive;
         Debug.Log("Explode!");
         GameObject explosion = GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);
         MeshRenderer explosionMesh = explosion.GetComponent<MeshRenderer>();
@@ -62,7 +69,7 @@ public class BombExplode : MonoBehaviour
         explosionMesh.material.SetFloat("_TransparencyFade", 1);
         explosionMesh.material.SetFloat("_MaxSize", explodeRadius);
 
-        explosion.GetComponent<Explosion>().InitialiseExplosionVariables(blastStrength, explodeRadius, explodeUpwardsModifier, explosionMoveMask);
+        explosion.GetComponent<Explosion>().InitialiseExplosionVariables(blastStrength, explodeRadius, explodeUpwardsModifier, explosionMoveMask, fuseTimeRangeOfAffectedBomb);
 
         GameObject.Destroy(this.gameObject);
     }

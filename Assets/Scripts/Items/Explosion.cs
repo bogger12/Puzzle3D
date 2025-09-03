@@ -23,6 +23,7 @@ public class Explosion : MonoBehaviour
     private float explodeRadius;
     private float explodeUpwardsModifier;
     private LayerMask explosionMoveMask;
+    private Vector2 fuseTimeRangeOfAffectedBomb;
 
     Collider[] surroundingBodies;
 
@@ -69,7 +70,7 @@ public class Explosion : MonoBehaviour
                                 }
                                 if (c.gameObject.TryGetComponent<BombExplode>(out BombExplode bomb))
                                 {
-                                    bomb.StartFuse(0.05f);
+                                    bomb.StartFuse(Random.Range(fuseTimeRangeOfAffectedBomb.x, fuseTimeRangeOfAffectedBomb.y));
                                 }
                             }
                         }
@@ -91,11 +92,12 @@ public class Explosion : MonoBehaviour
     }
 
 
-    public void InitialiseExplosionVariables(float blastStrength, float explodeRadius, float explodeUpwardsModifier, LayerMask explosionMoveMask)
+    public void InitialiseExplosionVariables(float blastStrength, float explodeRadius, float explodeUpwardsModifier, LayerMask explosionMoveMask, Vector2 fuseTimeRangeOfAffectedBomb)
     {
         this.blastStrength = blastStrength;
         this.explodeRadius = explodeRadius;
         this.explodeUpwardsModifier = explodeUpwardsModifier;
         this.explosionMoveMask = explosionMoveMask;
+        this.fuseTimeRangeOfAffectedBomb = fuseTimeRangeOfAffectedBomb;
     }
 }
