@@ -12,6 +12,6 @@ public class GameHandler_SpeechBubble : MonoBehaviour
       Debug.LogError("npcTransform is not assigned in the inspector.");
       return;
     }
-    SpeechBubble.Create(npcTransform, new Vector3(0, 2f), SpeechBubble.IconType.Neutral, "Hello there!");
+    // SpeechBubble.Create(npcTransform, new Vector3(0, 2f), SpeechBubble.IconType.Neutral, "Hello there!");
   }
 }

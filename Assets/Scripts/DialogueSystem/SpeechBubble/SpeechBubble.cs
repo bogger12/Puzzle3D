@@ -9,11 +9,12 @@ using Vector3 = UnityEngine.Vector3;
 public class SpeechBubble : MonoBehaviour
 {
 
-  public static void Create(Transform parent, Vector3 localPosition, IconType iconType, string text)
+  public static void Create(Transform parent, Vector3 localPosition, IconType iconType, string text, float duration = 5f)
   {
     Transform speechBubbleTransform = Instantiate(GameAssets.i.pfSpeechBubble, parent);
     speechBubbleTransform.localPosition = localPosition;
     speechBubbleTransform.GetComponent<SpeechBubble>().Setup(iconType, text);
+    Destroy(speechBubbleTransform.gameObject, duration);
   }
 
   public enum IconType
