@@ -151,14 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fe9eb7532be4bafbf1b68bc1703513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowRotationCarryOver: 1
+  allowRotationCarryOver: 0
   freezeRotationDuringCarry: 0
+  lockItemToPlayer: 1
   customHeldRotation: 1
   heldRotation: {x: 0.25881904, y: 0, z: 0, w: 0.9659258}
   playerUpwardsGravityMult: 0.4
-  selfUpwardsGravityMult: 0.5
+  selfUpwardsGravityMult: 0.7
   playerMaxDownwardVelocity: 0.3
-  selfMaxDownwardVelocity: 0
+  selfMaxDownwardVelocity: 1.5
   boostDuringJumpUp: 1
   onlyGlideWhileButtonPress: 1
   playerAirAccelerationMult: 0.8

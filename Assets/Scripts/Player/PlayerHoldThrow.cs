@@ -94,6 +94,7 @@ public class PlayerThrow : MonoBehaviour
                 {
                     holdable.NotHeld();
                     heldBody.freezeRotation = heldBodyOriginalFreezeRotation;
+                    if (!holdable.allowRotationCarryOver) heldBody.rotation = heldBodyOriginalRotation;
                 }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);

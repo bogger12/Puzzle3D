@@ -9,6 +9,7 @@ public class Holdable : MonoBehaviour
 
     public bool allowRotationCarryOver = true;
     public bool freezeRotationDuringCarry = false;
+    public bool lockItemToPlayer = false;
     public bool customHeldRotation = false;
     public Quaternion heldRotation = Quaternion.identity;
     protected ConfigurableJoint holdJoint = null;
@@ -35,13 +36,12 @@ public class Holdable : MonoBehaviour
         holdJoint.xMotion = ConfigurableJointMotion.Locked;
         holdJoint.yMotion = ConfigurableJointMotion.Locked;
         holdJoint.zMotion = ConfigurableJointMotion.Locked;
-        if (!freezeRotationDuringCarry)
+        if (lockItemToPlayer)
         {
             holdJoint.angularXMotion = ConfigurableJointMotion.Locked;
             holdJoint.angularYMotion = ConfigurableJointMotion.Locked;
             holdJoint.angularZMotion = ConfigurableJointMotion.Locked;
         }
-        holdJoint.targetRotation = Quaternion.Inverse(rb.rotation);
     }
 
     public virtual void NotHeld()
