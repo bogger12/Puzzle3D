@@ -39,17 +39,17 @@ public class PlayerThrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
-    {
-        if (heldBody != null)
-        {
-            // Vector3 offset = holdAnchor.localPosition;
-            // Vector3 targetPos = rb.position + offset;
-            Vector3 targetPos = holdAnchor.position;
-            heldBody.MovePosition(targetPos);
-            heldBody.rotation = rb.rotation * heldBodyOriginalRotation;
-        }
-    }
+    // void FixedUpdate()
+    // {
+    //     if (heldBody != null)
+    //     {
+    //         // Vector3 offset = holdAnchor.localPosition;
+    //         // Vector3 targetPos = rb.position + offset;
+    //         Vector3 targetPos = holdAnchor.position;
+    //         heldBody.MovePosition(targetPos);
+    //         heldBody.rotation = rb.rotation * heldBodyOriginalRotation;
+    //     }
+    // }
 
     // Update is called once per frame
     void Update()
@@ -173,6 +173,7 @@ public class PlayerThrow : MonoBehaviour
 
         if (docile) {
             heldBodyOriginalMass = heldBody.mass;
+            heldBody.mass = 0f; //TODO:
             heldBody.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
             // Debug.Log("Iignoring physics");
