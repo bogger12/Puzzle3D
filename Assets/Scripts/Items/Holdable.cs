@@ -24,8 +24,6 @@ public class Holdable : MonoBehaviour
         isHeld = true;
         this.holdingBody = holdingBody;
 
-        Debug.Log(rb.name);
-        Debug.Log(holdAnchor.name);
         rb.position = holdAnchor.position;
 
         holdJoint = gameObject.AddComponent<ConfigurableJoint>();
@@ -43,6 +41,7 @@ public class Holdable : MonoBehaviour
             holdJoint.angularYMotion = ConfigurableJointMotion.Locked;
             holdJoint.angularZMotion = ConfigurableJointMotion.Locked;
         }
+        holdJoint.targetRotation = Quaternion.Inverse(rb.rotation);
     }
 
     public virtual void NotHeld()

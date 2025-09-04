@@ -71,14 +71,15 @@ public class PlayerThrow : MonoBehaviour
                 // Make body docile
                 heldBody.position = holdAnchor.position;
                 heldBodyOriginalFreezeRotation = heldBody.freezeRotation;
-                heldBody.rotation = rb.rotation * Quaternion.Euler(40f, 0f, 0);
                 heldBodyOriginalRotation = heldBody.rotation;
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
+                    // Rotation first as gets locked in in heldBy
+                    if (holdable.customHeldRotation) heldBody.rotation = rb.rotation * holdable.heldRotation;
+                    heldBody.transform.rotation = heldBody.rotation;
                     holdable.HeldBy(rb, holdAnchor);
                     if (holdable.allowRotationCarryOver) heldBody.linearVelocity = Vector3.zero;
                     heldBody.freezeRotation = holdable.freezeRotationDuringCarry;
-                    if (holdable.customHeldRotation) heldBody.rotation = holdable.heldRotation;
                 }
                 SetBodyDocile(heldBody, true);
             }

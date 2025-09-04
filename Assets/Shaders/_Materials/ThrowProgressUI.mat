@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Progress: 0.57955915
+    - _Progress: 0.06977148
     m_Colors:
     - _ColorEmpty: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ColorFilled: {r: 0, g: 1, b: 0, a: 1}
