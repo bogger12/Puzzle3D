@@ -11,6 +11,7 @@ public class HoldableFlower : Holdable
     public float selfMaxDownwardVelocity = 0.2f;
 
     public bool boostDuringJumpUp = false;
+    public bool onlyGlideWhileButtonPress = false;
 
     [Header("Player Air Acceleration")]
     public float playerAirAccelerationMult = 1;
@@ -22,14 +23,9 @@ public class HoldableFlower : Holdable
     private float initialAirRotationSpeed;
 
     private float playerGravity;
-    private Rigidbody rb;
-    public void Start()
+    public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
-        rb = GetComponent<Rigidbody>();
-    }
-    public override void HeldBy(Rigidbody holdingBody)
-    {
-        base.HeldBy(holdingBody);
+        base.HeldBy(holdingBody, holdAnchor);
         PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
         playerGravity = playerMovement.gravityAcceleration;
         initialPlayerAirAcceleration = playerMovement.maxAirAcceleration;
@@ -52,7 +48,7 @@ public class HoldableFlower : Holdable
 
     public void FixedUpdate()
     {
-        if (holdingBody != null)
+        if (holdingBody != null && (!onlyGlideWhileButtonPress || Input.GetKey(KeyCode.Space)))
         {
             if (boostDuringJumpUp || holdingBody.linearVelocity.y < 0)
             {

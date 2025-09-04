@@ -1,52 +1,22 @@
 using UnityEngine;
 
-public class VineBurn : MonoBehaviour
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(MeshRenderer))]
+public class VineBurn : Burnable
 {
-
-    private float burnAmount;
-    public float BurnAmount
-    {
-        get { return burnAmount; }
-        private set
-        {
-            burnAmount = value; SetBurnAmount(value);
-        }
-    }
-    [SerializeField]
-    private bool burning = false;
-    public float burnPerSecond = 0.5f;
 
     MeshRenderer meshRenderer;
     Collider vineCollider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         vineCollider = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void SetBurnAmount(float value)
     {
-        if (burning)
-        {
-            BurnAmount += Time.deltaTime * burnPerSecond;
-        }
-    }
-
-    public void StartBurn()
-    {
-        burning = true;
-    }
-    public void ResetBurn()
-    {
-        burning = false;
-        BurnAmount = 0f;
-    }
-
-    private void SetBurnAmount(float value)
-    {
-        meshRenderer.material.SetFloat("_BurnAmount", burnAmount);
-        vineCollider.enabled = burnAmount < 1f;
+        meshRenderer.material.SetFloat("_BurnAmount", value);
+        vineCollider.enabled = value < 1f;
     }
 }

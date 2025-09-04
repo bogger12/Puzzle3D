@@ -5,13 +5,14 @@ public class HoldableBomb : Holdable
 {
     private BombExplode bombExplode;
 
-    public void Start()
+    protected override void Start()
     {
+        base.Start();
         bombExplode = GetComponent<BombExplode>();
     }
-    public override void HeldBy(Rigidbody holdingBody)
+    public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
-        base.HeldBy(holdingBody);
+        base.HeldBy(holdingBody, holdAnchor);
         bombExplode.StartFuse();
     }
 }
