@@ -10,9 +10,11 @@ public class ActivateDoor : Activateable
         animator = GetComponent<Animator>();
     }
 
-    public override void SetActive(bool active)
+    public override bool SetActive(bool active)
     {
+        base.SetActive(active);
         Debug.Log(transform.name + " set to" + active);
         animator.SetBool("open", active);
+        return active;
     }
 }

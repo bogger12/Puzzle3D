@@ -3,7 +3,11 @@ using UnityEngine;
 public abstract class Activateable : MonoBehaviour
 {
 
-    public bool active;
+    public bool active = false;
 
-    public abstract void SetActive(bool active);
+    public virtual bool SetActive(bool active)
+    {
+        this.active = active;
+        return active;
+    }
 }

@@ -5,8 +5,8 @@ public class RemoteActivate : MonoBehaviour
 
     public Activateable activateable;
 
-    public void SetActive(bool active)
+    public bool SetActive(bool active)
     {
-        activateable.SetActive(active);
+        return activateable.SetActive(active);
     }
 }
