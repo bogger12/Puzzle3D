@@ -16774,10 +16774,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 579559512531351347, guid: a67b721ca9b9a0d4caaedf9d384a0b69, type: 3}
-      propertyPath: speechBubblePrefab
-      value: 
-      objectReference: {fileID: 157764318313488325, guid: a2d3edff905f4694da3101920162d685, type: 3}
     - target: {fileID: 1888977195235973856, guid: a67b721ca9b9a0d4caaedf9d384a0b69, type: 3}
       propertyPath: m_Name
       value: NPC

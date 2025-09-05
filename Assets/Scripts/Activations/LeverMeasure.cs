@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(HingeJoint))]
+[RequireComponent(typeof(RemoteActivate))]
 public class LeverMeasure : MonoBehaviour
 {
 
