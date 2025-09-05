@@ -2,17 +2,19 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Burnable
+  - NPC
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessVolume
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Interactable
   - 
   - 
   - 
@@ -41,3 +43,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Top
+    uniqueID: 393072921
+    locked: 0
+  m_RenderingLayers:
+  - Default

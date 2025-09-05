@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Waterfall
+  m_Shader: {fileID: 4800000, guid: 5d605e25eb87f482a8ceaf16c4caa0c3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 08b44fc608989484e8883f410f84bf3a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 5a9ca2cb36a7a420f844abf7d8cf7c1b, type: 3}
+        m_Scale: {x: 2.36, y: 0.3}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BottomMaskLevel: 1
+    - _FlowSpeed: 40
+    - _FoamWidth: 0.15
+    - _SolidFoam: 1
+    - _TopMaskLevel: 0.18
+    - _WiggleIntensity: 0.1
+    - _WiggleLength: 2
+    - _WiggleSpeed: 4
+    m_Colors:
+    - _FoamColor: {r: 0.5235849, g: 1, b: 0.9800454, a: 1}
+    - _MainColor: {r: 0.14929691, g: 0.5096398, b: 0.5754717, a: 1}
+    - _SecondaryColor: {r: 0.25, g: 1, b: 0.9693792, a: 1}
+    - _StepLevels: {r: 1.11, g: 0.39, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
