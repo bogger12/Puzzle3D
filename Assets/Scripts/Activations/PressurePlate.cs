@@ -16,6 +16,7 @@ public class PressurePlate : RemoteActivate
 
     public void OnTriggerEnter(Collider collider)
     {
+        if (collider.isTrigger) return;
         if (!withinTrigger.ContainsKey(collider)) withinTrigger.Add(collider, true);
         if (!active && withinTrigger.Count > 0) active = SetActive(true);
         
@@ -29,6 +30,7 @@ public class PressurePlate : RemoteActivate
 
     public void OnTriggerExit(Collider other)
     {
+        if (other.isTrigger) return;
         if (withinTrigger.ContainsKey(other)) withinTrigger.Remove(other);
         if (active && withinTrigger.Count == 0) active = SetActive(false);
 
