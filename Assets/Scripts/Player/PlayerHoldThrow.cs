@@ -33,9 +33,6 @@ public class PlayerThrow : MonoBehaviour
     // Frame carryover values
     private List<Collider> lastColliders = new List<Collider>();
     private float timeSincePressed;
-    private float heldBodyOriginalMass;
-    private Quaternion heldBodyOriginalRotation;
-    private bool heldBodyOriginalFreezeRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,18 +40,6 @@ public class PlayerThrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInputs = GetComponent<PlayerInputs>();
     }
-
-    // void FixedUpdate()
-    // {
-    //     if (heldBody != null)
-    //     {
-    //         // Vector3 offset = holdAnchor.localPosition;
-    //         // Vector3 targetPos = rb.position + offset;
-    //         Vector3 targetPos = holdAnchor.position;
-    //         heldBody.MovePosition(targetPos);
-    //         heldBody.rotation = rb.rotation * heldBodyOriginalRotation;
-    //     }
-    // }
 
     // Update is called once per frame
     void Update()
@@ -73,18 +58,11 @@ public class PlayerThrow : MonoBehaviour
             if (nearest != null && heldBody == null && nearest.attachedRigidbody != null && !nearest.attachedRigidbody.TryGetComponent<ConfigurableJoint>(out ConfigurableJoint cj))
             {
                 heldBody = nearest.attachedRigidbody;
+                
                 // Make body docile
-                heldBody.position = holdAnchor.position;
-                heldBodyOriginalFreezeRotation = heldBody.freezeRotation;
-                heldBodyOriginalRotation = heldBody.rotation;
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
-                    // Rotation first as gets locked in in heldBy
-                    if (holdable.customHeldRotation) heldBody.rotation = rb.rotation * holdable.heldRotation;
-                    heldBody.transform.rotation = heldBody.rotation;
                     holdable.HeldBy(rb, holdAnchor);
-                    if (holdable.allowRotationCarryOver) heldBody.linearVelocity = Vector3.zero;
-                    heldBody.freezeRotation = holdable.freezeRotationDuringCarry;
                 }
                 SetBodyDocile(heldBody, true);
             }
@@ -98,8 +76,6 @@ public class PlayerThrow : MonoBehaviour
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
                     holdable.OnThrow();
-                    heldBody.freezeRotation = heldBodyOriginalFreezeRotation;
-                    if (!holdable.allowRotationCarryOver) heldBody.rotation = heldBodyOriginalRotation;
                 }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
@@ -179,14 +155,11 @@ public class PlayerThrow : MonoBehaviour
         heldBody.useGravity = !docile;
 
         if (docile) {
-            heldBodyOriginalMass = heldBody.mass;
-            heldBody.mass = 0f; //TODO:
             heldBody.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
             // Debug.Log("Iignoring physics");
         }
         else {
-            heldBody.mass = heldBodyOriginalMass;
             heldBody.interpolation = RigidbodyInterpolation.None;
             StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
         }

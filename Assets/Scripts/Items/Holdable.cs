@@ -15,6 +15,12 @@ public class Holdable : MonoBehaviour
     protected ConfigurableJoint holdJoint = null;
     protected Rigidbody rb;
 
+    // Original Values
+    private float originalMass;
+    private Quaternion originalRotation;
+    private bool originalFreezeRotation;
+
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,6 +32,19 @@ public class Holdable : MonoBehaviour
         this.holdingBody = holdingBody;
 
         rb.position = holdAnchor.position;
+
+        // Store original values
+        originalFreezeRotation = rb.freezeRotation;
+        rb.freezeRotation = freezeRotationDuringCarry;
+
+        originalRotation = rb.rotation;
+        if (customHeldRotation) rb.rotation = holdingBody.rotation * heldRotation;
+        rb.transform.rotation = rb.rotation;
+
+        originalMass = rb.mass;
+        rb.mass = 0f; //TODO: find alternative
+
+
 
         holdJoint = gameObject.AddComponent<ConfigurableJoint>();
 
@@ -49,5 +68,10 @@ public class Holdable : MonoBehaviour
         isHeld = false;
         holdingBody = null;
         Destroy(holdJoint);
+
+        rb.freezeRotation = originalFreezeRotation;
+        if (!allowRotationCarryOver) rb.rotation = originalRotation;
+
+        rb.mass = originalMass;
     }
 }
