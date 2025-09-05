@@ -123,3 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1293291abbb7340b90bd9b8c5bbad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcId: npc1
+  speechBubblePrefab: {fileID: 157764318313488325, guid: a2d3edff905f4694da3101920162d685, type: 3}

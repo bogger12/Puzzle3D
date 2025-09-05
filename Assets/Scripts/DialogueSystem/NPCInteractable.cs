@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class NPCInteractable : MonoBehaviour
 {
-  [SerializeField] private Transform npcTransform;
   [SerializeField] private string npcId = "npc1";
 
   private DialogueData dialogueData;
   private int currentLineIndex = 0;
   private SpeechBubble activeBubble; // track bubble
+
+  public GameObject speechBubblePrefab;
 
   private void Start()
   {
@@ -16,11 +17,6 @@ public class NPCInteractable : MonoBehaviour
 
   public void Interact()
   {
-    if (npcTransform == null)
-    {
-      Debug.LogError("npcTransform is not assigned in the inspector.");
-      return;
-    }
 
     if (dialogueData == null || dialogueData.lines.Length == 0)
     {
@@ -50,8 +46,9 @@ public class NPCInteractable : MonoBehaviour
     // If bubble already exists, just update it
     if (activeBubble == null)
     {
-      activeBubble = SpeechBubble.Create(
-        npcTransform,
+      GameObject bubble = Instantiate(speechBubblePrefab, transform);
+      activeBubble = bubble.GetComponent<SpeechBubble>();
+      activeBubble.Initialise(
         new Vector3(0, 2f),
         iconType,
         line.text,

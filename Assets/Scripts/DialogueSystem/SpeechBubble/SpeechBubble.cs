@@ -9,19 +9,7 @@ using Vector3 = UnityEngine.Vector3;
 public class SpeechBubble : MonoBehaviour
 {
 
-  private Transform playerTransform;
-  public static SpeechBubble Create(Transform parent, Vector3 localPosition, IconType iconType, string text, Transform player = null)
-  {
-    Transform speechBubbleTransform = Instantiate(GameAssets.i.pfSpeechBubble, parent);
-    speechBubbleTransform.localPosition = localPosition;
-
-    SpeechBubble bubble = speechBubbleTransform.GetComponent<SpeechBubble>();
-    bubble.Setup(iconType, text);
-    bubble.playerTransform = player; // 👈 assign player
-
-    return bubble;
-  }
-
+  private Transform lookTransform;
 
   public enum IconType
   {
@@ -42,9 +30,9 @@ public class SpeechBubble : MonoBehaviour
 
   private void Update()
   {
-    if (playerTransform != null)
+    if (lookTransform != null)
     {
-      Vector3 direction = playerTransform.position - transform.position;
+      Vector3 direction = lookTransform.position - transform.position;
       direction.y = 0f; // keep upright
       if (direction.sqrMagnitude > 0.001f)
       {
@@ -65,6 +53,13 @@ public class SpeechBubble : MonoBehaviour
   //   Setup(IconType.Happy, "INITIAL TEXT");
   // }
 
+  public void Initialise(Vector3 localPosition, IconType iconType, string text, Transform lookAt = null)
+  {
+    transform.localPosition = localPosition;
+
+    lookTransform = lookAt; // 👈 assign player
+    Setup(iconType, text);
+  }
   public void Setup(IconType iconType, string text)
   {
     textMeshPro.SetText(text);
