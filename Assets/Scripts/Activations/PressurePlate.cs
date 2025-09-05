@@ -14,7 +14,7 @@ public class PressurePlate : RemoteActivate
     {
         if (!setValue)
         {
-            SetActive(!setValue);
+            SetActive(true);
             active = false;
         }
     }
