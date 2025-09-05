@@ -37,13 +37,13 @@ public class HoldableFlower : Holdable
         playerMovement.airRotationSpeed *= playerAirRotationSpeedMult;
     }
 
-    public override void NotHeld()
+    public override void OnThrow()
     {
         PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
-        base.NotHeld();
+        base.OnThrow();
     }
 
     public void FixedUpdate()
