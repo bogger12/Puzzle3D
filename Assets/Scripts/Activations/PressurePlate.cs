@@ -1,28 +1,44 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(RemoteActivate))]
-public class PressurePlate : MonoBehaviour
+public class PressurePlate : RemoteActivate
 {
-    private RemoteActivate remoteActivate;
     public bool setOnActivate = true;
+
+    private bool active = false;
+
+    Dictionary<Collider, bool> withinTrigger = new Dictionary<Collider, bool>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        remoteActivate = GetComponent<RemoteActivate>();
     }
 
     public void OnTriggerEnter(Collider collider)
     {
-        remoteActivate.SetActive(setOnActivate);
-    }
-    public void OnTriggerStay(Collider collider)
-    {
-        if (remoteActivate.activateable.active != setOnActivate) remoteActivate.SetActive(setOnActivate);
+        if (collider.isTrigger) return;
+        if (!withinTrigger.ContainsKey(collider)) withinTrigger.Add(collider, true);
+        if (!active && withinTrigger.Count > 0) active = SetActive(true);
+        
+        // string items = "";
+        // foreach (var item in withinTrigger)
+        // {
+        //     items += item.Key.name;
+        // }
+        // Debug.Log("enter: " + items);
     }
 
     public void OnTriggerExit(Collider other)
     {
-        remoteActivate.SetActive(setOnActivate);
+        if (other.isTrigger) return;
+        if (withinTrigger.ContainsKey(other)) withinTrigger.Remove(other);
+        if (active && withinTrigger.Count == 0) active = SetActive(false);
+
+        // string items = "";
+        // foreach (var item in withinTrigger)
+        // {
+        //     items += item.Key.name;
+        // }
+        // Debug.Log("exit: " + items);
     }
 }

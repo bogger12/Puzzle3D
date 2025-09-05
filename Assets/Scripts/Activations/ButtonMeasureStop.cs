@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ButtonMeasureStop : MonoBehaviour
+public class ButtonMeasureStop : RemoteActivate
 {
 
     public Transform frame;
@@ -9,7 +9,6 @@ public class ButtonMeasureStop : MonoBehaviour
     public float pressedThreshold = 0.1f;
     private Vector3 initialRelativePos;
     private Rigidbody rb;
-    private RemoteActivate remoteActivate;
 
     private bool lastPressed = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +16,6 @@ public class ButtonMeasureStop : MonoBehaviour
     {
         initialRelativePos = transform.position - frame.position;
         rb = GetComponent<Rigidbody>();
-        remoteActivate = GetComponent<RemoteActivate>();
         Debug.Log(initialRelativePos);
     }
 
@@ -35,7 +33,7 @@ public class ButtonMeasureStop : MonoBehaviour
         // Activate something based on button press (and show debug visual)
         bool currentPressed = Mathf.Abs(yDistance) > pressedThreshold;
         VisualVarDisplay.SetDebugBool("button", currentPressed);
-        if (lastPressed != currentPressed) remoteActivate.SetActive(currentPressed);
+        if (lastPressed != currentPressed) SetActive(currentPressed);
         lastPressed = currentPressed;
         
     }
