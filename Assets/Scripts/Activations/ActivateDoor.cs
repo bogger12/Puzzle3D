@@ -5,7 +5,7 @@ public class ActivateDoor : Activateable
 {
     private Animator animator;
 
-    void Start()
+    public void Start()
     {
         animator = GetComponent<Animator>();
     }
@@ -14,6 +14,7 @@ public class ActivateDoor : Activateable
     {
         base.SetActive(active);
         Debug.Log(transform.name + " set to" + active);
+        Debug.Log(animator.name);
         animator.SetBool("open", active);
         return active;
     }
