@@ -1,0 +1,8 @@
+{
+  "npcId": "npc1",
+  "lines": [
+    { "icon": "Neutral", "text": "Hello there!" },
+    { "icon": "Happy", "text": "It’s a great day, isn’t it?" },
+    { "icon": "Sad", "text": "I miss the old times..." }
+  ]
+}

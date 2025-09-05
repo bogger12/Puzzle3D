@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 9085308426116145792}
   - component: {fileID: 403123220054115791}
   - component: {fileID: 1852679090459551813}
-  - component: {fileID: 6452847656865292226}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -176,22 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb62719eb824a469684bef6aa89f86b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateable: {fileID: 0}
   frame: {fileID: 5745539427848112435}
   maxPenetration: 0.3
   pressedThreshold: 0.1
---- !u!114 &6452847656865292226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912909857889267168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7fa0740ba7a4cc5a585f78a2287ab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateable: {fileID: 0}
 --- !u!1 &3928965762882170574
 GameObject:
   m_ObjectHideFlags: 0

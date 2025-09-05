@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fresnel: 2.71
+    - _Fresnel: 2.5
     - _TexVisibility: 0
     - _Transparency: 0
     m_Colors: []

@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3115242265980520485}
   - component: {fileID: 8156359393484254}
   - component: {fileID: 2270255917776420367}
-  - component: {fileID: 9214587518489565513}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -188,18 +187,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 721bda7b68e1841078a706c504df6da3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9214587518489565513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4060776852320124938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7fa0740ba7a4cc5a585f78a2287ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activateable: {fileID: 0}

@@ -10,7 +10,7 @@ public class PlayerThrow : MonoBehaviour
     public Rigidbody heldBody = null;
     public Transform holdAnchor;
     public Vector3 throwDirectionForward = new Vector3(0, 0.5f, 0.5f);
-    public float throwForceMult = 1;
+    public Vector2 throwForceRange = new Vector2(0, 5);
     public float minThrowSeconds = 0.1f;
     public float maxThrowSeconds = 2;
     public float waitBeforeReenablePhysicsSeconds = 0.2f;
@@ -30,6 +30,8 @@ public class PlayerThrow : MonoBehaviour
     private List<Collider> lastColliders = new List<Collider>();
     private float timeSincePressed;
     private float heldBodyOriginalMass;
+    private Quaternion heldBodyOriginalRotation;
+    private bool heldBodyOriginalFreezeRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,14 +39,17 @@ public class PlayerThrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void LateUpdate()
-    {
-        if (heldBody != null)
-        {
-            Vector3 targetPos = holdAnchor.position;
-            heldBody.MovePosition(targetPos);
-        }
-    }
+    // void FixedUpdate()
+    // {
+    //     if (heldBody != null)
+    //     {
+    //         // Vector3 offset = holdAnchor.localPosition;
+    //         // Vector3 targetPos = rb.position + offset;
+    //         Vector3 targetPos = holdAnchor.position;
+    //         heldBody.MovePosition(targetPos);
+    //         heldBody.rotation = rb.rotation * heldBodyOriginalRotation;
+    //     }
+    // }
 
     // Update is called once per frame
     void Update()
@@ -55,6 +60,8 @@ public class PlayerThrow : MonoBehaviour
         Collider nearest = collidersList.Count > 0 ? GetNearestCollider(collidersList) : null;
 
 
+        float throwProgress = Mathf.Clamp01(timeSincePressed / maxThrowSeconds);
+
         // Checking key up first so timeSincePressed = 0 not done before keydown
         if (Input.GetKeyUp(KeyCode.E))
         {
@@ -63,15 +70,32 @@ public class PlayerThrow : MonoBehaviour
                 heldBody = nearest.attachedRigidbody;
                 // Make body docile
                 heldBody.position = holdAnchor.position;
-                heldBody.rotation = Quaternion.Euler(40f, 0f, 0);
+                heldBodyOriginalFreezeRotation = heldBody.freezeRotation;
+                heldBodyOriginalRotation = heldBody.rotation;
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                {
+                    // Rotation first as gets locked in in heldBy
+                    if (holdable.customHeldRotation) heldBody.rotation = rb.rotation * holdable.heldRotation;
+                    heldBody.transform.rotation = heldBody.rotation;
+                    holdable.HeldBy(rb, holdAnchor);
+                    if (holdable.allowRotationCarryOver) heldBody.linearVelocity = Vector3.zero;
+                    heldBody.freezeRotation = holdable.freezeRotationDuringCarry;
+                }
                 SetBodyDocile(heldBody, true);
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
                 Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
-                float throwForce = throwForceMult * timeSincePressed;
+                float throwForce = Mathf.Lerp(throwForceRange.x, throwForceRange.y, throwProgress);
+                Debug.Log("Throwing Item with force:" + throwForce);
                 // Reset body vars before throw
                 SetBodyDocile(heldBody, false);
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                {
+                    holdable.OnThrow();
+                    heldBody.freezeRotation = heldBodyOriginalFreezeRotation;
+                    if (!holdable.allowRotationCarryOver) heldBody.rotation = heldBodyOriginalRotation;
+                }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                 heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
 
@@ -119,7 +143,7 @@ public class PlayerThrow : MonoBehaviour
         lastColliders = collidersList;
         foreach (Collider c in collidersExitedRange)
         {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            if (c!=null && c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
             {
                 outlineScript.Enabled = false;
             }
@@ -151,6 +175,7 @@ public class PlayerThrow : MonoBehaviour
 
         if (docile) {
             heldBodyOriginalMass = heldBody.mass;
+            heldBody.mass = 0f; //TODO:
             heldBody.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
             // Debug.Log("Iignoring physics");
@@ -167,6 +192,7 @@ public class PlayerThrow : MonoBehaviour
         // Eventual code to execute right as the function is called
         yield return new WaitForSeconds(duration);
         // The code from here will be executed after **duration** seconds
+        if (transform == null) yield break;
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
         // Debug.Log("Unignoring physics");
     }
