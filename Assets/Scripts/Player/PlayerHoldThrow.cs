@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerInputs))]
 public class PlayerThrow : MonoBehaviour
 {
+
+    // Input Component
+    private PlayerInputs playerInputs;
 
     public Rigidbody heldBody = null;
     public Transform holdAnchor;
@@ -37,6 +41,7 @@ public class PlayerThrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerInputs = GetComponent<PlayerInputs>();
     }
 
     // void FixedUpdate()
@@ -63,9 +68,9 @@ public class PlayerThrow : MonoBehaviour
         float throwProgress = Mathf.Clamp01(timeSincePressed / maxThrowSeconds);
 
         // Checking key up first so timeSincePressed = 0 not done before keydown
-        if (Input.GetKeyUp(KeyCode.E))
+        if (playerInputs.holdThrow.WasReleasedThisFrame())
         {
-            if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
+            if (nearest != null && heldBody == null && nearest.attachedRigidbody != null && !nearest.attachedRigidbody.TryGetComponent<ConfigurableJoint>(out ConfigurableJoint cj))
             {
                 heldBody = nearest.attachedRigidbody;
                 // Make body docile
@@ -104,7 +109,7 @@ public class PlayerThrow : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (playerInputs.holdThrow.IsPressed())
         {
             // Setting the throw strength
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
