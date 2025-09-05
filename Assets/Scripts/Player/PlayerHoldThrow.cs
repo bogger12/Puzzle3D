@@ -92,7 +92,7 @@ public class PlayerThrow : MonoBehaviour
                 SetBodyDocile(heldBody, false);
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
-                    holdable.NotHeld();
+                    holdable.OnThrow();
                     heldBody.freezeRotation = heldBodyOriginalFreezeRotation;
                     if (!holdable.allowRotationCarryOver) heldBody.rotation = heldBodyOriginalRotation;
                 }

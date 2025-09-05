@@ -44,7 +44,7 @@ public class Holdable : MonoBehaviour
         }
     }
 
-    public virtual void NotHeld()
+    public virtual void OnThrow()
     {
         isHeld = false;
         holdingBody = null;
