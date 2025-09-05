@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Outline))]
@@ -45,7 +46,7 @@ public class Holdable : MonoBehaviour
         rb.mass = 0f; //TODO: find alternative
 
 
-
+        // Add joint to object
         holdJoint = gameObject.AddComponent<ConfigurableJoint>();
 
         holdJoint.connectedBody = holdingBody; // player rigidbody
@@ -73,5 +74,30 @@ public class Holdable : MonoBehaviour
         if (!allowRotationCarryOver) rb.rotation = originalRotation;
 
         rb.mass = originalMass;
+    }
+
+
+    public void SetBodyDocile(Rigidbody holdingBody, bool docile, float waitBeforeReenablePhysicsSeconds=0)
+    {
+        Collider c = holdingBody.GetComponent<Collider>();
+        rb.useGravity = !docile;
+
+        if (docile) {
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
+        }
+        else {
+            rb.interpolation = RigidbodyInterpolation.None;
+            StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
+        }
+    }
+
+    private IEnumerator<WaitForSeconds> SetIgnoreCollisionAfter(float duration, Collider c)
+    {
+        // Eventual code to execute right as the function is called
+        yield return new WaitForSeconds(duration);
+        // The code from here will be executed after **duration** seconds
+        if (transform == null) yield break;
+        Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
     }
 }

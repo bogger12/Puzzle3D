@@ -58,13 +58,13 @@ public class PlayerThrow : MonoBehaviour
             if (nearest != null && heldBody == null && nearest.attachedRigidbody != null && !nearest.attachedRigidbody.TryGetComponent<ConfigurableJoint>(out ConfigurableJoint cj))
             {
                 heldBody = nearest.attachedRigidbody;
-                
+
                 // Make body docile
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
                     holdable.HeldBy(rb, holdAnchor);
+                    holdable.SetBodyDocile(rb, true);
                 }
-                SetBodyDocile(heldBody, true);
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
             {
@@ -72,9 +72,9 @@ public class PlayerThrow : MonoBehaviour
                 float throwForce = Mathf.Lerp(throwForceRange.x, throwForceRange.y, throwProgress);
                 Debug.Log("Throwing Item with force:" + throwForce);
                 // Reset body vars before throw
-                SetBodyDocile(heldBody, false);
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
+                    holdable.SetBodyDocile(rb, false, waitBeforeReenablePhysicsSeconds);
                     holdable.OnThrow();
                 }
                 heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
@@ -146,32 +146,5 @@ public class PlayerThrow : MonoBehaviour
             }
         }
         return closest;
-    }
-
-    void SetBodyDocile(Rigidbody heldBody, bool docile)
-    {
-        Collider c = heldBody.GetComponent<Collider>();
-        
-        heldBody.useGravity = !docile;
-
-        if (docile) {
-            heldBody.interpolation = RigidbodyInterpolation.Interpolate;
-            Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
-            // Debug.Log("Iignoring physics");
-        }
-        else {
-            heldBody.interpolation = RigidbodyInterpolation.None;
-            StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
-        }
-    }
-
-    private IEnumerator<WaitForSeconds> SetIgnoreCollisionAfter(float duration, Collider c)
-    {
-        // Eventual code to execute right as the function is called
-        yield return new WaitForSeconds(duration);
-        // The code from here will be executed after **duration** seconds
-        if (transform == null) yield break;
-        Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
-        // Debug.Log("Unignoring physics");
     }
 }
