@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PressurePlate : RemoteActivate
 {
-    public bool setOnActivate = true;
+    public bool setValue = true;
 
     private bool active = false;
 
@@ -12,33 +12,46 @@ public class PressurePlate : RemoteActivate
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (!setValue)
+        {
+            SetActive(!setValue);
+            active = false;
+        }
     }
 
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.isTrigger) return;
         if (!withinTrigger.ContainsKey(collider)) withinTrigger.Add(collider, true);
-        if (!active && withinTrigger.Count > 0) active = SetActive(true);
+        if (!active && withinTrigger.Count > 0)
+        {
+            SetActive(setValue);
+            active = true;
+        }
         
         // string items = "";
-        // foreach (var item in withinTrigger)
-        // {
-        //     items += item.Key.name;
-        // }
-        // Debug.Log("enter: " + items);
-    }
+            // foreach (var item in withinTrigger)
+            // {
+            //     items += item.Key.name;
+            // }
+            // Debug.Log("enter: " + items);
+        }
 
     public void OnTriggerExit(Collider other)
     {
         if (other.isTrigger) return;
         if (withinTrigger.ContainsKey(other)) withinTrigger.Remove(other);
-        if (active && withinTrigger.Count == 0) active = SetActive(false);
+        if (active && withinTrigger.Count == 0)
+        {
+            SetActive(!setValue);
+            active = false;
+        }
 
         // string items = "";
-        // foreach (var item in withinTrigger)
-        // {
-        //     items += item.Key.name;
-        // }
-        // Debug.Log("exit: " + items);
-    }
+            // foreach (var item in withinTrigger)
+            // {
+            //     items += item.Key.name;
+            // }
+            // Debug.Log("exit: " + items);
+        }
 }
