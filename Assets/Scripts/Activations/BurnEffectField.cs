@@ -18,13 +18,13 @@ public class BurnEffectField : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Burnable"))
-        {
-            if (other.TryGetComponent<VineBurn>(out VineBurn v))
+        // if (other.gameObject.CompareTag("Burnable"))
+        // {
+            if (other.TryGetComponent<Burnable>(out Burnable b))
             {
-                Debug.Log("Found vine and trying to burn " + v.gameObject.name);
-                v.StartBurn();
+                Debug.Log("Found and trying to burn " + b.gameObject.name);
+                b.StartBurn();
             }
-        }
+        // }
     }
 }

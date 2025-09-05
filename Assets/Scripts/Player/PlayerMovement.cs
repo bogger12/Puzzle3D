@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public Transform playerInputSpace = default;
     public float movementSpeed = 5f;
-    public float rotationSpeed = 10f;
+    public float groundedRotationSpeed = 10f;
+    public float airRotationSpeed = 10f;
 
     public float gravityAcceleration = 9.81f;
 
@@ -18,10 +19,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundDetectionLayer;
     public float groundDetectionDistance = 1;
 
-    [SerializeField, Range(0f, 500f)]
-    float maxAcceleration = 10f, maxAirAcceleration = 1f;
-    [SerializeField, Range(0f, 500f)]
-    float maxDeceleration = 10f, maxAirDeceleration = 1f;
+    [SerializeField, Range(0f, 50)]
+    public float maxAcceleration = 10f, maxAirAcceleration = 1f;
+    [SerializeField, Range(0f, 50)]
+    public float maxDeceleration = 10f, maxAirDeceleration = 1f;
 
     // [Header("Debug References")]
     // public Image groundedIndicator;
@@ -35,30 +36,19 @@ public class PlayerMovement : MonoBehaviour
     Vector3 desiredVelocity;
     bool desiredJump;
 
-    [System.Serializable]
-    public class PlayerValues
-    {
-        public float numJumps = 1;
-    }
-    public PlayerValues playerValues = new PlayerValues();
+    [Header("Player Values")]
+    public float numJumps = 1;
 
-    private class TrackingValues
-    {
-        public float timeSinceJump = 0f;
-        public float numJumps = 1;
-        public TrackingValues(PlayerValues playerValues)
-        {
-            this.numJumps = playerValues.numJumps;
-        }
-    }
-    private TrackingValues p;
+    private float timeSinceJump = 0f;
+    private float currentJumps;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        p = new TrackingValues(playerValues);
+
+        currentJumps = numJumps;
         upAxis = Vector3.up;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -148,12 +138,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
 
-            if (p.numJumps > 0 && desiredJump)
+            if (currentJumps > 0 && desiredJump)
             { // Jumping from ground
                 rb.linearVelocity -= verticalSpeed * upAxis; // Reset vertical velocity of player
                 rb.AddForce(upAxis * jumpForce, ForceMode.VelocityChange);
-                p.numJumps--;
-                p.timeSinceJump = 0;
+                currentJumps--;
+                timeSinceJump = 0;
                 desiredJump = false;
             }
         }
@@ -161,8 +151,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (IsGrounded)
             {
-                p.numJumps = playerValues.numJumps;
-                p.timeSinceJump = 0;
+                currentJumps = numJumps;
+                timeSinceJump = 0;
             }
             if (!IsGrounded && verticalSpeed > 0)
             {
@@ -170,13 +160,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(-upAxis * jumpExtraAcceleration, ForceMode.Acceleration);
             }
         }
-        if (!IsGrounded) p.timeSinceJump += Time.fixedDeltaTime;
+        if (!IsGrounded) timeSinceJump += Time.fixedDeltaTime;
     }
 
     void RotateCharacter()
     {
         if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
         {
+            float rotationSpeed = IsGrounded ? groundedRotationSpeed : airRotationSpeed;
             Quaternion targetRotationMove = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(desiredVelocity, Vector3.up);
             Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
 

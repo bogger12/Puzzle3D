@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8209975497889984803}
   - component: {fileID: 1960928540956872922}
   - component: {fileID: 6179700452717034211}
+  - component: {fileID: 3591108979308944723}
   m_Layer: 7
   m_Name: Torch
   m_TagString: Untagged
@@ -53,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMaterial: {fileID: 2100000, guid: 46d6684742c6f3649af59c8cfdc31234, type: 2}
   enabled: 0
-  meshRenderers: []
+  applyToChildren: 1
 --- !u!54 &1960928540956872922
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -103,6 +104,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: e0e1714b90c28bf4b8f9b6e56edc0f0c, type: 3}
+--- !u!114 &3591108979308944723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082057357980262995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2904d82bbc503456fbf180b3e6181cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowRotationCarryOver: 1
+  freezeRotationDuringCarry: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &5074925183701614112
 GameObject:
   m_ObjectHideFlags: 0
