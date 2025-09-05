@@ -20,12 +20,12 @@ public class PressurePlate : RemoteActivate
         if (!withinTrigger.ContainsKey(collider)) withinTrigger.Add(collider, true);
         if (!active && withinTrigger.Count > 0) active = SetActive(true);
         
-        string items = "";
-        foreach (var item in withinTrigger)
-        {
-            items += item.Key.name;
-        }
-        Debug.Log("enter: " + items);
+        // string items = "";
+        // foreach (var item in withinTrigger)
+        // {
+        //     items += item.Key.name;
+        // }
+        // Debug.Log("enter: " + items);
     }
 
     public void OnTriggerExit(Collider other)
@@ -34,11 +34,11 @@ public class PressurePlate : RemoteActivate
         if (withinTrigger.ContainsKey(other)) withinTrigger.Remove(other);
         if (active && withinTrigger.Count == 0) active = SetActive(false);
 
-        string items = "";
-        foreach (var item in withinTrigger)
-        {
-            items += item.Key.name;
-        }
-        Debug.Log("exit: " + items);
+        // string items = "";
+        // foreach (var item in withinTrigger)
+        // {
+        //     items += item.Key.name;
+        // }
+        // Debug.Log("exit: " + items);
     }
 }
