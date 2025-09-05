@@ -55,13 +55,19 @@ public class PlayerThrow : MonoBehaviour
         // Checking key up first so timeSincePressed = 0 not done before keydown
         if (playerInputs.holdThrow.WasReleasedThisFrame())
         {
-            if (nearest != null && heldBody == null && nearest.attachedRigidbody != null && !nearest.attachedRigidbody.TryGetComponent<ConfigurableJoint>(out ConfigurableJoint cj))
+            if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
             {
                 heldBody = nearest.attachedRigidbody;
 
                 // Make body docile
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
+                    if (holdable.isHeld)
+                    {
+                        holdable.SetBodyDocile(rb, false, 0f);
+                        holdable.RemoveFromHoldingBody();
+                        holdable.OnThrow();
+                    }
                     holdable.HeldBy(rb, holdAnchor);
                     holdable.SetBodyDocile(rb, true);
                 }

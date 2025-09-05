@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Holdable : MonoBehaviour
 {
-    protected bool isHeld;
+    public bool isHeld;
     protected Rigidbody holdingBody;
 
     public bool allowRotationCarryOver = true;
@@ -77,18 +77,20 @@ public class Holdable : MonoBehaviour
     }
 
 
-    public void SetBodyDocile(Rigidbody holdingBody, bool docile, float waitBeforeReenablePhysicsSeconds=0)
+    public void SetBodyDocile(Rigidbody holdingBody, bool docile, float waitBeforeReenablePhysicsSeconds = 0)
     {
         Collider c = holdingBody.GetComponent<Collider>();
         rb.useGravity = !docile;
 
-        if (docile) {
+        if (docile)
+        {
             rb.interpolation = RigidbodyInterpolation.Interpolate;
             Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, true);
         }
-        else {
+        else
+        {
             rb.interpolation = RigidbodyInterpolation.None;
-            StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c)); 
+            StartCoroutine(SetIgnoreCollisionAfter(waitBeforeReenablePhysicsSeconds, c));
         }
     }
 
@@ -99,5 +101,11 @@ public class Holdable : MonoBehaviour
         // The code from here will be executed after **duration** seconds
         if (transform == null) yield break;
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
+    }
+
+    public void RemoveFromHoldingBody()
+    {
+        PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
+        playerThrow.heldBody = null;
     }
 }
