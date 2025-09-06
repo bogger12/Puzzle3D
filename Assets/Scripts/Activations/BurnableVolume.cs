@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class BurnableBox : BurnableBurnsAdjacent
+public class BurnableVolume : BurnableBurnsAdjacent
 {
 
     public ParticleSystem burnParticles;
@@ -62,7 +62,8 @@ public class BurnableBox : BurnableBurnsAdjacent
     {
         base.FinishBurn();
         burnParticles.Stop();
-        Instantiate(breakParticles, transform.position, Quaternion.identity);
+        GameObject breakParticlesInstance = Instantiate(breakParticles, transform.position, Quaternion.identity);
+        breakParticlesInstance.transform.localScale = burnParticles.transform.localScale;
         Destroy(transform.parent.gameObject);
     }
 

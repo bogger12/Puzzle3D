@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1252485500774570767}
   - component: {fileID: 8305709108347758439}
   - component: {fileID: 3346463707980797793}
+  - component: {fileID: 1710245804634499504}
   - component: {fileID: 8805385368958055209}
   - component: {fileID: 3838728589637004038}
   m_Layer: 7
@@ -174,6 +175,19 @@ MonoBehaviour:
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &1710245804634499504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953930257116042867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa3b80bb060e45cfb7282d281642442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
 --- !u!198 &8805385368958055209
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5069,6 +5083,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  emissionMultiplier: 100
   speedOverTime:
     serializedVersion: 2
     m_Curve:
@@ -5093,4 +5108,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  emissionMultiplier: 100
