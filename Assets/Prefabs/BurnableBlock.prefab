@@ -309,9 +309,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 5
-      minScalar: 5
+      minMaxState: 3
+      scalar: 6
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5041,7 +5041,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   burning: 0
-  burnPerSecond: 0.5
+  burnTime: 5
   delayBetweenNearbyBurns: 1
   burnParticles: {fileID: 8805385368958055209}
   breakParticles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
+  emissionRateOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.008757914
+      outSlope: 0.00008109798
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.3123446
+    - serializedVersion: 3
+      time: 1
+      value: 1.0023575
+      inSlope: 0.16888551
+      outSlope: 0.16888551
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.084210694
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.31839624
+      inSlope: 1.9274073
+      outSlope: 1.9274073
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.050877184
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  emissionMultiplier: 100

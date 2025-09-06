@@ -14,7 +14,7 @@ public abstract class Burnable : MonoBehaviour
     }
     [HideInInspector]
     public bool burning = false;
-    public float burnPerSecond = 0.5f;
+    public float burnTime = 1f;
 
     // // Start is called once before the first execution of Update after the MonoBehaviour is created
     // protected void Start()
@@ -22,11 +22,11 @@ public abstract class Burnable : MonoBehaviour
     // }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         if (burning)
         {
-            BurnAmount = Mathf.Clamp01(BurnAmount + Time.deltaTime * burnPerSecond);
+            BurnAmount = Mathf.Clamp01(BurnAmount + Time.deltaTime / burnTime);
             if (burnAmount >= 1) FinishBurn();
         }
     }
