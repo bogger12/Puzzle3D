@@ -43,7 +43,7 @@ public class AnchorOn3DPoint : MonoBehaviour
         rt.anchoredPosition = uiPoint + offset2D * canvas.scaleFactor;
 
         rt.sizeDelta = defaultSize * sizeMultiplier;
-        Debug.Log("Viewport Point " + screenPoint);
+        // Debug.Log("Viewport Point " + screenPoint);
     }
 
     public void SetAnchorPos(Vector3 pos)

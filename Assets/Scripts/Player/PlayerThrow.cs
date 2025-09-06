@@ -57,11 +57,10 @@ public class PlayerThrow : MonoBehaviour
         {
             if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
             {
-                heldBody = nearest.attachedRigidbody;
-
                 // Make body docile
-                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                if (nearest.attachedRigidbody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
+                    heldBody = nearest.attachedRigidbody;
                     if (holdable.isHeld)
                     {
                         holdable.SetBodyDocile(rb, false, 0f);

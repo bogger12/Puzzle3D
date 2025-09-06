@@ -49,7 +49,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -210,6 +210,72 @@
                 },
                 {
                     "name": "",
+                    "id": "68c311a5-7447-4b2d-938b-e535462dfdb1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "2955eaca-0ff4-449f-98fc-bcdcf6b36bba",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "778ccf3f-72c4-44ca-9bb4-fb35f1bed7c3",
+                    "path": "<HID::Google LLC Stadia Controller rev. A>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "e21080e6-7162-40a4-a29e-a40d1de28527",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "0bc8260d-dae5-4d0d-a302-7d4001fcf0a4",
+                    "path": "<HID::Google LLC Stadia Controller rev. A>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "79a89331-2910-4d0f-b3d7-936db6da1639",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
                     "id": "92a25999-95d6-4be2-bb5c-bb5693d51aed",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -243,6 +309,17 @@
                 },
                 {
                     "name": "",
+                    "id": "eb7d926d-38c0-49d2-993d-4468467980ae",
+                    "path": "<HID::Google LLC Stadia Controller rev. A>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f36ee4c4-f863-4327-8326-75572c6032ad",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -259,6 +336,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Pickup_Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88265379-b01f-4459-8ddd-63a8a6fc4127",
+                    "path": "<HID::Google LLC Stadia Controller rev. A>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Pickup_Throw",
                     "isComposite": false,
                     "isPartOfComposite": false

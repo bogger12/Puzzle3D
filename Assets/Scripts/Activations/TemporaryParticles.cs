@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class DestructibleBlockParticles : MonoBehaviour
+public class TemporaryParticles : MonoBehaviour
 {
 
     public float destroyAfterSeconds = 1;

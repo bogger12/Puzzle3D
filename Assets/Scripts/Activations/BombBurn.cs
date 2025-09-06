@@ -18,4 +18,6 @@ public class BombBurn : Burnable
         // Vector2 fuseTimeRange = bombExplode.fuseTimeRangeOfAffectedBomb;
         bombExplode.StartFuse();
     }
+
+    protected override void SetBurnAmount(float amount) { }
 }

@@ -12,8 +12,8 @@ public abstract class Burnable : MonoBehaviour
             burnAmount = value; SetBurnAmount(value);
         }
     }
-    [SerializeField]
-    protected bool burning = false;
+    [HideInInspector]
+    public bool burning = false;
     public float burnPerSecond = 0.5f;
 
     // // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,7 +26,8 @@ public abstract class Burnable : MonoBehaviour
     {
         if (burning)
         {
-            BurnAmount += Time.deltaTime * burnPerSecond;
+            BurnAmount = Mathf.Clamp01(BurnAmount + Time.deltaTime * burnPerSecond);
+            if (burnAmount >= 1) FinishBurn();
         }
     }
 
@@ -34,11 +35,16 @@ public abstract class Burnable : MonoBehaviour
     {
         burning = true;
     }
-    public void ResetBurn()
+
+    public virtual void FinishBurn()
+    {
+        burning = false;
+    }
+    public virtual void ResetBurn()
     {
         burning = false;
         BurnAmount = 0f;
     }
 
-    protected virtual void SetBurnAmount(float value) { }
+    protected abstract void SetBurnAmount(float value);
 }
