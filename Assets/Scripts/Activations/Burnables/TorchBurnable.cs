@@ -13,7 +13,11 @@ public class TorchBurnable : BurnableVolume
         base.Start();
         torchLight = transform.parent.GetComponentInChildren<Light>();
 
-        if (burnOnStart) StartBurn();
+        if (burnOnStart)
+        {
+            StartBurn();
+            BurnAmount = 1;
+        }
         else ResetBurn();
     }
 

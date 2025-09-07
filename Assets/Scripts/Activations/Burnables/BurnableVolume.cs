@@ -11,7 +11,6 @@ public class BurnableVolume : BurnableBurnsAdjacent
     public float emissionMultiplier = 10;
     public AnimationCurve speedOverTime;
 
-    private float timer = 0;
     public ParticleSystem.EmissionModule burnEmission;
     public ParticleSystem.MainModule burnMainModule;
     private ParticleSystem.MinMaxCurve initialSpeedRange;
@@ -32,10 +31,9 @@ public class BurnableVolume : BurnableBurnsAdjacent
         base.Update();
         if (burning)
         {
-            timer += Time.deltaTime;
 
-            float emission_t = emissionRateOverTime.Evaluate(timer / burnTime);
-            float speed_t = speedOverTime.Evaluate(timer / burnTime);
+            float emission_t = emissionRateOverTime.Evaluate(BurnAmount);
+            float speed_t = speedOverTime.Evaluate(BurnAmount);
 
             burnEmission.rateOverTime = emission_t * emissionMultiplier;
 
@@ -63,7 +61,6 @@ public class BurnableVolume : BurnableBurnsAdjacent
     {
         base.ResetBurn();
         burnParticles.Stop();
-        timer = 0;
     }
 
 

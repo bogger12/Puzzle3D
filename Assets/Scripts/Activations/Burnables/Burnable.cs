@@ -3,11 +3,11 @@ using UnityEngine;
 public abstract class Burnable : MonoBehaviour
 {
 
-    protected float burnAmount;
+    private float burnAmount;
     public float BurnAmount
     {
         get { return burnAmount; }
-        private set
+        protected set
         {
             burnAmount = value; SetBurnAmount(value);
         }
