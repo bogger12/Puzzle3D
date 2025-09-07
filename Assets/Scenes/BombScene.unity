@@ -26934,7 +26934,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6366462767207484402, guid: a3874f598ba0c49a585f625c614ceead, type: 3}
-      propertyPath: playOnAwake
+      propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6366462767207484402, guid: a3874f598ba0c49a585f625c614ceead, type: 3}
