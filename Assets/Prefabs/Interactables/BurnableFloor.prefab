@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4295713281178437909}
   - component: {fileID: 3525535624404267859}
-  - component: {fileID: 8599422727972437942}
+  - component: {fileID: 2493409086867107373}
   m_Layer: 7
   m_Name: Burnable
   m_TagString: Untagged
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8599422727972437942
+--- !u!114 &2493409086867107373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,14 +63,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 608462168340007175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c370be33dc9144a7a160f8b60c23374, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cd54fc6c7b54472f973e97fa4efbd3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   burning: 0
   burnTime: 5
-  delayBetweenNearbyBurns: 1
+  delayBetweenNearbyBurns: 0.5
+  useDelayWhenAlreadyBurning: 0
   burnParticles: {fileID: 8005364617303332919}
-  breakParticles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
   emissionRateOverTime:
     serializedVersion: 2
     m_Curve:
@@ -120,6 +120,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  breakParticles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
 --- !u!1 &3805435448378260814
 GameObject:
   m_ObjectHideFlags: 0

@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
+  speedToSet: 10
 --- !u!198 &8805385368958055209
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4998,7 +4999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7541536097215239703}
   - component: {fileID: 6205098584193870222}
-  - component: {fileID: 7275639855919783168}
+  - component: {fileID: 1945802981103585896}
   m_Layer: 7
   m_Name: Burnable
   m_TagString: Untagged
@@ -5042,7 +5043,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8, y: 1.8, z: 1.8}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7275639855919783168
+--- !u!114 &1945802981103585896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5051,14 +5052,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3762954457794346353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c370be33dc9144a7a160f8b60c23374, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cd54fc6c7b54472f973e97fa4efbd3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   burning: 0
   burnTime: 5
-  delayBetweenNearbyBurns: 1
+  delayBetweenNearbyBurns: 0.5
+  useDelayWhenAlreadyBurning: 0
   burnParticles: {fileID: 8805385368958055209}
-  breakParticles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}
   emissionRateOverTime:
     serializedVersion: 2
     m_Curve:
@@ -5108,3 +5109,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  breakParticles: {fileID: 4951363953718472451, guid: 6796c4e4139cc4030b2cfda1b154e52d, type: 3}

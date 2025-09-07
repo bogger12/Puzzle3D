@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class BurnableVolume : BurnableBurnsAdjacent
 {
 
     public ParticleSystem burnParticles;
-    public GameObject breakParticles;
 
     [Header("Particles")]
     public AnimationCurve emissionRateOverTime;
@@ -22,7 +20,7 @@ public class BurnableVolume : BurnableBurnsAdjacent
     public override void Start()
     {
         base.Start();
-        burnParticles.Stop();
+        // burnParticles.Stop();
         burnEmission = burnParticles.emission;
         burnMainModule = burnParticles.main;
         initialSpeedRange = burnMainModule.startSpeed;
@@ -45,9 +43,6 @@ public class BurnableVolume : BurnableBurnsAdjacent
             currentSpeedRange.constantMin = initialSpeedRange.constantMin * speed_t;
             currentSpeedRange.constantMax = initialSpeedRange.constantMax * speed_t;
             burnMainModule.startSpeed = currentSpeedRange;
-
-            // Debug.Log("emission: " + emission_t * emissionMultiplier);
-            Debug.Log("speed: " + speed_t * new Vector2(initialSpeedRange.constantMin, initialSpeedRange.constantMax));
         }
     }
 
@@ -62,9 +57,13 @@ public class BurnableVolume : BurnableBurnsAdjacent
     {
         base.FinishBurn();
         burnParticles.Stop();
-        GameObject breakParticlesInstance = Instantiate(breakParticles, transform.position, Quaternion.identity);
-        breakParticlesInstance.transform.localScale = burnParticles.transform.localScale;
-        Destroy(transform.parent.gameObject);
+    }
+
+    public override void ResetBurn()
+    {
+        base.ResetBurn();
+        burnParticles.Stop();
+        timer = 0;
     }
 
 

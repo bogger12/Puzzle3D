@@ -1,27 +1,61 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Collider))]
 public abstract class BurnableBurnsAdjacent : Burnable
 {
 
 
-    protected BoxCollider nearbyBurnCollider;
+    protected Collider nearbyBurnCollider;
     public float delayBetweenNearbyBurns = 0;
+    public bool useDelayWhenAlreadyBurning = false;
+
+
+    private List<Burnable> burnablesInsideBurnVolume = new List<Burnable>();
     public virtual void Start()
     {
-        nearbyBurnCollider = GetComponent<BoxCollider>();
+        nearbyBurnCollider = GetComponent<Collider>();
     }
     public override void StartBurn()
     {
         burning = true;
         // Start burning nearby objects
-        Collider[] nearbyColliders = Physics.OverlapBox(nearbyBurnCollider.transform.position, nearbyBurnCollider.bounds.extents);
-
-        foreach (Collider c in nearbyColliders)
+        
+        if (burnablesInsideBurnVolume.Count>0) foreach (Burnable b in burnablesInsideBurnVolume)
         {
-            if (c.TryGetComponent<Burnable>(out Burnable burnable))
-                if (!burnable.burning) StartCoroutine(StartBurnAfter(delayBetweenNearbyBurns, burnable));
+            if (!b.burning)
+            {
+                StartCoroutine(StartBurnAfter(delayBetweenNearbyBurns, b));
+                Debug.Log(transform.parent.name + "burns " + b.transform.parent.name + " after start burning");
+            }
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.isTrigger) return;
+        Burnable burnable = other.GetComponentInChildren<Burnable>();
+        if (burning && burnable!=null)
+        {
+            float delay = useDelayWhenAlreadyBurning ? delayBetweenNearbyBurns : 0;
+            if (!burnable.burning)
+            {
+                StartCoroutine(StartBurnAfter(delay, burnable));
+                Debug.Log(transform.parent.name + "burns " + burnable.transform.parent.name);
+            }
+        } else if (burnable!=null) {
+            burnablesInsideBurnVolume.Add(burnable);
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.isTrigger) return;
+        Burnable burnable = other.GetComponentInChildren<Burnable>();
+        if (burnable!=null)
+        {
+            burnablesInsideBurnVolume.Remove(burnable);
         }
     }
 
