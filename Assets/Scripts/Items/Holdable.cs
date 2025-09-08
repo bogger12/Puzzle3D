@@ -96,11 +96,15 @@ public class Holdable : MonoBehaviour
             holdJoint.angularYMotion = ConfigurableJointMotion.Locked;
             holdJoint.angularZMotion = ConfigurableJointMotion.Locked;
         }
+
+        SetBodyDocile(holdingBody, true);
     }
 
-    public virtual void OnThrow()
+    public virtual void OnThrow(float physicsIgnoreTime)
     {
+        SetBodyDocile(holdingBody, false, physicsIgnoreTime);
         heldStatus = HoldableStatus.NotHeld;
+        RemoveFromHoldingBody();
         holdingBody = null;
         Destroy(holdJoint);
 
@@ -112,15 +116,18 @@ public class Holdable : MonoBehaviour
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
     {
-        OnThrow();
-        heldStatus = HoldableStatus.Dropping;
-        this.holdPoint = holdPoint;
-        this.dropPoint = dropPoint;
-        this.currentDropTime = dropTime;
+        OnThrow(dropTime);
+        if (holdPoint && dropPoint)
+        {
+            heldStatus = HoldableStatus.Dropping;
+            this.holdPoint = holdPoint;
+            this.dropPoint = dropPoint;
+            this.currentDropTime = dropTime;
+        }
     }
 
 
-    public void SetBodyDocile(Rigidbody holdingBody, bool docile, float waitBeforeReenablePhysicsSeconds = 0)
+    protected void SetBodyDocile(Rigidbody holdingBody, bool docile, float waitBeforeReenablePhysicsSeconds = 0)
     {
         Collider c = holdingBody.GetComponent<Collider>();
         rb.useGravity = !docile;
@@ -146,7 +153,7 @@ public class Holdable : MonoBehaviour
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), c, false);
     }
 
-    public void RemoveFromHoldingBody()
+    protected void RemoveFromHoldingBody()
     {
         PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
         playerThrow.heldBody = null;

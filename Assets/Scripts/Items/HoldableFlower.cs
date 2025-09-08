@@ -42,14 +42,14 @@ public class HoldableFlower : Holdable
         playerInputs = holdingBody.GetComponent<PlayerInputs>();
     }
 
-    public override void OnThrow()
+    public override void OnThrow(float physicsIgnoreTime)
     {
         PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
         playerInputs = null;
-        base.OnThrow();
+        base.OnThrow(physicsIgnoreTime);
     }
 
     protected override void FixedUpdate()

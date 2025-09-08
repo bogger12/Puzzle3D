@@ -66,14 +66,11 @@ public class PlayerThrow : MonoBehaviour
                     heldBody = nearest.attachedRigidbody;
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
-                        holdable.SetBodyDocile(rb, false, 0f);
-                        holdable.RemoveFromHoldingBody();
-                        holdable.OnThrow();
+                        holdable.OnThrow(0f);
                     }
                     if (holdable.heldStatus == HoldableStatus.NotHeld)
                     {
                         holdable.HeldBy(rb, holdAnchor);
-                        holdable.SetBodyDocile(rb, true);
                     }
                 }
             }
@@ -85,11 +82,10 @@ public class PlayerThrow : MonoBehaviour
                 // Reset body vars before throw
                 if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)
                 {
-                    holdable.SetBodyDocile(rb, false, waitBeforeReenablePhysicsSeconds);
-                    holdable.OnThrow();
+                    Rigidbody heldBody = this.heldBody; // heldBody is nullified in OnThrow
+                    holdable.OnThrow(waitBeforeReenablePhysicsSeconds);
                     heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                     heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-                    heldBody = null;
                 }
                 timeSincePressed = 0;
             }
@@ -99,11 +95,10 @@ public class PlayerThrow : MonoBehaviour
                 {
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
-                        holdable.SetBodyDocile(rb, false, dropTime);
                         holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
-                        heldBody = null;
                     }
                 }
+                timeSincePressed = 0;
             }
         }
 

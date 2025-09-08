@@ -95,10 +95,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9013798883855099975}
+  - component: {fileID: 8364865228537095678}
   - component: {fileID: 5089023352724149825}
   - component: {fileID: 1993362326991591957}
-  - component: {fileID: 1757257262570745144}
   - component: {fileID: 3830806949679712691}
+  - component: {fileID: 4607387944172626167}
   m_Layer: 7
   m_Name: Key
   m_TagString: Untagged
@@ -122,6 +123,28 @@ Transform:
   - {fileID: 2018710045205757190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8364865228537095678
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445984353465357319}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: edf8d9b8b415f491380c0619feb06009, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5089023352724149825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,24 +187,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1757257262570745144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7445984353465357319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2904d82bbc503456fbf180b3e6181cf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isHeld: 0
-  allowRotationCarryOver: 1
-  freezeRotationDuringCarry: 0
-  lockItemToPlayer: 1
-  customHeldRotation: 1
-  heldRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!65 &3830806949679712691
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -203,3 +208,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.85, y: 0.4, z: 0.13}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4607387944172626167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445984353465357319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395546cc3f4a8474a8a47ce6926c4eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldStatus: 0
+  allowRotationCarryOver: 1
+  freezeRotationDuringCarry: 0
+  lockItemToPlayer: 1
+  customHeldRotation: 1
+  heldRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  inKeyHole: 0
