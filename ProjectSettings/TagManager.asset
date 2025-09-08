@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Burnable
   - NPC
+  - Key
   layers:
   - Default
   - TransparentFX

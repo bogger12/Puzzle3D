@@ -52,8 +52,9 @@ public class HoldableFlower : Holdable
         base.OnThrow();
     }
 
-    public void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         if (holdingBody != null && (!onlyGlideWhileButtonPress || playerInputs.jump.IsPressed()))
         {
             if (boostDuringJumpUp || holdingBody.linearVelocity.y < 0)

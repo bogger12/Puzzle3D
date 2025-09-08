@@ -27,7 +27,7 @@ public abstract class BurnableBurnsAdjacent : Burnable
             if (!b.burning)
             {
                 StartCoroutine(StartBurnAfter(delayBetweenNearbyBurns, b));
-                Debug.Log(transform.parent.name + "burns " + b.transform.parent.name + " after start burning");
+                // Debug.Log(transform.parent.name + "burns " + b.transform.parent.name + " after start burning");
             }
         }
     }
@@ -42,7 +42,7 @@ public abstract class BurnableBurnsAdjacent : Burnable
             if (!burnable.burning)
             {
                 StartCoroutine(StartBurnAfter(delay, burnable));
-                Debug.Log(transform.parent.name + "burns " + burnable.transform.parent.name);
+                // Debug.Log(transform.parent.name + "burns " + burnable.transform.parent.name);
             }
         } else if (burnable!=null) {
             burnablesInsideBurnVolume.Add(burnable);

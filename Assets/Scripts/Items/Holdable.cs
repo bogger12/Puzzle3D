@@ -1,11 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum HoldableStatus
+{
+    NotHeld,
+    Held,
+    Dropping
+}
+
 [RequireComponent(typeof(Outline))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class Holdable : MonoBehaviour
 {
-    public bool isHeld;
+    public HoldableStatus heldStatus;
     protected Rigidbody holdingBody;
 
     public bool allowRotationCarryOver = true;
@@ -22,14 +31,39 @@ public class Holdable : MonoBehaviour
     private bool originalFreezeRotation;
 
 
+    // Dropping stuff
+
+    private float currentDropTime = 0.2f;
+    private float dropTimer = 0f;
+    private Transform holdPoint;
+    private Transform dropPoint;
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    protected virtual void FixedUpdate()
+    {
+        // Do dropping
+        if (heldStatus == HoldableStatus.Dropping)
+        {
+            dropTimer += Time.fixedDeltaTime;
+            float t = dropTimer / currentDropTime;
+            Vector3 moveTo = Vector3.Slerp(holdPoint.position, dropPoint.position, t);
+            if (t >= 1)
+            {
+                moveTo = dropPoint.position;
+                heldStatus = HoldableStatus.NotHeld;
+                dropTimer = 0;
+            }
+            rb.MovePosition(moveTo);
+        }
+    }
+
     public virtual void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
-        isHeld = true;
+        heldStatus = HoldableStatus.Held;
         this.holdingBody = holdingBody;
 
         rb.position = holdAnchor.position;
@@ -66,7 +100,7 @@ public class Holdable : MonoBehaviour
 
     public virtual void OnThrow()
     {
-        isHeld = false;
+        heldStatus = HoldableStatus.NotHeld;
         holdingBody = null;
         Destroy(holdJoint);
 
@@ -74,6 +108,15 @@ public class Holdable : MonoBehaviour
         if (!allowRotationCarryOver) rb.rotation = originalRotation;
 
         rb.mass = originalMass;
+    }
+
+    public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
+    {
+        OnThrow();
+        heldStatus = HoldableStatus.Dropping;
+        this.holdPoint = holdPoint;
+        this.dropPoint = dropPoint;
+        this.currentDropTime = dropTime;
     }
 
 

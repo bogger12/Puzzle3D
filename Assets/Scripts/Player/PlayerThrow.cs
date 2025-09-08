@@ -13,6 +13,9 @@ public class PlayerThrow : MonoBehaviour
 
     public Rigidbody heldBody = null;
     public Transform holdAnchor;
+    public Transform dropAnchor;
+    public float dropTime = 0.2f;
+
     public Vector3 throwDirectionForward = new Vector3(0, 0.5f, 0.5f);
     public Vector2 throwForceRange = new Vector2(0, 5);
     public float minThrowSeconds = 0.1f;
@@ -61,14 +64,17 @@ public class PlayerThrow : MonoBehaviour
                 if (nearest.attachedRigidbody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
                     heldBody = nearest.attachedRigidbody;
-                    if (holdable.isHeld)
+                    if (holdable.heldStatus == HoldableStatus.Held)
                     {
                         holdable.SetBodyDocile(rb, false, 0f);
                         holdable.RemoveFromHoldingBody();
                         holdable.OnThrow();
                     }
-                    holdable.HeldBy(rb, holdAnchor);
-                    holdable.SetBodyDocile(rb, true);
+                    if (holdable.heldStatus == HoldableStatus.NotHeld)
+                    {
+                        holdable.HeldBy(rb, holdAnchor);
+                        holdable.SetBodyDocile(rb, true);
+                    }
                 }
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
@@ -77,16 +83,27 @@ public class PlayerThrow : MonoBehaviour
                 float throwForce = Mathf.Lerp(throwForceRange.x, throwForceRange.y, throwProgress);
                 Debug.Log("Throwing Item with force:" + throwForce);
                 // Reset body vars before throw
-                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)
                 {
                     holdable.SetBodyDocile(rb, false, waitBeforeReenablePhysicsSeconds);
                     holdable.OnThrow();
+                    heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
+                    heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+                    heldBody = null;
                 }
-                heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
-                heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-
                 timeSincePressed = 0;
-                heldBody = null;
+            }
+            else if (heldBody != null && timeSincePressed < minThrowSeconds)
+            {
+                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                {
+                    if (holdable.heldStatus == HoldableStatus.Held)
+                    {
+                        holdable.SetBodyDocile(rb, false, dropTime);
+                        holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
+                        heldBody = null;
+                    }
+                }
             }
         }
 

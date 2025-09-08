@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7331880262078305188}
   m_Layer: 0
   m_Name: Vine
-  m_TagString: Burnable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,4 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833ba970d58684cf29b862b3c9413ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burnPerSecond: 0.5
+  burning: 0
+  burnTime: 1
