@@ -22,6 +22,8 @@ public class HoldableKey : Holdable
 
     protected void Update()
     {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        bool finishedOpenAnimation = stateInfo.IsName("KeyOpen") && stateInfo.normalizedTime >= 1f && !stateInfo.loop;
         if (!animator.IsInTransition(0) && !inKeyHole && animator.enabled)
         {
             TakeKeyFromHole();
@@ -32,6 +34,10 @@ public class HoldableKey : Holdable
                 currentHoldAnchor = null;
             }
             Debug.Log("disabling key animation after finish");
+        }
+        else if (finishedOpenAnimation && inKeyHole && animator.enabled && !activeKeyHole.FinishedUnlockAnim)
+        {
+            activeKeyHole.FinishedKeyUnlockAnim();
         }
     }
     public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
@@ -55,8 +61,12 @@ public class HoldableKey : Holdable
 
     public override void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
     {
-        base.OnThrow(0f);
-        if (!inKeyHole && activeKeyHole) PutKeyInHole(activeKeyHole.keyAnchor);
+        if (!inKeyHole && activeKeyHole)
+        {
+            base.OnThrow(0f);
+            PutKeyInHole(activeKeyHole.keyAnchor);
+        }
+        else base.OnInteractDrop(holdPoint, dropPoint, dropTime);
     }
 
     public void PutKeyInHole(Transform keyAnchor)

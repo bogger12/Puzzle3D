@@ -2,7 +2,7 @@ Shader "Unlit/InverseHull"
 {
     Properties
     {
-        _OutlineColor ("OutlineColor", Color) = (1,0,0,1)
+        _Color ("Main Color", Color) = (1,0,0,1)
         _OutlineWidth ("OutlineWidth", Range(0,1)) = 1.0
         _NormalVSWorldSpace ("NormalVSWorldSpace", Range(0,1)) = 0.0
     }
@@ -34,7 +34,7 @@ Shader "Unlit/InverseHull"
             };
 
             float _OutlineWidth;
-            float4 _OutlineColor;
+            float4 _Color;
             float _NormalVSWorldSpace;
 
             v2f vert (appdata v)
@@ -47,7 +47,7 @@ Shader "Unlit/InverseHull"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                return _OutlineColor;
+                return _Color;
             }
             ENDCG
         }

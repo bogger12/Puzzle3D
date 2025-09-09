@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1141011799166853831}
   - component: {fileID: 5053099632495839142}
   - component: {fileID: 4892254394839764306}
+  - component: {fileID: 13069430553618223}
   m_Layer: 0
   m_Name: Keyhole
   m_TagString: Untagged
@@ -88,6 +89,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &13069430553618223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457446129204440408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72a408068a7041038debe24a2ec413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMaterial: {fileID: 0}
+  enabled: 0
+  applyToChildren: 1
 --- !u!1 &7825441832007190688
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,8 +170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec337306a60124ac3ae81366958481b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateable: {fileID: 0}
   keyAnchor: {fileID: 8163901262865050540}
-  rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+  noKeyColor: {r: 1, g: 0, b: 0, a: 1}
+  hasKeyColor: {r: 0, g: 1, b: 0, a: 1}
+  unlockedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  disableOutlineOnUnlock: 1
+  setValue: 1
 --- !u!1 &8608277387890819619
 GameObject:
   m_ObjectHideFlags: 0

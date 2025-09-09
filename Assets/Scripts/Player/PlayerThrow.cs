@@ -42,6 +42,11 @@ public class PlayerThrow : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInputs = GetComponent<PlayerInputs>();
+
+#if UNITY_EDITOR
+        // Set UIThrowProgressImage Material to make sure we aren't modifying the asset
+        UIThrowProgressImage.material = new Material(UIThrowProgressImage.material);
+#endif
     }
 
     // Update is called once per frame
