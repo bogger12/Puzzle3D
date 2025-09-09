@@ -151,7 +151,7 @@ public class Keyhole : RemoteActivate
         {
             HoldableKey playerHeldKey = playerThrow.heldBody != null ? playerThrow.heldBody.GetComponent<HoldableKey>() : null;
             bool hasKey = playerHeldKey != null;
-            if (hasKey)
+            if (hasKey && playerHeldKey.heldStatus==HoldableStatus.Held)
             {
                 currentKey = null;
                 playerHeldKey.SetActiveKeyHole(null);
