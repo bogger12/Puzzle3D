@@ -66,7 +66,7 @@ public class PlayerThrow : MonoBehaviour
             if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
             {
                 // Make body docile
-                if (nearest.attachedRigidbody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                if (nearest.attachedRigidbody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.canBeHeld)
                 {
                     heldBody = nearest.attachedRigidbody;
                     if (holdable.heldStatus == HoldableStatus.Held)
@@ -76,6 +76,7 @@ public class PlayerThrow : MonoBehaviour
                     if (holdable.heldStatus == HoldableStatus.NotHeld)
                     {
                         holdable.HeldBy(rb, holdAnchor);
+                        // if (holdable.heldStatus == HoldableStatus.NotHeld) heldBody = null;
                     }
                 }
             }
@@ -134,14 +135,15 @@ public class PlayerThrow : MonoBehaviour
         // Do phyisic cast to find items within radius
         float castRadius = 2f;
         Collider[] colliders = Physics.OverlapSphere(rb.position, castRadius, castLayerMask);
+        List<Collider> collidersList = colliders.ToList<Collider>();
         foreach (Collider c in colliders)
         {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
             {
-                outlineScript.Enabled = true;
+                outlineScript.Enabled = holdable.canBeHeld;
+                if (!holdable.canBeHeld) collidersList.Remove(c);
             }
         }
-        List<Collider> collidersList = colliders.ToList<Collider>();
         var collidersExitedRange = lastColliders.Except(collidersList); // Any Colliders left over from last frame that aren't within range this frame
         lastColliders = collidersList;
         foreach (Collider c in collidersExitedRange)

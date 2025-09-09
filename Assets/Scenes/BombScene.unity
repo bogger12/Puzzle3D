@@ -21986,6 +21986,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 171865928}
     - target: {fileID: 7250113023824276817, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
+      propertyPath: allowKeyPickup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250113023824276817, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
       propertyPath: rotationOffset.w
       value: 0.49999997
       objectReference: {fileID: 0}
@@ -22003,10 +22007,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250113023824276817, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
       propertyPath: disableOutlineOnLock
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7250113023824276817, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
-      propertyPath: setActiveOnlyWhenFinishedAnim
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8163901262865050540, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
@@ -26990,6 +26990,7 @@ MonoBehaviour:
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
+  canBeHeld: 1
 --- !u!1 &4214631137537964068
 GameObject:
   m_ObjectHideFlags: 0
@@ -27537,6 +27538,7 @@ MonoBehaviour:
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
+  canBeHeld: 1
   inKeyHole: 0
 --- !u!95 &6496156899181014206
 Animator:

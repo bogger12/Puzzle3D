@@ -1,5 +1,15 @@
 using UnityEngine;
 
+
+public enum LockStates
+{
+    Locked,
+    Unlocking,
+    Unlocked
+}
+
+
+
 [RequireComponent(typeof(Collider))]
 public class Keyhole : RemoteActivate
 {
@@ -15,8 +25,9 @@ public class Keyhole : RemoteActivate
 
     private HoldableKey currentKey = null;
 
-    public bool Locked { get; private set; } = true;
+    public LockStates LockState { get; private set; } = LockStates.Locked;
     public bool FinishedUnlockAnim { get; private set; } = false;
+    public bool allowKeyPickup = true;
 
     public bool setValue = true;
 
@@ -36,13 +47,17 @@ public class Keyhole : RemoteActivate
     public void Unlock()
     {
         Debug.Log("Unlocked!");
+        if (!allowKeyPickup) currentKey.canBeHeld = false;
 
         if (!setActiveOnlyWhenFinishedAnim)
         {
-            Locked = false;
+            Debug.Log("Set " + activateable.name + " to " + setValue);
+            LockState = LockStates.Unlocked;
             SetActive(setValue);
+            if (disableOutlineOnUnlock) outline.Enabled = false;
         }
-        else if (disableOutlineOnUnlock) outline.Enabled = false;
+        else LockState = LockStates.Unlocking;
+        
     }
 
     public void FinishedKeyUnlockAnim()
@@ -51,16 +66,17 @@ public class Keyhole : RemoteActivate
         FinishedUnlockAnim = true;
         if (setActiveOnlyWhenFinishedAnim)
         {
-            Locked = false;
+            Debug.Log("Set " + activateable.name + " to " + setValue);
+            LockState = LockStates.Unlocked;
             SetActive(setValue);
         }
-        outline.Enabled = false;
+        // outline.Enabled = false;
     }
 
     public void Lock()
     {
         Debug.Log("Locked.");
-        Locked = true;
+        LockState = LockStates.Locked;
         FinishedUnlockAnim = false;
         SetActive(!setValue);
     }
@@ -75,7 +91,7 @@ public class Keyhole : RemoteActivate
         
         if (other.TryGetComponent<PlayerThrow>(out PlayerThrow playerThrow)) // if it is the player
         {
-            if (!Locked && !disableOutlineOnUnlock)
+            if (LockState != LockStates.Locked && !disableOutlineOnUnlock)
             {
                 outline.Enabled = true;
                 outline.ChangeColor(unlockedColor);
@@ -89,7 +105,7 @@ public class Keyhole : RemoteActivate
                     currentKey = playerHeldKey;
                     playerHeldKey.SetActiveKeyHole(this);
                 }
-                    outline.Enabled = (!disableOutlineOnUnlock || Locked);
+                    outline.Enabled = (!disableOutlineOnUnlock || LockState == LockStates.Locked);
                 outline.ChangeColor(hasKey ? hasKeyColor : noKeyColor);
             }
         }
@@ -97,14 +113,14 @@ public class Keyhole : RemoteActivate
 
     void OnTriggerStay(Collider other) // It seems like this tanks FPS
     {
-        if (!Locked && !disableOutlineOnUnlock)
+        if (LockState != LockStates.Locked && disableOutlineOnUnlock)
         {
             outline.Enabled = false;
             return;
         }
         if (other.TryGetComponent<PlayerThrow>(out PlayerThrow playerThrow)) // if it is the player
             {
-                if (!Locked && !disableOutlineOnUnlock)
+                if (LockState != LockStates.Locked && !disableOutlineOnUnlock)
                 {
                     outline.Enabled = true;
                     outline.ChangeColor(unlockedColor);
@@ -118,7 +134,7 @@ public class Keyhole : RemoteActivate
                         currentKey = playerHeldKey;
                         playerHeldKey.SetActiveKeyHole(this);
                     }
-                    outline.Enabled = (!disableOutlineOnUnlock || Locked);
+                    outline.Enabled = (!disableOutlineOnUnlock || LockState == LockStates.Locked);
                     outline.ChangeColor(hasKey ? hasKeyColor : noKeyColor);
                 }
             }

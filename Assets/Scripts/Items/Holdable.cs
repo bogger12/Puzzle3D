@@ -25,6 +25,8 @@ public class Holdable : MonoBehaviour
     protected ConfigurableJoint holdJoint = null;
     protected Rigidbody rb;
 
+    public bool canBeHeld = true;
+
     // Original Values
     private float originalMass;
     private Quaternion originalRotation;

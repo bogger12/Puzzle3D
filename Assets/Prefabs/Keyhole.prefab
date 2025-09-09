@@ -176,6 +176,8 @@ MonoBehaviour:
   hasKeyColor: {r: 0, g: 1, b: 0, a: 1}
   unlockedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   disableOutlineOnUnlock: 1
+  setActiveOnlyWhenFinishedAnim: 1
+  allowKeyPickup: 0
   setValue: 1
 --- !u!1 &8608277387890819619
 GameObject:

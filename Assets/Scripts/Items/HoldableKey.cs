@@ -6,6 +6,7 @@ public class HoldableKey : Holdable
 
     private Animator animator;
 
+    [HideInInspector]
     public bool inKeyHole = false;
     private Keyhole activeKeyHole = null;
 
@@ -43,6 +44,7 @@ public class HoldableKey : Holdable
     public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
         // base.HeldBy(holdingBody, holdAnchor);
+        // if (activeKeyHole && inKeyHole && !activeKeyHole.allowKeyPickup) return;
         if (inKeyHole)
         {
             this.currentHoldingBody = holdingBody;
@@ -95,7 +97,7 @@ public class HoldableKey : Holdable
 
     public void SetActiveKeyHole(Keyhole keyHole)
     {
-        this.activeKeyHole = keyHole;
+        if (!inKeyHole && activeKeyHole!=keyHole) this.activeKeyHole = keyHole;
         Debug.Log("Active Keyhole = " + (keyHole!=null?keyHole.name: keyHole));
     }
     public Keyhole GetActiveKeyHole()
