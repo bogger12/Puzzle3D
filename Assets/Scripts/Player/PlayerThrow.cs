@@ -79,6 +79,7 @@ public class PlayerThrow : MonoBehaviour
                         holdable.HeldBy(rb, holdAnchor);
                         // if (holdable.heldStatus == HoldableStatus.NotHeld) heldBody = null;
                     }
+                    else heldBody = null;
                 }
             }
             else if (heldBody != null && timeSincePressed >= minThrowSeconds)
