@@ -148,7 +148,7 @@ public class PlayerThrow : MonoBehaviour
                 }
                 outlineScript.Enabled = holdable.canBeHeld;
                 if (!holdable.canBeHeld) collidersList.Remove(c);
-            }
+            } else collidersList.Remove(c);
         }
         controlUI.SetHoldableTarget(closest); // null or real
         var collidersExitedRange = lastColliders.Except(collidersList); // Any Colliders left over from last frame that aren't within range this frame
