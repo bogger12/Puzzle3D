@@ -12,8 +12,11 @@ public class BurnableVolume : BurnableBurnsAdjacent
     public AnimationCurve speedOverTime;
 
     public ParticleSystem.EmissionModule burnEmission;
+    public ParticleSystem.ShapeModule burnShape;
     public ParticleSystem.MainModule burnMainModule;
     private ParticleSystem.MinMaxCurve initialSpeedRange;
+
+    private Quaternion initialRotation;
 
 
     public override void Start()
@@ -21,6 +24,8 @@ public class BurnableVolume : BurnableBurnsAdjacent
         base.Start();
         // burnParticles.Stop();
         burnEmission = burnParticles.emission;
+        burnShape = burnParticles.shape;
+        initialRotation = Quaternion.Euler(burnShape.rotation);
         burnMainModule = burnParticles.main;
         initialSpeedRange = burnMainModule.startSpeed;
         burnEmission.rateOverTime = 0;
@@ -36,6 +41,7 @@ public class BurnableVolume : BurnableBurnsAdjacent
             float speed_t = speedOverTime.Evaluate(BurnAmount);
 
             burnEmission.rateOverTime = emission_t * emissionMultiplier;
+            burnShape.rotation = (Quaternion.Inverse(transform.rotation)*initialRotation).eulerAngles;
 
             ParticleSystem.MinMaxCurve currentSpeedRange = initialSpeedRange;
             currentSpeedRange.constantMin = initialSpeedRange.constantMin * speed_t;

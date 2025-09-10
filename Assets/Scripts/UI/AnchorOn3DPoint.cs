@@ -11,22 +11,21 @@ public class AnchorOn3DPoint : MonoBehaviour
     public Vector2 offset2D;
     public bool lockToScreenBounds;
 
-    private Vector2 defaultSize;
-    public float sizeMultiplier = 1;
+    protected Vector3 defaultScale;
 
     RectTransform rt;
     Canvas canvas;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         rt = GetComponent<RectTransform>();
         canvas = transform.GetComponentInParent<Canvas>();
         sceneCamera = canvas.worldCamera;
-        defaultSize = rt.sizeDelta;
+        defaultScale = rt.localScale;
     }
 
-    void LateUpdate()
+    protected virtual void LateUpdate()
     {
         Vector3 anchorPoint = anchor != null ? anchor.position : anchorPos;
         Vector3 screenPoint = sceneCamera.WorldToScreenPoint(anchorPoint);
@@ -42,11 +41,11 @@ public class AnchorOn3DPoint : MonoBehaviour
 
         rt.anchoredPosition = uiPoint + offset2D * canvas.scaleFactor;
 
-        rt.sizeDelta = defaultSize * sizeMultiplier;
+        // rt.localScale = defaultScale * sizeMultiplier;
         // Debug.Log("Viewport Point " + screenPoint);
     }
 
-    public void SetAnchorPos(Vector3 pos)
+    public virtual void SetAnchorPos(Vector3 pos)
     {
         anchorPos = pos;
     }

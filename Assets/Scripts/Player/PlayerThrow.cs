@@ -28,8 +28,9 @@ public class PlayerThrow : MonoBehaviour
     [Header("Circlecast")]
     public LayerMask castLayerMask;
 
-    [Header("Throw Progress UI")]
+    [Header("UI")]
     public Image UIThrowProgressImage;
+    public ControlAnchorOnHoldable controlUI;
 
     private Rigidbody rb;
 
@@ -136,14 +137,20 @@ public class PlayerThrow : MonoBehaviour
         float castRadius = 2f;
         Collider[] colliders = Physics.OverlapSphere(rb.position, castRadius, castLayerMask);
         List<Collider> collidersList = colliders.ToList<Collider>();
+        Holdable closest = null;
         foreach (Collider c in colliders)
         {
             if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
             {
+                if (closest == null || Vector3.Distance(holdable.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position))
+                {
+                    closest = holdable;
+                }
                 outlineScript.Enabled = holdable.canBeHeld;
                 if (!holdable.canBeHeld) collidersList.Remove(c);
             }
         }
+        controlUI.SetHoldableTarget(closest); // null or real
         var collidersExitedRange = lastColliders.Except(collidersList); // Any Colliders left over from last frame that aren't within range this frame
         lastColliders = collidersList;
         foreach (Collider c in collidersExitedRange)
