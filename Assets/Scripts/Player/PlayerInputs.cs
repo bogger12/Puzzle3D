@@ -8,23 +8,80 @@ public class PlayerInputs : MonoBehaviour
 
     public InputActionAsset playerInput;
     [HideInInspector]
-    public InputAction move;
+    public InputActionReference move;
     [HideInInspector]
-    public InputAction look;
+    public InputActionReference look;
     [HideInInspector]
-    public InputAction jump;
+    public InputActionReference jump;
     [HideInInspector]
-    public InputAction holdThrow;
+    public InputActionReference holdThrow;
 
     void Start()
     {
         string mapName = playerIndex == 0 ? "Player1" : "Player2";
         var map = playerInput.FindActionMap(mapName);
 
-        move = map.FindAction("Move");
-        look = map.FindAction("Look");
-        jump = map.FindAction("Jump");
-        holdThrow = map.FindAction("Pickup_Throw");
+        move = InputActionReference.Create(map.FindAction("Move"));
+        look = InputActionReference.Create(map.FindAction("Look"));
+        jump = InputActionReference.Create(map.FindAction("Jump"));
+        holdThrow = InputActionReference.Create(map.FindAction("Pickup_Throw"));
     }
 
+    private InputDevice lastUsedDevice;
+
+
+    // Input action events to determine device used
+    // I'm not gonna update text on every change cus I lazy and no one will change controllers while UI hint is visible. 
+    void OnEnable()
+    {
+        // Subscribe to input events
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+    }
+
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            lastUsedDevice = action.activeControl?.device;
+            // UpdatePrompt();
+        }
+    }
+
+    public string GetButtonText(InputActionReference actionReference)
+    {
+        var action = actionReference.action;
+
+        if (action.bindings.Count == 0 || lastUsedDevice == null)
+        {
+            return InputControlPath.ToHumanReadableString(
+                action.bindings[0].effectivePath,
+                InputControlPath.HumanReadableStringOptions.OmitDevice
+            );
+
+        }
+
+        // Find the binding that matches the current device
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            var binding = action.bindings[i];
+
+            if (binding.groups.Contains(lastUsedDevice.layout))
+            {
+                string keyString = InputControlPath.ToHumanReadableString(
+                    binding.effectivePath,
+                    InputControlPath.HumanReadableStringOptions.OmitDevice
+                );
+
+                return keyString;
+                // promptText.text = $"Press [{keyString}] to {action.name}";
+            }
+        }
+        return "FUCKNOTFOUND";
+    }
 }

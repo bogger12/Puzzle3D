@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded = CheckIsGrounded();
 
 
-        Vector2 playerInput = playerInputs.move.ReadValue<Vector2>();
+        Vector2 playerInput = playerInputs.move.action.ReadValue<Vector2>();
         // playerInput.x = Input.GetAxis("Horizontal");
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
 
-        desiredJump |= playerInputs.jump.WasPressedThisFrame();
+        desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
         Debug.DrawLine(transform.position, transform.position + upAxis * 5, Color.yellow);
         Debug.DrawRay(transform.position + upAxis * 1, moveDirection * 5, Color.red);
@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump(float verticalSpeed)
     {
-        if (playerInputs.jump.IsPressed())
+        if (playerInputs.jump.action.IsPressed())
         {
 
             if (currentJumps > 0 && desiredJump)

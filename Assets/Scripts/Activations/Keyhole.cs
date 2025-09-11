@@ -98,7 +98,7 @@ public class Keyhole : RemoteActivate
             }
             else
             {
-                HoldableKey playerHeldKey = playerThrow.heldBody != null ? playerThrow.heldBody.GetComponent<HoldableKey>() : null;
+                HoldableKey playerHeldKey = playerThrow.HeldBodyHoldable is HoldableKey key ? key : null;
                 bool hasKey = playerHeldKey != null;
                 if (hasKey && currentKey != playerHeldKey)
                 {
@@ -127,7 +127,7 @@ public class Keyhole : RemoteActivate
                 }
                 else
                 {
-                    HoldableKey playerHeldKey = playerThrow.heldBody != null ? playerThrow.heldBody.GetComponent<HoldableKey>() : null;
+                    HoldableKey playerHeldKey = playerThrow.HeldBodyHoldable is HoldableKey key ? key : null;
                     bool hasKey = playerHeldKey != null;
                     if (hasKey && currentKey != playerHeldKey)
                     {
@@ -149,7 +149,7 @@ public class Keyhole : RemoteActivate
         }
         if (other.TryGetComponent<PlayerThrow>(out PlayerThrow playerThrow)) // if it is the player
         {
-            HoldableKey playerHeldKey = playerThrow.heldBody != null ? playerThrow.heldBody.GetComponent<HoldableKey>() : null;
+            HoldableKey playerHeldKey = playerThrow.HeldBodyHoldable is HoldableKey key ? key : null;
             bool hasKey = playerHeldKey != null;
             if (hasKey && playerHeldKey.heldStatus==HoldableStatus.Held)
             {

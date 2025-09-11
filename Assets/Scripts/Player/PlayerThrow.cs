@@ -10,8 +10,18 @@ public class PlayerThrow : MonoBehaviour
 
     // Input Component
     private PlayerInputs playerInputs;
-
-    public Rigidbody heldBody = null;
+    public Holdable HeldBodyHoldable { get; private set; } = null;
+    private Rigidbody _heldBody;
+    public Rigidbody HeldBody
+    {
+        get => _heldBody;
+        set
+        {
+            HeldBodyHoldable = value != null ? value.GetComponent<Holdable>() : null;
+            _heldBody = value;
+            SetControlHints();
+        }
+    }
     public Transform holdAnchor;
     public Transform dropAnchor;
     public float dropTime = 0.2f;
@@ -30,7 +40,8 @@ public class PlayerThrow : MonoBehaviour
 
     [Header("UI")]
     public Image UIThrowProgressImage;
-    public ControlAnchorOnHoldable controlUI;
+    public ControlAnchorOnPoint controlUI;
+    public ControlHintsManager controlHintsManager;
 
     private Rigidbody rb;
 
@@ -62,14 +73,14 @@ public class PlayerThrow : MonoBehaviour
         float throwProgress = Mathf.Clamp01(timeSincePressed / maxThrowSeconds);
 
         // Checking key up first so timeSincePressed = 0 not done before keydown
-        if (playerInputs.holdThrow.WasReleasedThisFrame())
+        if (playerInputs.holdThrow.action.WasReleasedThisFrame())
         {
-            if (nearest != null && heldBody == null && nearest.attachedRigidbody != null)
+            if (nearest != null && HeldBody == null && nearest.attachedRigidbody != null)
             {
                 // Make body docile
                 if (nearest.attachedRigidbody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.canBeHeld)
                 {
-                    heldBody = nearest.attachedRigidbody;
+                    HeldBody = nearest.attachedRigidbody;
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
                         holdable.OnThrow(0f);
@@ -79,27 +90,27 @@ public class PlayerThrow : MonoBehaviour
                         holdable.HeldBy(rb, holdAnchor);
                         // if (holdable.heldStatus == HoldableStatus.NotHeld) heldBody = null;
                     }
-                    else heldBody = null;
+                    else HeldBody = null;
                 }
             }
-            else if (heldBody != null && timeSincePressed >= minThrowSeconds)
+            else if (HeldBody != null && timeSincePressed >= minThrowSeconds)
             {
                 Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
                 float throwForce = Mathf.Lerp(throwForceRange.x, throwForceRange.y, throwProgress);
                 Debug.Log("Throwing Item with force:" + throwForce);
                 // Reset body vars before throw
-                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)
+                if (HeldBody.transform.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)
                 {
-                    Rigidbody heldBody = this.heldBody; // heldBody is nullified in OnThrow
+                    Rigidbody heldBody = this.HeldBody; // heldBody is nullified in OnThrow
                     holdable.OnThrow(waitBeforeReenablePhysicsSeconds);
                     heldBody.linearVelocity = rb.linearVelocity * parentBodyVelocityAddFactor;
                     heldBody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
                 }
                 timeSincePressed = 0;
             }
-            else if (heldBody != null && timeSincePressed < minThrowSeconds)
+            else if (HeldBody != null && timeSincePressed < minThrowSeconds)
             {
-                if (heldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
+                if (HeldBody.transform.TryGetComponent<Holdable>(out Holdable holdable))
                 {
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
@@ -110,14 +121,14 @@ public class PlayerThrow : MonoBehaviour
             }
         }
 
-        if (playerInputs.holdThrow.IsPressed())
+        if (playerInputs.holdThrow.action.IsPressed())
         {
             // Setting the throw strength
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
             Debug.DrawRay(rb.position, throwDirection * timeSincePressed, Color.red);
             timeSincePressed += Time.deltaTime;
             // Update Throw Progress in Material
-            if (heldBody != null)
+            if (HeldBody != null)
             {
                 float progress = timeSincePressed / maxThrowSeconds;
                 UIThrowProgressImage.enabled = true;
@@ -143,20 +154,26 @@ public class PlayerThrow : MonoBehaviour
         {
             if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
             {
-                if (closest == null || Vector3.Distance(holdable.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position))
+                bool allowTestForClosest = holdable.heldStatus == HoldableStatus.NotHeld && HeldBody == null;
+                if (allowTestForClosest && (closest == null || Vector3.Distance(holdable.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position)))
                 {
                     closest = holdable;
                 }
                 outlineScript.Enabled = holdable.canBeHeld;
                 if (!holdable.canBeHeld) collidersList.Remove(c);
-            } else collidersList.Remove(c);
+            }
+            else collidersList.Remove(c);
         }
-        controlUI.SetHoldableTarget(closest); // null or real
+        if (HeldBody == null) controlUI.SetTargetAndTextsAuto(closest, playerInputs);
+        // else if (controlUI.anchor != HeldBody.transform)
+        // {
+        //     controlUI.SetTargetAndTextsAuto(HeldBodyHoldable, playerInputs);
+        // }
         var collidersExitedRange = lastColliders.Except(collidersList); // Any Colliders left over from last frame that aren't within range this frame
         lastColliders = collidersList;
         foreach (Collider c in collidersExitedRange)
         {
-            if (c!=null && c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
+            if (c != null && c.gameObject.TryGetComponent<Outline>(out Outline outlineScript))
             {
                 outlineScript.Enabled = false;
             }
@@ -178,5 +195,15 @@ public class PlayerThrow : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void SetControlHints()
+    {
+        controlHintsManager.ResetHints();
+        if (HeldBody != null)
+        {
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public enum HoldableStatus
@@ -23,7 +24,7 @@ public class Holdable : MonoBehaviour
     public bool customHeldRotation = false;
     public Quaternion heldRotation = Quaternion.identity;
     protected ConfigurableJoint holdJoint = null;
-    protected Rigidbody rb;
+    public Rigidbody rb { get; protected set; }
 
     public bool canBeHeld = true;
 
@@ -39,6 +40,9 @@ public class Holdable : MonoBehaviour
     private float dropTimer = 0f;
     private Transform holdPoint;
     private Transform dropPoint;
+
+    private ControlAnchorOnPoint controlUI = null;
+    private PlayerInputs currentPlayerInputs;
 
     protected virtual void Start()
     {
@@ -100,6 +104,11 @@ public class Holdable : MonoBehaviour
         }
 
         SetBodyDocile(holdingBody, true);
+        PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
+        currentPlayerInputs = playerThrow.GetComponent<PlayerInputs>();
+        controlUI = playerThrow.controlUI;
+        // controlUI.SetTargetAndTexts(this, currentPlayerInputs.GetButtonText(currentPlayerInputs.holdThrow), GetControlHint());
+        controlUI.SetHoldableTarget(null);
     }
 
     public virtual void OnThrow(float physicsIgnoreTime)
@@ -114,6 +123,9 @@ public class Holdable : MonoBehaviour
         if (!allowRotationCarryOver) rb.rotation = originalRotation;
 
         rb.mass = originalMass;
+
+        controlUI.SetHoldableTarget(null);
+        controlUI = null;
     }
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
@@ -158,6 +170,28 @@ public class Holdable : MonoBehaviour
     protected void RemoveFromHoldingBody()
     {
         PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
-        playerThrow.heldBody = null;
+        playerThrow.HeldBody = null;
+    }
+
+    public string GetControlHint()
+    {
+        return heldStatus switch
+        {
+            HoldableStatus.NotHeld => "Pick Up",
+            HoldableStatus.Dropping => "You shouldn't see this",
+            HoldableStatus.Held => "Throw",
+            _ => null,
+        };
+    }
+
+    public bool GetIsLongPress()
+    {
+        return heldStatus switch
+        {
+            HoldableStatus.NotHeld => false,
+            HoldableStatus.Dropping => false,
+            HoldableStatus.Held => true,
+            _ => false,
+        };
     }
 }

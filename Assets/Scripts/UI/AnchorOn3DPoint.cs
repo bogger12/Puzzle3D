@@ -27,6 +27,12 @@ public class AnchorOn3DPoint : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
+        if (anchor is RectTransform a)
+        {
+            if ((RectTransform)transform.parent == a) rt.anchoredPosition = Vector3.zero;
+            else rt.anchoredPosition = a.anchoredPosition;
+            return;
+        }
         Vector3 anchorPoint = anchor != null ? anchor.position : anchorPos;
         Vector3 screenPoint = sceneCamera.WorldToScreenPoint(anchorPoint);
         if (lockToScreenBounds) screenPoint = new Vector2(Mathf.Clamp(screenPoint.x, 0, sceneCamera.pixelWidth), Mathf.Clamp(screenPoint.y, 0, sceneCamera.pixelHeight));
