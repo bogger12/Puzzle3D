@@ -16,7 +16,18 @@ public enum HoldableStatus
 public class Holdable : MonoBehaviour
 {
     public HoldableStatus heldStatus;
-    protected Rigidbody holdingBody;
+    protected Rigidbody _holdingBody;
+    protected PlayerThrow playerThrow;
+
+    public Rigidbody HoldingBody
+    {
+        get => _holdingBody;
+        set
+        {
+            playerThrow = value != null ? value.GetComponent<PlayerThrow>() : null;
+            _holdingBody = value;
+        }
+    }
 
     public bool allowRotationCarryOver = true;
     public bool freezeRotationDuringCarry = false;
@@ -70,7 +81,7 @@ public class Holdable : MonoBehaviour
     public virtual void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
         heldStatus = HoldableStatus.Held;
-        this.holdingBody = holdingBody;
+        this.HoldingBody = holdingBody;
 
         rb.position = holdAnchor.position;
 
@@ -104,19 +115,17 @@ public class Holdable : MonoBehaviour
         }
 
         SetBodyDocile(holdingBody, true);
-        PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
-        currentPlayerInputs = playerThrow.GetComponent<PlayerInputs>();
         controlUI = playerThrow.controlUI;
         // controlUI.SetTargetAndTexts(this, currentPlayerInputs.GetButtonText(currentPlayerInputs.holdThrow), GetControlHint());
         controlUI.SetHoldableTarget(null);
+        AssignStaticHints(true);
     }
 
     public virtual void OnThrow(float physicsIgnoreTime)
     {
-        SetBodyDocile(holdingBody, false, physicsIgnoreTime);
+        SetBodyDocile(HoldingBody, false, physicsIgnoreTime);
         heldStatus = HoldableStatus.NotHeld;
         RemoveFromHoldingBody();
-        holdingBody = null;
         Destroy(holdJoint);
 
         rb.freezeRotation = originalFreezeRotation;
@@ -126,6 +135,8 @@ public class Holdable : MonoBehaviour
 
         controlUI.SetHoldableTarget(null);
         controlUI = null;
+        AssignStaticHints(false); // needs holdingbody (playerthrow)
+        HoldingBody = null;
     }
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
@@ -169,7 +180,7 @@ public class Holdable : MonoBehaviour
 
     protected void RemoveFromHoldingBody()
     {
-        PlayerThrow playerThrow = holdingBody.GetComponent<PlayerThrow>();
+        PlayerThrow playerThrow = HoldingBody.GetComponent<PlayerThrow>();
         playerThrow.HeldBody = null;
     }
 
@@ -193,5 +204,17 @@ public class Holdable : MonoBehaviour
             HoldableStatus.Held => true,
             _ => false,
         };
+    }
+
+    public virtual void AssignStaticHints(bool display)
+    {
+        ControlHintsManager controlHintsManager = playerThrow.controlHintsManager;
+        controlHintsManager.ResetHints();
+        if (display)
+        {
+            PlayerInputs playerInputs = playerThrow.playerInputs;
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+        }
     }
 }

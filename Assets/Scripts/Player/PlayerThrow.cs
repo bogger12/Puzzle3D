@@ -9,7 +9,7 @@ public class PlayerThrow : MonoBehaviour
 {
 
     // Input Component
-    private PlayerInputs playerInputs;
+    public PlayerInputs playerInputs;
     public Holdable HeldBodyHoldable { get; private set; } = null;
     private Rigidbody _heldBody;
     public Rigidbody HeldBody
@@ -19,7 +19,7 @@ public class PlayerThrow : MonoBehaviour
         {
             HeldBodyHoldable = value != null ? value.GetComponent<Holdable>() : null;
             _heldBody = value;
-            SetControlHints();
+            // SetControlHints();
         }
     }
     public Transform holdAnchor;
@@ -197,13 +197,13 @@ public class PlayerThrow : MonoBehaviour
         return closest;
     }
 
-    public void SetControlHints()
-    {
-        controlHintsManager.ResetHints();
-        if (HeldBody != null)
-        {
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
-        }
-    }
+    // public void SetControlHints()
+    // {
+    //     if (HeldBody != null)
+    //     {
+    //         HeldBodyHoldable.AssignStaticHints(true);
+    //         // controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
+    //         // controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+    //     }
+    // }
 }

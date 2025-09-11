@@ -44,7 +44,7 @@ public class HoldableFlower : Holdable
 
     public override void OnThrow(float physicsIgnoreTime)
     {
-        PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
+        PlayerMovement playerMovement = HoldingBody.GetComponent<PlayerMovement>();
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
@@ -55,16 +55,16 @@ public class HoldableFlower : Holdable
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (holdingBody != null && (!onlyGlideWhileButtonPress || playerInputs.jump.action.IsPressed()))
+        if (HoldingBody != null && (!onlyGlideWhileButtonPress || playerInputs.jump.action.IsPressed()))
         {
-            if (boostDuringJumpUp || holdingBody.linearVelocity.y < 0)
+            if (boostDuringJumpUp || HoldingBody.linearVelocity.y < 0)
             {
-                holdingBody.AddForce(playerGravity * playerUpwardsGravityMult * Vector3.up, ForceMode.Acceleration);
+                HoldingBody.AddForce(playerGravity * playerUpwardsGravityMult * Vector3.up, ForceMode.Acceleration);
                 // Limit downward velocity
                 if (playerMaxDownwardVelocity != 0)
                 {
-                    float newVelocityY = Mathf.Max(holdingBody.linearVelocity.y, -playerMaxDownwardVelocity);
-                    holdingBody.linearVelocity = new Vector3(holdingBody.linearVelocity.x, newVelocityY, holdingBody.linearVelocity.z);
+                    float newVelocityY = Mathf.Max(HoldingBody.linearVelocity.y, -playerMaxDownwardVelocity);
+                    HoldingBody.linearVelocity = new Vector3(HoldingBody.linearVelocity.x, newVelocityY, HoldingBody.linearVelocity.z);
                 }
             }
         }
