@@ -97,11 +97,29 @@ public class HoldableKey : Holdable
 
     public void SetActiveKeyHole(Keyhole keyHole)
     {
-        if (!inKeyHole && activeKeyHole!=keyHole) this.activeKeyHole = keyHole;
+        if (!inKeyHole && activeKeyHole != keyHole)
+        {
+            this.activeKeyHole = keyHole;
+            if (keyHole != null) AssignStaticKeyHints(true);
+            else AssignStaticHints(true);
+        }
+        // else AssignStaticHints(false);
         Debug.Log("Active Keyhole = " + (keyHole!=null?keyHole.name: keyHole));
     }
     public Keyhole GetActiveKeyHole()
     {
         return activeKeyHole;
+    }
+
+    public void AssignStaticKeyHints(bool display)
+    {
+        ControlHintsManager controlHintsManager = playerThrow.controlHintsManager;
+        controlHintsManager.ResetHints();
+        if (display)
+        {
+            PlayerInputs playerInputs = playerThrow.playerInputs;
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Unlock", false);
+            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+        }
     }
 }

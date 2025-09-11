@@ -154,7 +154,7 @@ public class PlayerThrow : MonoBehaviour
         {
             if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
             {
-                bool allowTestForClosest = holdable.heldStatus == HoldableStatus.NotHeld && HeldBody == null;
+                bool allowTestForClosest = holdable.heldStatus == HoldableStatus.NotHeld && HeldBody == null && holdable.canBeHeld;
                 if (allowTestForClosest && (closest == null || Vector3.Distance(holdable.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position)))
                 {
                     closest = holdable;
