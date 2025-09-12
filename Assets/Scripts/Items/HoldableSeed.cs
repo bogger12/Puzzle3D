@@ -27,7 +27,10 @@ public class HoldableSeed : Holdable
 
     void OnCollisionEnter(Collision collision)
     {
-        if (seedActive)
+        bool hasInteractableLayer = (LayerMask.NameToLayer("Interactable") & collision.collider.gameObject.layer) != 0;
+        bool hasPlayerLayer = (LayerMask.NameToLayer("Player") & collision.collider.gameObject.layer) != 0;
+        
+        if (seedActive && !hasInteractableLayer && !hasPlayerLayer)
         {
             seedActive = false;
             ContactPoint contact = collision.GetContact(0);
