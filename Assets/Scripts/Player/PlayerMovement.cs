@@ -2,6 +2,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerInputs))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -42,10 +43,13 @@ public class PlayerMovement : MonoBehaviour
     private float timeSinceJump = 0f;
     private float currentJumps;
 
+    // Input Component
+    private PlayerInputs playerInputs;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerInputs = GetComponent<PlayerInputs>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         currentJumps = numJumps;
@@ -73,9 +77,9 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded = CheckIsGrounded();
 
 
-        Vector2 playerInput;
-        playerInput.x = Input.GetAxis("Horizontal");
-        playerInput.y = Input.GetAxis("Vertical");
+        Vector2 playerInput = playerInputs.move.action.ReadValue<Vector2>();
+        // playerInput.x = Input.GetAxis("Horizontal");
+        // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
 
@@ -92,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
 
-        desiredJump |= Input.GetButtonDown("Jump");
+        desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
         Debug.DrawLine(transform.position, transform.position + upAxis * 5, Color.yellow);
         Debug.DrawRay(transform.position + upAxis * 1, moveDirection * 5, Color.red);
@@ -135,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump(float verticalSpeed)
     {
-        if (Input.GetButton("Jump"))
+        if (playerInputs.jump.action.IsPressed())
         {
 
             if (currentJumps > 0 && desiredJump)

@@ -7,10 +7,19 @@ public class RemoteActivate : MonoBehaviour
 
     public bool SetActive(bool active)
     {
+        if (activateable == null)
+        {
+            Debug.LogError("You need to set an activateable object for this RemoteActivate");
+            return false;
+        }
 #if UNITY_EDITOR
         lineColor = active ? Color.green : Color.red;
 #endif
         return activateable.SetActive(active);
+    }
+    public bool GetActive()
+    {
+        return activateable.GetActive();
     }
 
 #if UNITY_EDITOR

@@ -23,6 +23,10 @@ public class HoldableFlower : Holdable
     private float initialAirRotationSpeed;
 
     private float playerGravity;
+
+    // Input Component
+    private PlayerInputs playerInputs;
+
     public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
         base.HeldBy(holdingBody, holdAnchor);
@@ -35,29 +39,32 @@ public class HoldableFlower : Holdable
         playerMovement.maxAirAcceleration *= playerAirAccelerationMult;
         playerMovement.maxAirDeceleration *= playerAirDecelerationMult;
         playerMovement.airRotationSpeed *= playerAirRotationSpeedMult;
+        playerInputs = holdingBody.GetComponent<PlayerInputs>();
     }
 
-    public override void OnThrow()
+    public override void OnThrow(float physicsIgnoreTime)
     {
-        PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
+        PlayerMovement playerMovement = HoldingBody.GetComponent<PlayerMovement>();
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
-        base.OnThrow();
+        playerInputs = null;
+        base.OnThrow(physicsIgnoreTime);
     }
 
-    public void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        if (holdingBody != null && (!onlyGlideWhileButtonPress || Input.GetKey(KeyCode.Space)))
+        base.FixedUpdate();
+        if (HoldingBody != null && (!onlyGlideWhileButtonPress || playerInputs.jump.action.IsPressed()))
         {
-            if (boostDuringJumpUp || holdingBody.linearVelocity.y < 0)
+            if (boostDuringJumpUp || HoldingBody.linearVelocity.y < 0)
             {
-                holdingBody.AddForce(playerGravity * playerUpwardsGravityMult * Vector3.up, ForceMode.Acceleration);
+                HoldingBody.AddForce(playerGravity * playerUpwardsGravityMult * Vector3.up, ForceMode.Acceleration);
                 // Limit downward velocity
                 if (playerMaxDownwardVelocity != 0)
                 {
-                    float newVelocityY = Mathf.Max(holdingBody.linearVelocity.y, -playerMaxDownwardVelocity);
-                    holdingBody.linearVelocity = new Vector3(holdingBody.linearVelocity.x, newVelocityY, holdingBody.linearVelocity.z);
+                    float newVelocityY = Mathf.Max(HoldingBody.linearVelocity.y, -playerMaxDownwardVelocity);
+                    HoldingBody.linearVelocity = new Vector3(HoldingBody.linearVelocity.x, newVelocityY, HoldingBody.linearVelocity.z);
                 }
             }
         }

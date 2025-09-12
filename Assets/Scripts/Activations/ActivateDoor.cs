@@ -5,7 +5,7 @@ public class ActivateDoor : Activateable
 {
     private Animator animator;
 
-    public void Start()
+    public void Awake()
     {
         animator = GetComponent<Animator>();
     }

@@ -10,4 +10,8 @@ public abstract class Activateable : MonoBehaviour
         this.active = active;
         return active;
     }
+    public virtual bool GetActive()
+    {
+        return active;
+    }
 }

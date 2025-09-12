@@ -36,6 +36,13 @@ public class WaterfallDisplacement : MonoBehaviour
     {
         Debug.Log(other.gameObject.name + " Entered waterfall");
         if (other.isTrigger || other.attachedRigidbody == null) return;
+        Burnable burnable = other.GetComponentInChildren<Burnable>();
+        if (burnable != null)
+        {
+            Debug.Log("Reset burn of " + burnable.transform.parent);
+            burnable.ResetBurn();
+            // TODO: Play put out sound effect
+        }
         if ((displacingTypes.value & (1 << other.transform.gameObject.layer)) > 0) // Is correct layer
         {
             insideWaterfall.Add(other.transform);
