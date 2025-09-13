@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class ActivateBridge : Activateable
+public class ActivateAnimateable : Activateable
 {
-    private Animator animator;
+    protected Animator animator;
 
-    public void Start()
+    public void Awake()
     {
         animator = GetComponent<Animator>();
     }
@@ -15,7 +15,7 @@ public class ActivateBridge : Activateable
         base.SetActive(active);
         Debug.Log(transform.name + " set to" + active);
         Debug.Log(animator.name);
-        animator.SetBool("open", active);
+        animator.SetBool("active", active);
         return active;
     }
 }

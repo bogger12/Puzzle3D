@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: open
+    m_ConditionEvent: active
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1521797736313572369}
@@ -61,7 +61,7 @@ AnimatorController:
   m_Name: Bridge
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: open
+  - m_Name: active
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -118,10 +118,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -1521797736313572369}
-    m_Position: {x: 310, y: 100, z: 0}
+    m_Position: {x: 310, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5834852062203217818}
-    m_Position: {x: 310, y: -20, z: 0}
+    m_Position: {x: 310, y: 10, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -141,7 +141,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: open
+    m_ConditionEvent: active
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5834852062203217818}
