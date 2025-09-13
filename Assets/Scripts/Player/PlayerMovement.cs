@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 upAxis, rightAxis, forwardAxis;
     Vector3 desiredVelocity;
+    Vector3 accumulatedVelocity = Vector3.zero;
+    [Range(0f, 1f)]
+    public float accumulatedVelocityDragMult = 0.9f;
     bool desiredJump;
 
     [Header("Player Values")]
@@ -125,8 +128,15 @@ public class PlayerMovement : MonoBehaviour
             Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
+        // desiredVelocity = Vector3.zero;
 
-        rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
+
+        accumulatedVelocity *= accumulatedVelocityDragMult;
+        accumulatedVelocity = Vector3.ClampMagnitude(accumulatedVelocity, acceleration);
+
+        rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ) + accumulatedVelocity;
+
+
 
     }
 
@@ -177,5 +187,11 @@ public class PlayerMovement : MonoBehaviour
 
             rb.MoveRotation(currentRotationNormal);
         }
+    }
+
+
+    public void AddVelocity(Vector3 vel)
+    {
+        accumulatedVelocity += vel;
     }
 }

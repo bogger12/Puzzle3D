@@ -156,6 +156,7 @@ MonoBehaviour:
   maxAirAcceleration: 5
   maxDeceleration: 20
   maxAirDeceleration: 10
+  accumulatedVelocityDragMult: 0.4
   numJumps: 1
 --- !u!114 &7961765390995167856
 MonoBehaviour:
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2923e93ecad7a4df7ab93ef13600ba55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heldBody: {fileID: 0}
+  playerInputs: {fileID: 0}
   holdAnchor: {fileID: 3368514791729360281}
   dropAnchor: {fileID: 7399678272360219103}
   dropTime: 0.5
@@ -183,6 +184,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   UIThrowProgressImage: {fileID: 0}
+  controlUI: {fileID: 0}
+  controlHintsManager: {fileID: 0}
 --- !u!114 &3455128250116054181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,42 +276,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIndex: 0
   playerInput: {fileID: 0}
-  move:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b97462b3-7eec-484f-8731-d45c97fd9c93
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  look:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 469ab5a4-4b4f-466d-87fa-5b44cbdb48c0
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  jump:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 60671c14-b849-4d26-b133-41c433a1f597
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  holdThrow:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ecf51342-d321-4c61-aa98-8846da4205ee
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  move: {fileID: 0}
+  look: {fileID: 0}
+  jump: {fileID: 0}
+  holdThrow: {fileID: 0}
 --- !u!1 &7356622532958948699
 GameObject:
   m_ObjectHideFlags: 0
