@@ -264,4 +264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 0
+  permanentlyOpens: 0
   activationsNeeded: 2
+  needsExactNumActivations: 0
