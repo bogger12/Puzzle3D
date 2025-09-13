@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 4429785620961795684}
   - component: {fileID: 4116278772179429353}
   - component: {fileID: 1090644382501203063}
-  m_Layer: 0
+  - component: {fileID: 4435820719468040193}
+  - component: {fileID: 9105089303652775782}
+  m_Layer: 7
   m_Name: DestructibleBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,3 +152,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 5405544353503567449, guid: e4d9098d8532e4a758aa4a41936a29eb, type: 3}
+  speedToSet: 10
+--- !u!114 &4435820719468040193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224201714972496465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72a408068a7041038debe24a2ec413a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMaterial: {fileID: 2100000, guid: 30fba5a19bed042329f5735c7498e268, type: 2}
+  enabled: 0
+  applyToChildren: 1
+--- !u!114 &9105089303652775782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224201714972496465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2904d82bbc503456fbf180b3e6181cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldStatus: 0
+  allowRotationCarryOver: 1
+  freezeRotationDuringCarry: 0
+  lockItemToPlayer: 0
+  customHeldRotation: 0
+  heldRotation: {x: 0, y: 0, z: 0, w: 1}
+  canBeHeld: 1
