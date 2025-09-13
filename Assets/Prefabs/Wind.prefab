@@ -124,5 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 100
-  playerPushForce: 100
+  playerPushForce: 30
+  maxObjectSpeed: 10
   customDirection: {x: 0, y: 0, z: 0}
