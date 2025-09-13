@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded { get; private set; }
     private Vector3 moveDirection;
 
+    private Vector3 groundNormal;
+    public float maxGroundAngle = 45;
+    public bool useNormalOfGround = true;
     Vector3 upAxis, rightAxis, forwardAxis;
     Vector3 desiredVelocity;
     Vector3 accumulatedVelocity = Vector3.zero;
@@ -85,32 +88,38 @@ public class PlayerMovement : MonoBehaviour
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
+        Vector3 movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
 
-        if (playerInputSpace)
-        {
-            rightAxis = Vector3.ProjectOnPlane(playerInputSpace.right, upAxis);
-            forwardAxis = Vector3.ProjectOnPlane(playerInputSpace.forward, upAxis);
-        }
-        else
-        {
-            rightAxis = Vector3.ProjectOnPlane(Vector3.right, upAxis);
-            forwardAxis = Vector3.ProjectOnPlane(Vector3.forward, upAxis);
-        }
+        rightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, upAxis);
+        forwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, upAxis);
 
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
 
         desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
-        Debug.DrawLine(transform.position, transform.position + upAxis * 5, Color.yellow);
-        Debug.DrawRay(transform.position + upAxis * 1, moveDirection * 5, Color.red);
+        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
     }
 
     void AdjustVelocity()
     {
-        Vector3 xAxis = Vector3.ProjectOnPlane(rightAxis, upAxis).normalized;
-        Vector3 zAxis = Vector3.ProjectOnPlane(forwardAxis, upAxis).normalized;
+
+        Vector3 movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;
+
+        Vector3 movementRightAxis = rightAxis;
+        Vector3 movementForwardAxis = forwardAxis;
+
+        if (useNormalOfGround) {
+            movementRightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, movementUpAxis);
+            movementForwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, movementUpAxis);
+        }
+
+        Vector3 xAxis = Vector3.ProjectOnPlane(movementRightAxis, upAxis).normalized;
+        Vector3 zAxis = Vector3.ProjectOnPlane(movementForwardAxis, upAxis).normalized;
+
+
 
         Debug.DrawRay(transform.position, xAxis * 5, Color.red);
         Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
@@ -144,6 +153,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 castFrom = transform.position + transform.up * 1f;
         bool didHit = Physics.SphereCast(castFrom, 0.5f, -transform.up, out RaycastHit hit, groundDetectionDistance + 0.5f, groundDetectionLayer);
+        if (Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
         return didHit;
     }
 
