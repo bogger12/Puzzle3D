@@ -15,16 +15,14 @@ public class NPCInteractable : MonoBehaviour
     dialogueData = DialogueLoader.Load(npcId);
   }
 
-  public void Interact()
+  public void Interact(Transform playerCamera)
   {
-
     if (dialogueData == null || dialogueData.lines.Length == 0)
     {
       Debug.LogWarning($"No dialogue available for {npcId}");
       return;
     }
 
-    // If we're at the end, close the bubble and stop
     if (currentLineIndex >= dialogueData.lines.Length)
     {
       if (activeBubble != null)
@@ -32,7 +30,7 @@ public class NPCInteractable : MonoBehaviour
         Destroy(activeBubble.gameObject);
         activeBubble = null;
       }
-      currentLineIndex = 0; // reset if you want repeatable dialogue
+      currentLineIndex = 0;
       return;
     }
 
@@ -43,16 +41,15 @@ public class NPCInteractable : MonoBehaviour
       iconType = SpeechBubble.IconType.Neutral;
     }
 
-    // If bubble already exists, just update it
     if (activeBubble == null)
     {
       GameObject bubble = Instantiate(speechBubblePrefab, transform);
       activeBubble = bubble.GetComponent<SpeechBubble>();
       activeBubble.Initialise(
-        new Vector3(0, 2f),
-        iconType,
-        line.text,
-        Camera.main.transform // 👈 pass player camera or player transform
+          new Vector3(0, 2f),
+          iconType,
+          line.text,
+          playerCamera // ✅ now we pass in the correct camera
       );
     }
     else

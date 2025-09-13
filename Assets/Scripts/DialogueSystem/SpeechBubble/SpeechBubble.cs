@@ -57,7 +57,7 @@ public class SpeechBubble : MonoBehaviour
   {
     transform.localPosition = localPosition;
 
-    lookTransform = lookAt; // 👈 assign player
+    lookTransform = lookAt;
     Setup(iconType, text);
   }
   public void Setup(IconType iconType, string text)
@@ -66,10 +66,11 @@ public class SpeechBubble : MonoBehaviour
     textMeshPro.ForceMeshUpdate();
 
     Vector2 textSize = textMeshPro.GetRenderedValues(false);
-    Vector2 padding = new Vector2(1.25f, 0.25f);
-    backgroundSpriteRenderer.size = textSize / 2 + padding;
+    Vector2 padding = new Vector2(2f, 0.5f);
 
-    Vector2 offset = new Vector2(-3f, 0f);
+    backgroundSpriteRenderer.size = textSize + padding;
+
+    Vector2 offset = new Vector2(-2.2f, 0f);
     backgroundSpriteRenderer.transform.localPosition =
         new Vector3(backgroundSpriteRenderer.size.x / 2f + offset.x, 0f);
 
