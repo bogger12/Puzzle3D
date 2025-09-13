@@ -7,6 +7,8 @@ public class WindPusher : MonoBehaviour
     public float pushForce;
     public float playerPushForce;
 
+    public float maxObjectSpeed = 10f;
+
     public Vector3 customDirection = Vector3.zero;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,7 +27,7 @@ public class WindPusher : MonoBehaviour
     {
         if (other.attachedRigidbody != null)
         {
-            float maxSpeed = 10f;
+            float maxSpeed = maxObjectSpeed;
             PlayerMovement movement = other.GetComponent<PlayerMovement>();
             if (movement != null)
                 maxSpeed = movement.movementSpeed;
