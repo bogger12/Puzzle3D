@@ -8,7 +8,7 @@ public class PressurePlate : MonoBehaviour
 
     private bool active = false;
 
-    Dictionary<Collider, bool> withinTrigger = new Dictionary<Collider, bool>();
+    Dictionary<Collider, bool> withinTrigger = new();
 
     private RemoteActivate remoteActivate;
 
@@ -23,6 +23,22 @@ public class PressurePlate : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        List<Collider> toRemove = new();
+        foreach (var keyValue in withinTrigger)
+        {
+            if (keyValue.Key == null) toRemove.Add(keyValue.Key);
+        }
+        if (toRemove.Count > 0)
+        {
+            foreach (var c in toRemove) withinTrigger.Remove(c);
+            bool shouldBeActive = !active && withinTrigger.Count > 0;
+            remoteActivate.SetActive(shouldBeActive ? setValue : setValue);
+            active = shouldBeActive;
+        }
+    }
+
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.isTrigger) return;
@@ -32,14 +48,7 @@ public class PressurePlate : MonoBehaviour
             remoteActivate.SetActive(setValue);
             active = true;
         }
-        
-        // string items = "";
-            // foreach (var item in withinTrigger)
-            // {
-            //     items += item.Key.name;
-            // }
-            // Debug.Log("enter: " + items);
-        }
+    }
 
     public void OnTriggerExit(Collider other)
     {
@@ -50,12 +59,5 @@ public class PressurePlate : MonoBehaviour
             remoteActivate.SetActive(!setValue);
             active = false;
         }
-
-        // string items = "";
-            // foreach (var item in withinTrigger)
-            // {
-            //     items += item.Key.name;
-            // }
-            // Debug.Log("exit: " + items);
-        }
+    }
 }

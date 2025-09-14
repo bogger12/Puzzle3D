@@ -27,7 +27,6 @@ public class RemoteActivateMultiple : RemoteActivate
     }
 
 #if UNITY_EDITOR
-    private Color lineColor = Color.red;
     protected override void OnDrawGizmos()
     {
         Gizmos.color = lineColor;

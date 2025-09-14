@@ -22,7 +22,7 @@ public class RemoteActivate : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private Color lineColor = Color.red;
+    protected Color lineColor = Color.red;
     protected virtual void OnDrawGizmos()
     {
         if (activateable != null)

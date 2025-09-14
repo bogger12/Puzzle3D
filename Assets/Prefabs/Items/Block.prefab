@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5339170541375672580}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -80.49, y: 9.149, z: 11.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -165,7 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2904d82bbc503456fbf180b3e6181cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heldStatus: 0
   allowRotationCarryOver: 1
   freezeRotationDuringCarry: 0
+  lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
+  canBeHeld: 1
