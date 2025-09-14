@@ -1,5 +1,14 @@
 using UnityEngine;
 
+
+public enum KeyState
+{
+    None,
+    UnlockTurn,
+    LockTurn,
+    InKeyHole
+}
+
 [RequireComponent(typeof(Animator))]
 public class HoldableKey : Holdable
 {
@@ -7,12 +16,14 @@ public class HoldableKey : Holdable
     private Animator animator;
 
     [HideInInspector]
-    public bool inKeyHole = false;
+    // public bool inKeyHole = false;
     private Keyhole activeKeyHole = null;
 
 
     private Rigidbody currentHoldingBody;
     private Transform currentHoldAnchor;
+
+    private KeyState keyState = KeyState.None;
 
     protected override void Start()
     {
@@ -25,7 +36,9 @@ public class HoldableKey : Holdable
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         bool finishedOpenAnimation = stateInfo.IsName("KeyOpen") && stateInfo.normalizedTime >= 1f && !stateInfo.loop;
-        if (!animator.IsInTransition(0) && !inKeyHole && animator.enabled)
+        bool finishedClosedAnimation = stateInfo.IsName("KeyClose");
+
+        if (finishedClosedAnimation && keyState == KeyState.LockTurn && animator.enabled)
         {
             TakeKeyFromHole();
             if (currentHoldingBody != null && currentHoldAnchor != null)
@@ -34,9 +47,9 @@ public class HoldableKey : Holdable
                 currentHoldingBody = null;
                 currentHoldAnchor = null;
             }
-            Debug.Log("disabling key animation after finish");
+            // Debug.Log("disabling key animation after finish");
         }
-        else if (finishedOpenAnimation && inKeyHole && animator.enabled && !activeKeyHole.FinishedUnlockAnim)
+        else if (finishedOpenAnimation && keyState == KeyState.UnlockTurn && animator.enabled && !activeKeyHole.FinishedUnlockAnim)
         {
             activeKeyHole.FinishedKeyUnlockAnim();
         }
@@ -45,12 +58,12 @@ public class HoldableKey : Holdable
     {
         // base.HeldBy(holdingBody, holdAnchor);
         // if (activeKeyHole && inKeyHole && !activeKeyHole.allowKeyPickup) return;
-        if (inKeyHole)
+        if (keyState != KeyState.None)
         {
             this.currentHoldingBody = holdingBody;
             this.currentHoldAnchor = holdAnchor;
             animator.SetBool("open", false);
-            inKeyHole = false;
+            keyState = KeyState.LockTurn;
         }
         else base.HeldBy(holdingBody, holdAnchor);
         // if (inKeyHole) TakeKeyFromHole();
@@ -63,7 +76,7 @@ public class HoldableKey : Holdable
 
     public override void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
     {
-        if (!inKeyHole && activeKeyHole)
+        if (keyState == KeyState.None && activeKeyHole)
         {
             base.OnThrow(0f);
             PutKeyInHole(activeKeyHole.keyAnchor);
@@ -79,7 +92,8 @@ public class HoldableKey : Holdable
         animator.enabled = true;
         animator.SetBool("open", true);
         rb.isKinematic = true;
-        inKeyHole = true;
+        // inKeyHole = true;
+        keyState = KeyState.UnlockTurn;
 
         activeKeyHole.Unlock();
     }
@@ -91,20 +105,21 @@ public class HoldableKey : Holdable
         // animator.SetBool("open", false);
         animator.enabled = false;
         rb.isKinematic = false;
-        inKeyHole = false;
+        // inKeyHole = false;
+        keyState = KeyState.None;
         activeKeyHole.Lock();
     }
 
     public void SetActiveKeyHole(Keyhole keyHole)
     {
-        if (!inKeyHole && activeKeyHole != keyHole)
+        if (keyState == KeyState.None && activeKeyHole != keyHole)
         {
             this.activeKeyHole = keyHole;
             if (keyHole != null) AssignStaticKeyHints(true);
             else AssignStaticHints(true);
         }
         // else AssignStaticHints(false);
-        Debug.Log("Active Keyhole = " + (keyHole!=null?keyHole.name: keyHole));
+        // Debug.Log("Active Keyhole = " + (keyHole!=null?keyHole.name: keyHole));
     }
     public Keyhole GetActiveKeyHole()
     {

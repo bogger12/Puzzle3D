@@ -10,12 +10,9 @@ public class ActivateAnimateable : Activateable
         animator = GetComponent<Animator>();
     }
 
-    public override bool SetActive(bool active)
+    public override void SetActive(bool active)
     {
         base.SetActive(active);
-        Debug.Log(transform.name + " set to" + active);
-        Debug.Log(animator.name);
         animator.SetBool("active", active);
-        return active;
     }
 }

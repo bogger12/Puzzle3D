@@ -5,10 +5,9 @@ public abstract class Activateable : MonoBehaviour
 
     public bool active = false;
 
-    public virtual bool SetActive(bool active)
+    public virtual void SetActive(bool active)
     {
         this.active = active;
-        return active;
     }
     public virtual bool GetActive()
     {

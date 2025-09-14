@@ -30,17 +30,17 @@ public class ControlHintsManager : MonoBehaviour
 
     public void AssignHint(string buttonText, string hintText, bool longPress)
     {
-        Debug.Log("Assigning hint of " + hintText);
+        // Debug.Log("Assigning hint of " + hintText);
         foreach (RectTransform rt in hintAnchors)
         {
             if (!rt.GetChild(0).gameObject.activeInHierarchy)
             {
-                Debug.Log("Successfully Assigned " + hintText);
+                // Debug.Log("Successfully Assigned " + hintText);
                 controlAnchors[rt].gameObject.SetActive(true);
                 controlAnchors[rt].SetButtonText(buttonText);
                 controlAnchors[rt].SetHintText(hintText);
                 controlAnchors[rt].longPressIcon.SetActive(longPress);
-                Debug.Log(longPress + " " + controlAnchors[rt].longPressIcon.name + " is " + controlAnchors[rt].longPressIcon.activeInHierarchy);
+                // Debug.Log(longPress + " " + controlAnchors[rt].longPressIcon.name + " is " + controlAnchors[rt].longPressIcon.activeInHierarchy);
                 return;
             }
         }

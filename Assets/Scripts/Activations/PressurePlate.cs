@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlate : RemoteActivate
+[RequireComponent(typeof(RemoteActivate))]
+public class PressurePlate : MonoBehaviour
 {
     public bool setValue = true;
 
@@ -9,12 +10,15 @@ public class PressurePlate : RemoteActivate
 
     Dictionary<Collider, bool> withinTrigger = new Dictionary<Collider, bool>();
 
+    private RemoteActivate remoteActivate;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        remoteActivate = GetComponent<RemoteActivate>();
         if (!setValue)
         {
-            SetActive(true);
+            remoteActivate.SetActive(true);
             active = false;
         }
     }
@@ -25,7 +29,7 @@ public class PressurePlate : RemoteActivate
         if (!withinTrigger.ContainsKey(collider)) withinTrigger.Add(collider, true);
         if (!active && withinTrigger.Count > 0)
         {
-            SetActive(setValue);
+            remoteActivate.SetActive(setValue);
             active = true;
         }
         
@@ -43,7 +47,7 @@ public class PressurePlate : RemoteActivate
         if (withinTrigger.ContainsKey(other)) withinTrigger.Remove(other);
         if (active && withinTrigger.Count == 0)
         {
-            SetActive(!setValue);
+            remoteActivate.SetActive(!setValue);
             active = false;
         }
 

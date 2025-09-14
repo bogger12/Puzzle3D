@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ActivateDoor : ActivateAnimateable
 {
-    public override bool SetActive(bool active)
+    public override void SetActive(bool active)
     {
-        return base.SetActive(active);
+        base.SetActive(active);
     }
 }

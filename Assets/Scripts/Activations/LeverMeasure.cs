@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(HingeJoint))]
-public class LeverMeasure : RemoteActivate
+[RequireComponent(typeof(RemoteActivate))]
+public class LeverMeasure : MonoBehaviour
 {
-
+    private RemoteActivate remoteActivate;
     private HingeJoint hinge;
 
     private bool lastStatus = false;
@@ -11,6 +12,7 @@ public class LeverMeasure : RemoteActivate
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        remoteActivate = GetComponent<RemoteActivate>();
         hinge = GetComponent<HingeJoint>();
     }
 
@@ -19,7 +21,7 @@ public class LeverMeasure : RemoteActivate
     {
         bool currentStatus = hinge.angle > 0;
         VisualVarDisplay.SetDebugBool("lever", currentStatus);
-        if (currentStatus != lastStatus) SetActive(currentStatus);
+        if (currentStatus != lastStatus) remoteActivate.SetActive(currentStatus);
         lastStatus = currentStatus;
     }
 }
