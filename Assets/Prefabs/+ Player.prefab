@@ -158,7 +158,7 @@ MonoBehaviour:
   maxAirDeceleration: 10
   maxGroundAngle: 45
   useNormalOfGround: 0
-  accumulatedVelocityDragMult: 0.4
+  accumulatedVelocityDragMult: 0.45
   numJumps: 1
 --- !u!114 &7961765390995167856
 MonoBehaviour:

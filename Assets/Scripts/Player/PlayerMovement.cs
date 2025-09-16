@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
         float currentZ = Vector3.Dot(rb.linearVelocity, zAxis);
 
-        bool isDecelerating = desiredVelocity.magnitude < rb.linearVelocity.magnitude;
+        bool isDecelerating = (desiredVelocity + accumulatedVelocity).magnitude < rb.linearVelocity.magnitude;
         float acceleration = isDecelerating ? (IsGrounded ? maxDeceleration : maxAirDeceleration) :
             (IsGrounded ? maxAcceleration : maxAirAcceleration);
         float maxSpeedChange = acceleration * Time.deltaTime;
@@ -142,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
         accumulatedVelocity *= accumulatedVelocityDragMult;
         accumulatedVelocity = Vector3.ClampMagnitude(accumulatedVelocity, acceleration);
+        Debug.Log("accumulatedVelocity = " + accumulatedVelocity);
 
         rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ) + accumulatedVelocity;
 

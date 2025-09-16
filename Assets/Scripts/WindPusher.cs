@@ -30,14 +30,14 @@ public class WindPusher : MonoBehaviour
         {
             float maxSpeed = maxObjectSpeed;
             PlayerMovement movement = other.GetComponent<PlayerMovement>();
-            if (movement != null)
-                maxSpeed = movement.movementSpeed;
+            // if (movement != null)
+            //     maxSpeed = movement.movementSpeed;
             Vector3 direction = Vector3.Normalize(customDirection != Vector3.zero ? customDirection : transform.up);
 
             // float speed = pushForce;
             // other.attachedRigidbody.MovePosition(other.attachedRigidbody.position + speed * Time.deltaTime * direction);
             Debug.Log("Current velocity: " + other.attachedRigidbody.linearVelocity);
-            if ((Vector3.Dot(other.attachedRigidbody.linearVelocity,direction)*direction).magnitude < maxSpeed)
+            if (Vector3.Dot(other.attachedRigidbody.linearVelocity,direction) < maxSpeed) // Useless if
             {
                 Debug.Log("adding force");
                 if (movement != null) movement.AddVelocity(playerPushForce * Time.deltaTime * direction);
