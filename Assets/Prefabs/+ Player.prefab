@@ -150,12 +150,14 @@ MonoBehaviour:
   jumpExtraAcceleration: 10
   groundDetectionLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 193
   groundDetectionDistance: 1
   maxAcceleration: 10
   maxAirAcceleration: 5
   maxDeceleration: 20
   maxAirDeceleration: 10
+  maxGroundAngle: 45
+  useNormalOfGround: 0
   accumulatedVelocityDragMult: 0.4
   numJumps: 1
 --- !u!114 &7961765390995167856

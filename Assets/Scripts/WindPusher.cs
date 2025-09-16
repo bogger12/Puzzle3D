@@ -8,6 +8,7 @@ public class WindPusher : MonoBehaviour
     public float playerPushForce;
 
     public float maxObjectSpeed = 10f;
+    public bool pushHeldItem = false;
 
     public Vector3 customDirection = Vector3.zero;
 
@@ -25,7 +26,7 @@ public class WindPusher : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.attachedRigidbody != null)
+        if (other.attachedRigidbody != null && (pushHeldItem || !(other.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)))
         {
             float maxSpeed = maxObjectSpeed;
             PlayerMovement movement = other.GetComponent<PlayerMovement>();

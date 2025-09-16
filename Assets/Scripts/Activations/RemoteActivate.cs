@@ -9,7 +9,8 @@ public class RemoteActivate : MonoBehaviour
     {
         if (activateable == null)
         {
-            Debug.LogError("You need to set an activateable object for this RemoteActivate");
+            Debug.LogWarning("You need to set an activateable object for this RemoteActivate");
+            return;
         }
 #if UNITY_EDITOR
         lineColor = active ? Color.green : Color.red;
