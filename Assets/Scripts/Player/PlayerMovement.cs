@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
         accumulatedVelocity *= accumulatedVelocityDragMult;
         accumulatedVelocity = Vector3.ClampMagnitude(accumulatedVelocity, acceleration);
-        Debug.Log("accumulatedVelocity = " + accumulatedVelocity);
+        // Debug.Log("accumulatedVelocity = " + accumulatedVelocity);
 
         rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ) + accumulatedVelocity;
 

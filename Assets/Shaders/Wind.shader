@@ -69,7 +69,8 @@ Shader "Unlit/Wind"
                 float noiseSampleY = tex2Dlod(_MainTex, float4((o.uv+float2(0.5,0.5))+_Time.xx,0,0)).r;
 
                 // float2 newuvs = o.uv * 1 + float2(0,_Time.x*_Speed);
-                float4 vertexWorld = mul(unity_ObjectToWorld, v.vertex) + _VertexOffset * float4(sin(_VertexOffsetSpeed*_Time.x*noiseSampleX+_VertexOffsetSpeed*o.uv.x)*noiseSampleX,sin(_VertexOffsetSpeed*_Time.x*noiseSampleX+_VertexOffsetSpeed*o.uv.y)*noiseSampleY,0,0);
+                float3 offset = _VertexOffset * float4(sin(_VertexOffsetSpeed*_Time.x+ noiseSampleX * 10.0 +_VertexOffsetSpeed*o.uv.x)*noiseSampleX,sin(_VertexOffsetSpeed*_Time.x+ noiseSampleY * 10.0 +_VertexOffsetSpeed*o.uv.y)*noiseSampleY,0,0);
+                float4 vertexWorld = mul(unity_ObjectToWorld, v.vertex) + float4(offset,0);
                 float4 vertexObjectNew = mul(unity_WorldToObject, vertexWorld);
                 o.vertex = UnityObjectToClipPos(vertexObjectNew);
                 o.wPos = mul(unity_ObjectToWorld, v.vertex);
