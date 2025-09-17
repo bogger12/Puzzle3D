@@ -75,6 +75,7 @@ Shader "Toon/Lit Tri Planar Normal" {
 		_RimPower("Rim Power", Range(-2,20)) = 1
 		_RimColor("Rim Color Top", Color) = (0.5,0.5,0.5,1)
 		_RimColor2("Rim Color Side/Bottom", Color) = (0.5,0.5,0.5,1)
+		_DetailThreshold("Detail Threshold", Float) = 0.5
 	}
 
 		SubShader{
@@ -143,6 +144,7 @@ Shader "Toon/Lit Tri Planar Normal" {
 	float3 _TopColor;
 	float3 _SideColor;
 
+	float _DetailThreshold;
 	// struct Input {
 	// 	float2 uv_MainTex : TEXCOORD0;
 	// 	float3 worldPos; // world position built-in value
@@ -240,7 +242,8 @@ Shader "Toon/Lit Tri Planar Normal" {
 		float3 triplanarTex = topTextureResult + sideTextureResult + topTextureEdgeResult;
 
 		// float whiteValue = saturate(dot(mixedDiffuse.rgb, float3(0.333, 0.333, 0.333))*20);
-		o.Albedo = lerp(triplanarTex, mixedDiffuse.rgba, mixedDiffuse.a);
+		float maskValue = _DetailThreshold>0 ? int(mixedDiffuse.a>_DetailThreshold) : mixedDiffuse.a;
+		o.Albedo = lerp(triplanarTex, mixedDiffuse.rgba, maskValue);
 		// o.Albedo = triplanarTex+ mixedDiffuse.rgb;
 		// o.Albedo = whiteValue.xxx;
 		// o.Albedo = mixedDiffuse.rgb;
