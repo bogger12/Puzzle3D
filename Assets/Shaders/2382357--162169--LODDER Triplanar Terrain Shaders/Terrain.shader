@@ -90,6 +90,7 @@ Shader "Toon/Lit Tri Planar Normal" {
 // #pragma surface surf ToonRamp
 		#pragma surface surf ToonRamp vertex:SplatmapVert finalcolor:SplatmapFinalColor finalgbuffer:SplatmapFinalGBuffer fullforwardshadows
 		#pragma target 3.0
+		#pragma multi_compile_fog
 		// needs more than 8 texcoords
 		#pragma exclude_renderers gles
 		#include "UnityPBSLighting.cginc"
@@ -118,7 +119,7 @@ Shader "Toon/Lit Tri Planar Normal" {
 
 		half4 c;
 		// c.rgb = s.Albedo * _LightColor0.rgb * ramp * (atten * 2);
-		c.rgb = s.Albedo * _LightColor0.rgb * (atten * 2);
+		c.rgb = s.Albedo * _LightColor0.rgb * (atten);
 		c.a = 0;
 		return c;
 	}
