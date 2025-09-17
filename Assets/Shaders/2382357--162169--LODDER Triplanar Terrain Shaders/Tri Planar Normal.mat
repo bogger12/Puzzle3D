@@ -90,15 +90,15 @@ Material:
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
-    - _NoiseScale: -0.15
-    - _RimPower: 6.3
-    - _Scale: 0.31
-    - _SideScale: 0.18
+    - _NoiseScale: 0.13
+    - _RimPower: 7.7
+    - _Scale: 0.3
+    - _SideScale: 0.3
     - _Smoothness0: 1
     - _Smoothness1: 1
     - _Smoothness2: 1
     - _Smoothness3: 1
-    - _TopSpread: 0.85
+    - _TopSpread: 0.44
     - _offset0x: 0
     - _offset0y: 0
     - _offset0z: 0
