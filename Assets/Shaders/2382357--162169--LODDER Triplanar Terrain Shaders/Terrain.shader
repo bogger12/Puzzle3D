@@ -42,27 +42,29 @@ Shader "Toon/Lit Tri Planar Normal" {
 		 _tiles3x ("tile3X", float) = 0.03
 		 _tiles3y ("tile3Y", float) = 0.03
 		 _tiles3z ("tile3Z", float) = 0.03
-		 _offset0x ("offset0X", float) = 0
-		 _offset0y ("offset0Y", float) = 0
-		 _offset0z ("offset0Z", float) = 0
-		 _offset1x ("offset1X", float) = 0
-		 _offset1y ("offset1Y", float) = 0
-		 _offset1z ("offset1Z", float) = 0
-		 _offset2x ("offset2X", float) = 0
-		 _offset2y ("offset2Y", float) = 0
-		 _offset2z ("offset2Z", float) = 0
-		 _offset3x ("offset3X", float) = 0
-		 _offset3y ("offset3Y", float) = 0
-		 _offset3z ("offset3Z", float) = 0
+		//  _offset0x ("offset0X", float) = 0
+		//  _offset0y ("offset0Y", float) = 0
+		//  _offset0z ("offset0Z", float) = 0
+		//  _offset1x ("offset1X", float) = 0
+		//  _offset1y ("offset1Y", float) = 0
+		//  _offset1z ("offset1Z", float) = 0
+		//  _offset2x ("offset2X", float) = 0
+		//  _offset2y ("offset2Y", float) = 0
+		//  _offset2z ("offset2Z", float) = 0
+		//  _offset3x ("offset3X", float) = 0
+		//  _offset3y ("offset3Y", float) = 0
+		//  _offset3z ("offset3Z", float) = 0
 
 
 
 		_Color("Main Color", Color) = (0.5,0.5,0.5,1)
 		_MainTex("Top Texture", 2D) = "white" {}
-		_NormalT("Top Normal", 2D) = "bump" {}
+		_TopColor("Top Color", Color) = (1,1,1,1)
+		// _NormalT("Top Normal", 2D) = "bump" {}
 		_MainTexSide("Side/Bottom Texture", 2D) = "white" {}
-		_Normal("Side/Bottom Normal", 2D) = "bump" {}
-		_Ramp("Toon Ramp (RGB)", 2D) = "gray" {}
+		_SideColor("Side Color", Color) = (1,1,1,1)
+		// _Normal("Side/Bottom Normal", 2D) = "bump" {}
+		// _Ramp("Toon Ramp (RGB)", 2D) = "gray" {}
 		_Noise("Noise", 2D) = "white" {}
 		_Scale("Top Scale", Range(-2,2)) = 1
 		_SideScale("Side Scale", Range(-2,2)) = 1
@@ -138,6 +140,9 @@ Shader "Toon/Lit Tri Planar Normal" {
     half _Smoothness2;
     half _Smoothness3;
 
+	float3 _TopColor;
+	float3 _SideColor;
+
 	// struct Input {
 	// 	float2 uv_MainTex : TEXCOORD0;
 	// 	float3 worldPos; // world position built-in value
@@ -212,11 +217,11 @@ Shader "Toon/Lit Tri Planar Normal" {
 		// if dot product is higher than the top spread slider, multiplied by triplanar mapped top texture
 		// step is replacing an if statement to avoid branching :
 		// if (worldNormalDotNoise > _TopSpread{ o.Albedo = toptexture}
-		float3 topTextureResult = step(_TopSpread + _EdgeWidth, worldNormalDotNoise) * toptexture;
+		float3 topTextureResult = step(_TopSpread + _EdgeWidth, worldNormalDotNoise) * toptexture * _TopColor;
 		float3 topNormalResult = step(_TopSpread, worldNormalDotNoise) * toptextureNormal;
 
 		// if dot product is lower than the top spread slider, multiplied by triplanar mapped side/bottom texture
-		float3 sideTextureResult = step(worldNormalDotNoise, _TopSpread) * sidetexture;
+		float3 sideTextureResult = step(worldNormalDotNoise, _TopSpread) * sidetexture * _SideColor;
 		float3 sideNormalResult = step(worldNormalDotNoise, _TopSpread) * sidetextureNormal;
 
 		// if dot product is in between the two, make the texture darker
