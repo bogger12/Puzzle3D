@@ -17273,14 +17273,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 768150873057706901, guid: 9e55c4e15e6b1458499d7ba6fa0ba8eb, type: 3}
-      propertyPath: rollRotationSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 768150873057706901, guid: 9e55c4e15e6b1458499d7ba6fa0ba8eb, type: 3}
-      propertyPath: facingRotationSpeed
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 2672877007569881248, guid: 9e55c4e15e6b1458499d7ba6fa0ba8eb, type: 3}
       propertyPath: m_Name
       value: Flower

@@ -171,8 +171,9 @@ MonoBehaviour:
   playerAirDecelerationMult: 0.5
   playerAirRotationSpeedMult: 0.05
   rotateAroundAnchor: {fileID: 5406947298068299645}
-  facingRotationSpeed: 5
-  rollRotationSpeed: 10
+  facingRotationSpeed: 0.05
+  rollRotationSpeed: 2
+  rotationMult: 6
   rotationMaxAngle: 45
 --- !u!114 &3135744311796471270
 MonoBehaviour:

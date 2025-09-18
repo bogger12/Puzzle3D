@@ -104,8 +104,8 @@ public class PlayerMovement : MonoBehaviour
 
         desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
-        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
-        Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
+        // Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        // Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
     }
@@ -128,8 +128,8 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        Debug.DrawRay(transform.position, xAxis * 5, Color.red);
-        Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
+        // Debug.DrawRay(transform.position, xAxis * 5, Color.red);
+        // Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
 
 
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
@@ -200,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
         Quaternion newRotation = rb.rotation;
         if (!IsGrounded && playerThrow.HeldBody != null && playerThrow.HeldBody.TryGetComponent<HoldableFlower>(out HoldableFlower flower))
         {
-            newRotation = RotatePlayerFromFlower(flower.rotationTargetAngle, flower.rotationMaxAngle, flower.rollRotationSpeed, flower.facingRotationSpeed);
+            newRotation = RotatePlayerFromFlower(flower.rotationMult, flower.rollRotationSpeed, flower.facingRotationSpeed);
         }
         else if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
         {
@@ -213,33 +213,42 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 currentDesiredVelocity = Vector3.zero;
     Vector3 currentHorizontalVelocity = Vector3.zero;
-    public Quaternion RotatePlayerFromFlower(float rotationTargetAngle, float rotationMaxAngle, float rollRotationSpeed, float facingRotationSpeed)
+    public Quaternion RotatePlayerFromFlower(float rotationMult, float rollRotationSpeed, float facingRotationSpeed)
     {
         // Get difference between current velocity and target velocity direction
 
-        if (desiredVelocity.magnitude > 0.001) currentDesiredVelocity = desiredVelocity;
+        if (desiredVelocity.magnitude>0.001)
+            currentDesiredVelocity = desiredVelocity.x * xAxis + desiredVelocity.z * zAxis;
 
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, upAxis);
         if (horizontalVelocity.magnitude > 0.001) currentHorizontalVelocity = horizontalVelocity;
 
-        Debug.DrawRay(transform.position, currentHorizontalVelocity * 10, Color.red);
+        // Debug.DrawRay(transform.position, currentHorizontalVelocity * 10, Color.red);
 
         Vector3 rotationForward = Vector3.ProjectOnPlane(rb.rotation * Vector3.forward, upAxis);
-        Debug.DrawRay(transform.position, rotationForward * 10, Color.magenta);
+        // Debug.DrawRay(transform.position, rotationForward * 10, Color.magenta);
 
+        Vector3 currentHorizontalVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentHorizontalVelocity;
+        Vector3 currentDesiredVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentDesiredVelocity;
         Vector3 rotationRight = Quaternion.AngleAxis(-90, Vector3.up) * rotationForward;
-        Debug.DrawRay(transform.position, rotationForward * 10, Color.blue);
+        Debug.DrawRay(transform.position, currentDesiredVelocityRight * 10, Color.blue);
 
         float directionDifference = Vector3.Dot(rotationRight.normalized, currentHorizontalVelocity.normalized);
         // if (directionDifference < 0.1) directionDifference = 0;
-        directionDifference = Mathf.Clamp(directionDifference*rotationTargetAngle, -rotationMaxAngle, rotationMaxAngle);
+        // directionDifference = Mathf.Clamp(directionDifference*rotationTargetAngle, -rotationMaxAngle, rotationMaxAngle);
         Debug.Log(directionDifference);
 
-        Quaternion facingRotation = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(currentDesiredVelocity, Vector3.up);
-        Quaternion rollRotation = Quaternion.LookRotation(currentHorizontalVelocity.normalized, Vector3.up) * Quaternion.AngleAxis(directionDifference, Vector3.forward);
+        directionDifference = currentHorizontalVelocity.magnitude * rotationMult;
+
+
+        Quaternion facingRotation = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+        // Quaternion rollRotation = Quaternion.LookRotation(currentHorizontalVelocity.normalized, Vector3.up) * Quaternion.AngleAxis(directionDifference, Vector3.forward);
+        Quaternion flowerAngle = Quaternion.AngleAxis(directionDifference, -currentDesiredVelocityRight) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+
+        Debug.DrawRay(transform.position, flowerAngle * Vector3.up * 10, Color.magenta);
 
         Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, facingRotation, facingRotationSpeed * Time.deltaTime);
-        currentRotationNormal = Quaternion.Slerp(currentRotationNormal, rollRotation, rollRotationSpeed * Time.deltaTime);
+        currentRotationNormal = Quaternion.Slerp(currentRotationNormal, flowerAngle, rollRotationSpeed * Time.deltaTime);
         // currentRotationNormal *= rollRotation;
 
 

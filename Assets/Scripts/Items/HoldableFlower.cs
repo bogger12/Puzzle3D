@@ -27,8 +27,7 @@ public class HoldableFlower : Holdable
     public Transform rotateAroundAnchor;
     public float facingRotationSpeed;
     public float rollRotationSpeed;
-    public float rotationTargetAngle;
-    public float rotationMaxAngle;
+    public float rotationMult;
 
     private float playerGravity;
 
