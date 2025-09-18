@@ -223,34 +223,15 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, upAxis);
         if (horizontalVelocity.magnitude > 0.001) currentHorizontalVelocity = horizontalVelocity;
 
-        // Debug.DrawRay(transform.position, currentHorizontalVelocity * 10, Color.red);
-
-        Vector3 rotationForward = Vector3.ProjectOnPlane(rb.rotation * Vector3.forward, upAxis);
-        // Debug.DrawRay(transform.position, rotationForward * 10, Color.magenta);
-
-        Vector3 currentHorizontalVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentHorizontalVelocity;
         Vector3 currentDesiredVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentDesiredVelocity;
-        Vector3 rotationRight = Quaternion.AngleAxis(-90, Vector3.up) * rotationForward;
-        Debug.DrawRay(transform.position, currentDesiredVelocityRight * 10, Color.blue);
 
-        float directionDifference = Vector3.Dot(rotationRight.normalized, currentHorizontalVelocity.normalized);
-        // if (directionDifference < 0.1) directionDifference = 0;
-        // directionDifference = Mathf.Clamp(directionDifference*rotationTargetAngle, -rotationMaxAngle, rotationMaxAngle);
-        Debug.Log(directionDifference);
-
-        directionDifference = currentHorizontalVelocity.magnitude * rotationMult;
-
+        float rollAngle = currentHorizontalVelocity.magnitude * rotationMult;
 
         Quaternion facingRotation = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
-        // Quaternion rollRotation = Quaternion.LookRotation(currentHorizontalVelocity.normalized, Vector3.up) * Quaternion.AngleAxis(directionDifference, Vector3.forward);
-        Quaternion flowerAngle = Quaternion.AngleAxis(directionDifference, -currentDesiredVelocityRight) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
-
-        Debug.DrawRay(transform.position, flowerAngle * Vector3.up * 10, Color.magenta);
+        Quaternion flowerAngle = Quaternion.AngleAxis(rollAngle, -currentDesiredVelocityRight) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
 
         Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, facingRotation, facingRotationSpeed * Time.deltaTime);
         currentRotationNormal = Quaternion.Slerp(currentRotationNormal, flowerAngle, rollRotationSpeed * Time.deltaTime);
-        // currentRotationNormal *= rollRotation;
-
 
         return currentRotationNormal;
     }
