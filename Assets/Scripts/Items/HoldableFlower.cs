@@ -22,15 +22,24 @@ public class HoldableFlower : Holdable
     private float initialPlayerAirDeceleration;
     private float initialAirRotationSpeed;
 
+
+    [Header("Rotation In Air")]
+    public Transform rotateAroundAnchor;
+    public float facingRotationSpeed;
+    public float rollRotationSpeed;
+    public float rotationTargetAngle;
+    public float rotationMaxAngle;
+
     private float playerGravity;
 
     // Input Component
     private PlayerInputs playerInputs;
+    private PlayerMovement playerMovement;
 
     public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
     {
         base.HeldBy(holdingBody, holdAnchor);
-        PlayerMovement playerMovement = holdingBody.GetComponent<PlayerMovement>();
+        playerMovement = holdingBody.GetComponent<PlayerMovement>();
         playerGravity = playerMovement.gravityAcceleration;
         initialPlayerAirAcceleration = playerMovement.maxAirAcceleration;
         initialPlayerAirDeceleration = playerMovement.maxAirDeceleration;
@@ -44,12 +53,12 @@ public class HoldableFlower : Holdable
 
     public override void OnThrow(float physicsIgnoreTime)
     {
-        PlayerMovement playerMovement = HoldingBody.GetComponent<PlayerMovement>();
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
         playerInputs = null;
         base.OnThrow(physicsIgnoreTime);
+        playerMovement = null;
     }
 
     protected override void FixedUpdate()
@@ -66,6 +75,8 @@ public class HoldableFlower : Holdable
                     float newVelocityY = Mathf.Max(HoldingBody.linearVelocity.y, -playerMaxDownwardVelocity);
                     HoldingBody.linearVelocity = new Vector3(HoldingBody.linearVelocity.x, newVelocityY, HoldingBody.linearVelocity.z);
                 }
+                // playerMovement.RotatePlayerFromFlower(rotationSpeed);
+                // RotatePlayer();
             }
         }
         if (rb.useGravity)
