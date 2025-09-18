@@ -153,12 +153,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 193
   groundDetectionDistance: 1
-  maxAcceleration: 10
+  maxAcceleration: 13
   maxAirAcceleration: 5
   maxDeceleration: 20
   maxAirDeceleration: 10
+  rb: {fileID: 0}
   maxGroundAngle: 45
-  useNormalOfGround: 0
+  useNormalOfGround: 1
+  hillSpeedBoostMult: 5
+  upAxis: {x: 0, y: 0, z: 0}
+  rightAxis: {x: 0, y: 0, z: 0}
+  forwardAxis: {x: 0, y: 0, z: 0}
+  desiredVelocity: {x: 0, y: 0, z: 0}
   accumulatedVelocityDragMult: 0.45
   numJumps: 1
 --- !u!114 &7961765390995167856

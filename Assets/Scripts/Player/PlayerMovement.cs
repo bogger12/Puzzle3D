@@ -35,8 +35,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection;
 
     private Vector3 groundNormal;
+    [Header("Incline Movement")]
     public float maxGroundAngle = 45;
     public bool useNormalOfGround = true;
+    public float hillSpeedBoostMult = 5;
+
     [HideInInspector]
     public Vector3 upAxis, rightAxis, forwardAxis;
     [HideInInspector]
@@ -75,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float verticalSpeed = Vector3.Dot(rb.linearVelocity, upAxis);
         Vector3 gravity = Vector3.down * gravityAcceleration;
+        // gravity -= gravity * (1-Vector3.Dot(groundNormal, Vector3.up)) * hillSpeedBoostMult;
+        // Debug.Log("Gravity: " + gravity);
 
         AdjustVelocity();
 
@@ -99,13 +104,15 @@ public class PlayerMovement : MonoBehaviour
 
         rightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, upAxis);
         forwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, upAxis);
-
-        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
+        
+        float hillSpeedBoost = hillSpeedBoostMult * (1-Vector3.Dot(groundNormal, Vector3.up));
+        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * (movementSpeed + hillSpeedBoost);
+        // Debug.Log("Total Speed: " + (movementSpeed + hillSpeedBoost));
 
         desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
-        // Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
-        // Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
+        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
     }
@@ -123,13 +130,13 @@ public class PlayerMovement : MonoBehaviour
             movementForwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, movementUpAxis);
         }
 
-        xAxis = Vector3.ProjectOnPlane(movementRightAxis, upAxis).normalized;
-        zAxis = Vector3.ProjectOnPlane(movementForwardAxis, upAxis).normalized;
+        xAxis = Vector3.ProjectOnPlane(movementRightAxis, movementUpAxis).normalized;
+        zAxis = Vector3.ProjectOnPlane(movementForwardAxis, movementUpAxis).normalized;
 
 
 
-        // Debug.DrawRay(transform.position, xAxis * 5, Color.red);
-        // Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
+        Debug.DrawRay(transform.position, xAxis * 5, Color.red);
+        Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
 
 
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
@@ -161,7 +168,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 castFrom = transform.position + transform.up * 1f;
         bool didHit = Physics.SphereCast(castFrom, 0.5f, -transform.up, out RaycastHit hit, groundDetectionDistance + 0.5f, groundDetectionLayer);
-        if (Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
+        // if (didHit && Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
+        groundNormal = didHit ? hit.normal : Vector3.up;
         return didHit;
     }
 
