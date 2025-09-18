@@ -37,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 765686731979087089}
   - {fileID: 4715144372153595442}
+  - {fileID: 5406947298068299645}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &58193998153806227
@@ -168,7 +169,12 @@ MonoBehaviour:
   onlyGlideWhileButtonPress: 1
   playerAirAccelerationMult: 0.8
   playerAirDecelerationMult: 0.5
-  playerAirRotationSpeedMult: 0.8
+  playerAirRotationSpeedMult: 0.05
+  rotateAroundAnchor: {fileID: 5406947298068299645}
+  facingRotationSpeed: 0.05
+  rollRotationSpeed: 2
+  rotationMult: 6
+  rotationMaxAngle: 45
 --- !u!114 &3135744311796471270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +347,37 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &8345498202738001975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5406947298068299645}
+  m_Layer: 7
+  m_Name: RotateAroundAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5406947298068299645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8345498202738001975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.264, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7104620614563407648}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8681831008847688935
 GameObject:
   m_ObjectHideFlags: 0

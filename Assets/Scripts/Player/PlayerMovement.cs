@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInputs))]
+[RequireComponent(typeof(PlayerThrow))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -29,15 +30,17 @@ public class PlayerMovement : MonoBehaviour
     // public Image groundedIndicator;
     // public TextMeshProUGUI debugText;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     public bool IsGrounded { get; private set; }
     private Vector3 moveDirection;
 
     private Vector3 groundNormal;
     public float maxGroundAngle = 45;
     public bool useNormalOfGround = true;
-    Vector3 upAxis, rightAxis, forwardAxis;
-    Vector3 desiredVelocity;
+    [HideInInspector]
+    public Vector3 upAxis, rightAxis, forwardAxis;
+    [HideInInspector]
+    public Vector3 desiredVelocity;
     Vector3 accumulatedVelocity = Vector3.zero;
     [Range(0f, 1f)]
     public float accumulatedVelocityDragMult = 0.9f;
@@ -51,11 +54,15 @@ public class PlayerMovement : MonoBehaviour
 
     // Input Component
     private PlayerInputs playerInputs;
+    private PlayerThrow playerThrow;
+
+    private Vector3 xAxis, zAxis;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerInputs = GetComponent<PlayerInputs>();
+        playerThrow = GetComponent<PlayerThrow>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         currentJumps = numJumps;
@@ -97,8 +104,8 @@ public class PlayerMovement : MonoBehaviour
 
         desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
-        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
-        Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
+        // Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        // Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
     }
@@ -116,13 +123,13 @@ public class PlayerMovement : MonoBehaviour
             movementForwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, movementUpAxis);
         }
 
-        Vector3 xAxis = Vector3.ProjectOnPlane(movementRightAxis, upAxis).normalized;
-        Vector3 zAxis = Vector3.ProjectOnPlane(movementForwardAxis, upAxis).normalized;
+        xAxis = Vector3.ProjectOnPlane(movementRightAxis, upAxis).normalized;
+        zAxis = Vector3.ProjectOnPlane(movementForwardAxis, upAxis).normalized;
 
 
 
-        Debug.DrawRay(transform.position, xAxis * 5, Color.red);
-        Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
+        // Debug.DrawRay(transform.position, xAxis * 5, Color.red);
+        // Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
 
 
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
@@ -190,14 +197,43 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateCharacter()
     {
-        if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
+        Quaternion newRotation = rb.rotation;
+        if (!IsGrounded && playerThrow.HeldBody != null && playerThrow.HeldBody.TryGetComponent<HoldableFlower>(out HoldableFlower flower))
+        {
+            newRotation = RotatePlayerFromFlower(flower.rotationMult, flower.rollRotationSpeed, flower.facingRotationSpeed);
+        }
+        else if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
         {
             float rotationSpeed = IsGrounded ? groundedRotationSpeed : airRotationSpeed;
             Quaternion targetRotationMove = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(desiredVelocity, Vector3.up);
-            Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
-
-            rb.MoveRotation(currentRotationNormal);
+            newRotation = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
         }
+        rb.MoveRotation(newRotation);
+    }
+
+    Vector3 currentDesiredVelocity = Vector3.zero;
+    Vector3 currentHorizontalVelocity = Vector3.zero;
+    public Quaternion RotatePlayerFromFlower(float rotationMult, float rollRotationSpeed, float facingRotationSpeed)
+    {
+        // Get difference between current velocity and target velocity direction
+
+        if (desiredVelocity.magnitude>0.001)
+            currentDesiredVelocity = desiredVelocity.x * xAxis + desiredVelocity.z * zAxis;
+
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, upAxis);
+        if (horizontalVelocity.magnitude > 0.001) currentHorizontalVelocity = horizontalVelocity;
+
+        Vector3 currentDesiredVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentDesiredVelocity;
+
+        float rollAngle = currentHorizontalVelocity.magnitude * rotationMult;
+
+        Quaternion facingRotation = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+        Quaternion flowerAngle = Quaternion.AngleAxis(rollAngle, -currentDesiredVelocityRight) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+
+        Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, facingRotation, facingRotationSpeed * Time.deltaTime);
+        currentRotationNormal = Quaternion.Slerp(currentRotationNormal, flowerAngle, rollRotationSpeed * Time.deltaTime);
+
+        return currentRotationNormal;
     }
 
 
