@@ -26,6 +26,7 @@ Shader "Lit/Diffuse"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fog
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
 
@@ -48,7 +49,8 @@ Shader "Lit/Diffuse"
                 float4 pos : SV_POSITION;
                 float3 normal : NORMAL;
                 SHADOW_COORDS(1) // put shadows data into TEXCOORD1
-                float3 wPos : TEXCOORD2;
+                UNITY_FOG_COORDS(2)
+                float3 wPos : TEXCOORD3;
             };
 
             sampler2D _MainTex;
@@ -68,6 +70,7 @@ Shader "Lit/Diffuse"
                 o.wPos = mul(unity_ObjectToWorld, v.vertex);
                 // compute shadows data
                 TRANSFER_SHADOW(o);
+                UNITY_TRANSFER_FOG(o, o.pos); 
                 return o;
             }
 
@@ -87,7 +90,9 @@ Shader "Lit/Diffuse"
                 // return float4(fresnel.xxx, 1);
 
                 if (!any(_LightColor0)) return float4(0,0,0,0); // Black when no light
-                return lambert*shadow >= _Threshold ? float4(_LightColor,1) : float4(_ShadowColor,1);
+                float4 color = lambert*shadow >= _Threshold ? float4(_LightColor,1) : float4(_ShadowColor,1);
+                UNITY_APPLY_FOG(i.fogCoord, color); 
+                return color;
             }
             ENDHLSL
         }

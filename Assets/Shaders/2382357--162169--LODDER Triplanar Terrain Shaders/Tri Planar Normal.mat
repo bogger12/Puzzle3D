@@ -28,11 +28,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d6dc825b3c01d9642bcf7f07895a6ae6, type: 3}
+        m_Texture: {fileID: 2800000, guid: de8cd6e3a5ebfc147aa4c696744988c3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexSide:
-        m_Texture: {fileID: 2800000, guid: 8103def8dea3ce041a7dbafefadc08c7, type: 3}
+        m_Texture: {fileID: 2800000, guid: cb9254ade89f635449831a6e19854cc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise:
@@ -85,15 +85,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EdgeWidth: 0.432
+    - _DetailThreshold: 0.53
+    - _EdgeWidth: 0.195
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
     - _NoiseScale: 0.13
     - _RimPower: 1.7
-    - _Scale: 0.3
-    - _SideScale: 0.3
+    - _Scale: 0.1
+    - _SideScale: 0.09
     - _Smoothness0: 1
     - _Smoothness1: 1
     - _Smoothness2: 1
@@ -117,20 +118,22 @@ Material:
     - _tiles1x: 0.03
     - _tiles1y: 0.03
     - _tiles1z: 0.03
-    - _tiles2x: 0.03
-    - _tiles2y: 0.03
-    - _tiles2z: 0.03
-    - _tiles3x: 0.03
-    - _tiles3y: 0.03
-    - _tiles3z: 0.03
+    - _tiles2x: 0.1
+    - _tiles2y: 0.1
+    - _tiles2z: 0.1
+    - _tiles3x: 0.1
+    - _tiles3y: 0.1
+    - _tiles3z: 0.1
     m_Colors:
     - _Color: {r: 0.6226415, g: 0.5980215, b: 0.5198469, a: 1}
     - _Color0: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 1, g: 1, b: 1, a: 1}
     - _Color2: {r: 1, g: 1, b: 1, a: 1}
     - _Color3: {r: 1, g: 1, b: 1, a: 1}
-    - _EdgeColor: {r: 0.15308937, g: 0.18867922, b: 0.13260946, a: 1}
-    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor2: {r: 0, g: 0, b: 0, a: 1}
+    - _EdgeColor: {r: 0.735849, g: 0.41076502, b: 0.2880918, a: 1}
+    - _RimColor: {r: 1, g: 0.15540542, b: 0, a: 1}
+    - _RimColor2: {r: 0.6415094, g: 0.21484514, b: 0.0514418, a: 1}
+    - _SideColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TopColor: {r: 1, g: 0.8928968, b: 0.08962262, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
