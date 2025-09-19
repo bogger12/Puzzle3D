@@ -183,7 +183,7 @@ MonoBehaviour:
   playerInputs: {fileID: 0}
   holdAnchor: {fileID: 3368514791729360281}
   dropAnchor: {fileID: 7399678272360219103}
-  dropTime: 0.5
+  dropTime: 0.1
   throwDirectionForward: {x: 0, y: 0.5, z: 0.5}
   throwForceRange: {x: 2, y: 8}
   minThrowSeconds: 0.1
@@ -5254,7 +5254,7 @@ Transform:
   m_GameObject: {fileID: 8887534657685061304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.92, z: 0}
+  m_LocalPosition: {x: 0, y: 0.024, z: 0.756}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

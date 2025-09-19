@@ -31,6 +31,7 @@ public class Holdable : MonoBehaviour
 
     public bool allowRotationCarryOver = true;
     public bool freezeRotationDuringCarry = false;
+    public bool matchPlayerRotationOnPickup = false;
     public bool lockItemToPlayer = false;
     public bool customHeldRotation = false;
     public Quaternion heldRotation = Quaternion.identity;
@@ -91,6 +92,7 @@ public class Holdable : MonoBehaviour
 
         originalRotation = rb.rotation;
         if (customHeldRotation) rb.rotation = holdingBody.rotation * heldRotation;
+        if (matchPlayerRotationOnPickup) rb.rotation = holdingBody.rotation;
         rb.transform.rotation = rb.rotation;
 
         originalMass = rb.mass;
@@ -119,6 +121,7 @@ public class Holdable : MonoBehaviour
         // controlUI.SetTargetAndTexts(this, currentPlayerInputs.GetButtonText(currentPlayerInputs.holdThrow), GetControlHint());
         controlUI.SetHoldableTarget(null);
         AssignStaticHints(true);
+        gameObject.layer = LayerMask.NameToLayer("Held");
     }
 
     public virtual void OnThrow(float physicsIgnoreTime)
@@ -137,6 +140,7 @@ public class Holdable : MonoBehaviour
         controlUI = null;
         AssignStaticHints(false); // needs holdingbody (playerthrow)
         HoldingBody = null;
+        gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)

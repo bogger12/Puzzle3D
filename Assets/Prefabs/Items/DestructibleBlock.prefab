@@ -183,6 +183,7 @@ MonoBehaviour:
   heldStatus: 0
   allowRotationCarryOver: 1
   freezeRotationDuringCarry: 0
+  matchPlayerRotationOnPickup: 1
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}

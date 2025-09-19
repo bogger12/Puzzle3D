@@ -24,6 +24,7 @@ public class PlayerThrow : MonoBehaviour
     }
     public Transform holdAnchor;
     public Transform dropAnchor;
+    public bool useDropAnchor = true;
     public float dropTime = 0.2f;
 
     public Vector3 throwDirectionForward = new Vector3(0, 0.5f, 0.5f);
@@ -114,7 +115,8 @@ public class PlayerThrow : MonoBehaviour
                 {
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
-                        holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
+                        if (useDropAnchor) holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
+                        else holdable.OnThrow(dropTime);
                     }
                 }
                 timeSincePressed = 0;
