@@ -26,9 +26,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _NormalVSWorldSpace: 0
-    - _OutlineWidth: 0.04
+    - _OutlineWidth: 0.03
     m_Colors:
-    - _Color: {r: 0.33962262, g: 0.18422925, b: 0.18422925, a: 1}
+    - _Color: {r: 0.3207547, g: 0.074136704, b: 0.074136704, a: 1}
     - _OutlineColor: {r: 1, g: 0.920817, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
