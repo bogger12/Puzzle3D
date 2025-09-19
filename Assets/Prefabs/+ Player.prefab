@@ -183,6 +183,7 @@ MonoBehaviour:
   playerInputs: {fileID: 0}
   holdAnchor: {fileID: 3368514791729360281}
   dropAnchor: {fileID: 7399678272360219103}
+  useDropAnchor: 1
   dropTime: 0.1
   throwDirectionForward: {x: 0, y: 0.5, z: 0.5}
   throwForceRange: {x: 2, y: 8}
@@ -192,7 +193,7 @@ MonoBehaviour:
   parentBodyVelocityAddFactor: 0.5
   castLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   UIThrowProgressImage: {fileID: 0}
   controlUI: {fileID: 0}
   controlHintsManager: {fileID: 0}

@@ -23,7 +23,7 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
 
-        currentVelocityDirection = Vector3.Lerp(currentVelocityDirection, rb.linearVelocity.normalized, velocityFollowSpeed * Time.deltaTime);
+        currentVelocityDirection = Vector3.Slerp(currentVelocityDirection, rb.linearVelocity.normalized, velocityFollowSpeed * Time.deltaTime);
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, playerMovement.upAxis);
         bool isMoving = horizontalVelocity.magnitude > 0.01;
 
