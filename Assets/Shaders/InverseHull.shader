@@ -8,13 +8,23 @@ Shader "Unlit/InverseHull"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue"="Geometry" "RenderType"="Opaque" }
         LOD 100
 
         Pass
         {
-            // ZWrite On
-            // ZTest LEqual 
+
+            Cull Front           // inverse hull
+            ZWrite On           // don't write to depth
+            ZTest LEqual         // still compare against scene depth
+
+            Stencil
+            {
+                Ref 1
+                Comp NotEqual        // only draw where stencil != 1 (outside base mesh)
+                Pass Keep
+            }
+
             Cull Front
             CGPROGRAM
             #pragma vertex vert

@@ -15,6 +15,13 @@ Shader "Lit/Cel Shade"
 
         Pass
         {
+            Stencil
+            {
+                Ref 11
+                Comp Always
+                Pass Replace
+            }
+
             Tags {"LightMode"="ForwardBase"  "RenderType"="Opaque" }
             HLSLPROGRAM
             #pragma vertex vert

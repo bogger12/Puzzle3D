@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player
+  m_Name: Player_old
   m_Shader: {fileID: 4800000, guid: 2d6bd4e75af038045acec335e1ec9af3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -23,12 +23,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _ColorRamp:
-        m_Texture: {fileID: 2800000, guid: 03f6a9be42483ae41be7ab38e2c75685, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: a00497a0b2f430241918c69c4803c355, type: 3}
+        m_Texture: {fileID: 2800000, guid: 04c3e26ee690b1d498879777c2b2f6fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
