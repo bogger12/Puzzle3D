@@ -24,7 +24,7 @@ public class PlayerAnimation : MonoBehaviour
     {
 
         currentVelocityDirection = Vector3.Slerp(currentVelocityDirection, rb.linearVelocity.normalized, velocityFollowSpeed * Time.deltaTime);
-        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, playerMovement.upAxis);
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, playerMovement.movementUpAxis);
         bool isMoving = horizontalVelocity.magnitude > 0.01;
 
         characterAnimator.SetBool("Grounded", playerMovement.IsGrounded);

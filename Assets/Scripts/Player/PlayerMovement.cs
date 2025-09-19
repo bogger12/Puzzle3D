@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerThrow playerThrow;
 
     private Vector3 xAxis, zAxis;
+    [HideInInspector]
+    public Vector3 movementUpAxis;
 
     void Start()
     {
@@ -100,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        Vector3 movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
+        movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
 
         rightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, upAxis);
         forwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, upAxis);
