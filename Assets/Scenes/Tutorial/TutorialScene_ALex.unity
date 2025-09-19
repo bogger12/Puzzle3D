@@ -16278,6 +16278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: + Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 7801167858053961252, guid: 73c9d3c3e41d64a62aef527817304977, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b69d61d675bf1404ea20bc7e58d12281, type: 2}
     - target: {fileID: 7961765390995167856, guid: 73c9d3c3e41d64a62aef527817304977, type: 3}
       propertyPath: controlUI
       value: 
