@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     // public Image groundedIndicator;
     // public TextMeshProUGUI debugText;
 
-    public Rigidbody rb;
+    private Rigidbody rb;
     public bool IsGrounded { get; private set; }
     private Vector3 moveDirection;
 

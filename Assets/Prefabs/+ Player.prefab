@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 6576848454953797378}
   - component: {fileID: 2480492366790219178}
   - component: {fileID: 7148669724942366635}
+  - component: {fileID: 953997736797558816}
   m_Layer: 6
   m_Name: + Player
   m_TagString: Player
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputSpace: {fileID: 0}
   movementSpeed: 5
-  groundedRotationSpeed: 10
+  groundedRotationSpeed: 3.5
   airRotationSpeed: 10
   gravityAcceleration: 19.62
   jumpForce: 10
@@ -158,7 +159,6 @@ MonoBehaviour:
   maxAirAcceleration: 5
   maxDeceleration: 20
   maxAirDeceleration: 10
-  rb: {fileID: 0}
   maxGroundAngle: 45
   useNormalOfGround: 1
   hillSpeedBoostMult: 5
@@ -302,6 +302,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20582370963dc0d4c8fe951839be1a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &953997736797558816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338891691979222974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78064f95c6cee7a4bb2b5512f1251723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAnimator: {fileID: 8182821336524091969}
 --- !u!1 &7356622532958948699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,5 +5371,10 @@ PrefabInstance:
 --- !u!4 &2841512370650261563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3276f451a1a69746a996da197c45c08, type: 3}
+  m_PrefabInstance: {fileID: 2370491060087541712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8182821336524091969 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d3276f451a1a69746a996da197c45c08, type: 3}
   m_PrefabInstance: {fileID: 2370491060087541712}
   m_PrefabAsset: {fileID: 0}

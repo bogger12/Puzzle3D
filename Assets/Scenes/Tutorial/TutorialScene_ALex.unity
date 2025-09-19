@@ -12653,10 +12653,6 @@ PrefabInstance:
       propertyPath: playerInputSpace
       value: 
       objectReference: {fileID: 873890169}
-    - target: {fileID: 4355295647365461432, guid: 73c9d3c3e41d64a62aef527817304977, type: 3}
-      propertyPath: groundedRotationSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6338891691979222974, guid: 73c9d3c3e41d64a62aef527817304977, type: 3}
       propertyPath: m_Name
       value: + Player1
