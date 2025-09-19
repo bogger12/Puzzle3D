@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
         desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
 
-        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        Debug.DrawRay(transform.position, movementUpAxis * 2, Color.yellow);
         Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
@@ -135,8 +135,8 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        Debug.DrawRay(transform.position, xAxis * 5, Color.red);
-        Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
+        Debug.DrawRay(transform.position, xAxis * 2, Color.red);
+        Debug.DrawRay(transform.position, zAxis * 2, Color.blue);
 
 
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);

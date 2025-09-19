@@ -315,6 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterAnimator: {fileID: 8182821336524091969}
+  velocityFollowSpeed: 5
 --- !u!1 &7356622532958948699
 GameObject:
   m_ObjectHideFlags: 0
