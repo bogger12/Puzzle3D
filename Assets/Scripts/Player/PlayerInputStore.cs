@@ -14,10 +14,7 @@ public class PlayerInputStore : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerIndex = playerInput.playerIndex;
-        assignedDevice = playerInput.devices[0];
-        string playerMap = playerIndex == 0 ? "Player1" : "Player2";
-        playerInput.defaultActionMap = playerMap;
-        playerInput.currentActionMap = playerInput.actions.FindActionMap(playerMap, true);
+        assignedDevice = playerInput.devices.Count==0 ? Keyboard.current : playerInput.devices[0];
         Debug.Log($"Player {playerIndex + 1} joined using {assignedDevice.displayName}");
     }
     void Start()
@@ -27,8 +24,8 @@ public class PlayerInputStore : MonoBehaviour
 
     void Update()
     {
-        Vector2 lookInput = playerInput.actions["Look"].ReadValue<Vector2>();
-        Debug.Log(lookInput);
+        // Vector2 lookInput = playerInput.actions["Look"].ReadValue<Vector2>();
+        // Debug.Log(lookInput);
     }
 
 

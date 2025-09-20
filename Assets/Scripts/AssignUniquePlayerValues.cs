@@ -12,11 +12,10 @@ public class AssignUniquePlayerValues : MonoBehaviour
     void Start()
     {
         int playerindex = GetComponent<PlayerInputStore>().playerIndex;
-        GetComponent<PlayerInputStore>().playerInput.actions["Look"].Enable();
         OutputChannels channelToUse = (OutputChannels)(2 << playerindex);
         cinemachineBrain.ChannelMask = channelToUse;
-        cinemachineCamera1.enabled = playerindex == 0;
-        cinemachineCamera2.enabled = playerindex == 1;
+        cinemachineCamera1.gameObject.SetActive(playerindex == 0);
+        cinemachineCamera2.gameObject.SetActive(playerindex == 1);
         CinemachineCamera usingCamera = playerindex == 0 ? cinemachineCamera1 : cinemachineCamera2;
         usingCamera.OutputChannel = channelToUse;
         usingCamera.GetComponent<CinemachineInputAxisController>().PlayerIndex = playerindex;
