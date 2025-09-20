@@ -28,12 +28,13 @@ public class ListenForSecondKeyboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // // Check for any keayboard inputs
-        // bool player1pressed = player1Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
-        // bool player2pressed = player2Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
-        // if (playerInputManager.playerCount == 1 && (player1pressed || player2pressed))
-        // {
-        //     playerInputManager.JoinPlayerFromAction(1, 1, "Keyboard&Mouse", Keyboard.current);
-        // }
+        // Check for any keayboard inputs
+        bool player1pressed = player1Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
+        bool player2pressed = player2Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
+        if (playerInputManager.playerCount == 1 && (player1pressed || player2pressed))
+        {
+            PlayerInput newPlayer = playerInputManager.JoinPlayer(1, -1, "Keyboard2", Keyboard.current);
+            newPlayer.GetComponent<AssignUniquePlayerValues>().UseSpecificCamera(0, 1);
+        }
     }
 }
