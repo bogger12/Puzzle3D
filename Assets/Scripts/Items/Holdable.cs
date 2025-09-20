@@ -210,9 +210,9 @@ public class Holdable : MonoBehaviour
         controlHintsManager.ResetHints();
         if (display)
         {
-            PlayerInputs playerInputs = playerThrow.playerInputs;
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+            PlayerInputStore playerInputStore = playerThrow.playerInputStore;
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Drop", false);
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Throw", true);
         }
     }
 }

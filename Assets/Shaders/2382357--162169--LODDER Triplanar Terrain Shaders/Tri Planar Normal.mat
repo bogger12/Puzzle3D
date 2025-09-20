@@ -115,9 +115,9 @@ Material:
     - _tiles0x: 0.03
     - _tiles0y: 0.03
     - _tiles0z: 0.03
-    - _tiles1x: 0.03
-    - _tiles1y: 0.03
-    - _tiles1z: 0.03
+    - _tiles1x: 0.1
+    - _tiles1y: 0.1
+    - _tiles1z: 0.1
     - _tiles2x: 0.1
     - _tiles2y: 0.1
     - _tiles2z: 0.1

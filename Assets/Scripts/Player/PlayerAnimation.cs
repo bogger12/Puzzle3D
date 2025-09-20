@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
@@ -6,6 +7,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     public Animator characterAnimator;
     public float velocityFollowSpeed = 1;
+    public bool lookTowardsCamera = true;
 
     private PlayerMovement playerMovement;
     private Rigidbody rb;
@@ -31,7 +33,7 @@ public class PlayerAnimation : MonoBehaviour
         characterAnimator.SetFloat("Vertical Velocity", Vector3.Project(rb.linearVelocity, playerMovement.upAxis).magnitude);
 
         // Horizontal is how far the transform rotation is away from the camera direction
-        float horizontalDirection = Vector3.SignedAngle(rb.rotation * Vector3.forward, playerMovement.forwardAxis, playerMovement.upAxis) > 0 ? 1 : -1;
+        float horizontalDirection = Mathf.Sign(Vector3.SignedAngle(rb.rotation * Vector3.forward, playerMovement.forwardAxis, playerMovement.upAxis)) * (lookTowardsCamera ? 1 : -1);
         float horizontal = Mathf.Abs(Vector3.Dot(rb.rotation * Vector3.forward, playerMovement.rightAxis)) * horizontalDirection;
         Debug.DrawRay(transform.position, -playerMovement.forwardAxis * 10, Color.magenta);
         Debug.DrawRay(transform.position, rb.linearVelocity * 2, Color.white);

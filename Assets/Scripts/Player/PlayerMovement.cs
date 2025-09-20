@@ -2,8 +2,8 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerInputs))]
 [RequireComponent(typeof(PlayerThrow))]
+[RequireComponent(typeof(PlayerInputStore))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentJumps;
 
     // Input Component
-    private PlayerInputs playerInputs;
+    private PlayerInputStore playerInputStore;
     private PlayerThrow playerThrow;
 
     private Vector3 xAxis, zAxis;
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerInputs = GetComponent<PlayerInputs>();
+        playerInputStore = GetComponent<PlayerInputStore>();
         playerThrow = GetComponent<PlayerThrow>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded = CheckIsGrounded();
 
 
-        Vector2 playerInput = playerInputs.move.action.ReadValue<Vector2>();
+        Vector2 playerInput = playerInputStore.playerInput.actions["Move"].ReadValue<Vector2>();
         // playerInput.x = Input.GetAxis("Horizontal");
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * (movementSpeed + hillSpeedBoost);
         // Debug.Log("Total Speed: " + (movementSpeed + hillSpeedBoost));
 
-        desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
+        desiredJump |= playerInputStore.playerInput.actions["Jump"].WasPressedThisFrame();
 
         Debug.DrawRay(transform.position, movementUpAxis * 2, Color.yellow);
         Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
@@ -178,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump(float verticalSpeed)
     {
-        if (playerInputs.jump.action.IsPressed())
+        if (playerInputStore.playerInput.actions["Jump"].IsPressed())
         {
 
             if (currentJumps > 0 && desiredJump)

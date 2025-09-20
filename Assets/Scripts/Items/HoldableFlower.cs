@@ -32,7 +32,7 @@ public class HoldableFlower : Holdable
     private float playerGravity;
 
     // Input Component
-    private PlayerInputs playerInputs;
+    private PlayerInputStore playerInputStore;
     private PlayerMovement playerMovement;
 
     public override void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
@@ -47,7 +47,7 @@ public class HoldableFlower : Holdable
         playerMovement.maxAirAcceleration *= playerAirAccelerationMult;
         playerMovement.maxAirDeceleration *= playerAirDecelerationMult;
         playerMovement.airRotationSpeed *= playerAirRotationSpeedMult;
-        playerInputs = holdingBody.GetComponent<PlayerInputs>();
+        playerInputStore = holdingBody.GetComponent<PlayerInputStore>();
     }
 
     public override void OnThrow(float physicsIgnoreTime)
@@ -55,7 +55,7 @@ public class HoldableFlower : Holdable
         playerMovement.maxAirAcceleration = initialPlayerAirAcceleration;
         playerMovement.maxAirDeceleration = initialPlayerAirDeceleration;
         playerMovement.airRotationSpeed = initialAirRotationSpeed;
-        playerInputs = null;
+        playerInputStore = null;
         base.OnThrow(physicsIgnoreTime);
         playerMovement = null;
     }
@@ -63,7 +63,7 @@ public class HoldableFlower : Holdable
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (HoldingBody != null && (!onlyGlideWhileButtonPress || playerInputs.jump.action.IsPressed()))
+        if (HoldingBody != null && (!onlyGlideWhileButtonPress || playerInputStore.playerInput.actions["Jump"].IsPressed()))
         {
             if (boostDuringJumpUp || HoldingBody.linearVelocity.y < 0)
             {

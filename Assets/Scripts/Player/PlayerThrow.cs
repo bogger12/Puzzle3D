@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerInputs))]
+[RequireComponent(typeof(PlayerInputStore))]
 public class PlayerThrow : MonoBehaviour
 {
 
     // Input Component
-    public PlayerInputs playerInputs;
+    public PlayerInputStore playerInputStore;
     public Holdable HeldBodyHoldable { get; private set; } = null;
     private Rigidbody _heldBody;
     public Rigidbody HeldBody
@@ -54,7 +54,7 @@ public class PlayerThrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerInputs = GetComponent<PlayerInputs>();
+        playerInputStore = GetComponent<PlayerInputStore>();
 
 #if UNITY_EDITOR
         // Set UIThrowProgressImage Material to make sure we aren't modifying the asset
@@ -74,7 +74,7 @@ public class PlayerThrow : MonoBehaviour
         float throwProgress = Mathf.Clamp01(timeSincePressed / maxThrowSeconds);
 
         // Checking key up first so timeSincePressed = 0 not done before keydown
-        if (playerInputs.holdThrow.action.WasReleasedThisFrame())
+        if (playerInputStore.playerInput.actions["Pickup_Throw"].WasReleasedThisFrame())
         {
             if (nearest != null && HeldBody == null && nearest.attachedRigidbody != null)
             {
@@ -123,7 +123,7 @@ public class PlayerThrow : MonoBehaviour
             }
         }
 
-        if (playerInputs.holdThrow.action.IsPressed())
+        if (playerInputStore.playerInput.actions["Pickup_Throw"].IsPressed())
         {
             // Setting the throw strength
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
@@ -166,7 +166,7 @@ public class PlayerThrow : MonoBehaviour
             }
             else collidersList.Remove(c);
         }
-        if (HeldBody == null) controlUI.SetTargetAndTextsAuto(closest, playerInputs);
+        if (HeldBody == null) controlUI.SetTargetAndTextsAuto(closest, playerInputStore);
         // else if (controlUI.anchor != HeldBody.transform)
         // {
         //     controlUI.SetTargetAndTextsAuto(HeldBodyHoldable, playerInputs);

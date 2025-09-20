@@ -132,9 +132,9 @@ public class HoldableKey : Holdable
         controlHintsManager.ResetHints();
         if (display)
         {
-            PlayerInputs playerInputs = playerThrow.playerInputs;
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Unlock", false);
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+            PlayerInputStore playerInputStore = playerThrow.playerInputStore;
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Unlock", false);
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Throw", true);
         }
     }
 }
