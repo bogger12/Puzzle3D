@@ -171,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 castFrom = transform.position + transform.up * 1f;
         bool didHit = Physics.SphereCast(castFrom, 0.5f, -transform.up, out RaycastHit hit, groundDetectionDistance + 0.5f, groundDetectionLayer);
         // if (didHit && Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
+        didHit &= hit.rigidbody != rb;
         groundNormal = didHit ? hit.normal : Vector3.up;
         return didHit;
     }

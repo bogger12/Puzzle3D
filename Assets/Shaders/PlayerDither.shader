@@ -206,7 +206,7 @@ Shader "Lit/Player Dithered Lit"
                 float specularExponent = exp2(0.5*8) + 2;
                 spec = pow(spec, specularExponent);
 
-                float3 ambient = 0.1;
+                float3 ambient = 0.0;
 
                 fixed atten = saturate(LIGHT_ATTENUATION(i)*_ForwardAddMultiplier);
                 fixed shadow = SHADOW_ATTENUATION(i);
