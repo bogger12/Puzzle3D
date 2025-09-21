@@ -342,8 +342,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483316865614344257}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08409171, y: 0.29350755, z: -0.025928782, w: 0.9518979}
-  m_LocalPosition: {x: -4.177976, y: 1.32113, z: -6.130848}
+  m_LocalRotation: {x: -0.18587008, y: 0.7973094, z: -0.48696682, w: -0.30432457}
+  m_LocalPosition: {x: 36.757298, y: 5.910692, z: 77.72221}
   m_LocalScale: {x: 0.75357944, y: 0.75357944, z: 0.75357944}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,8 +469,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926637139477114127}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.37734595, y: -0.23121688, z: 0.097879924, w: 0.8913856}
-  m_LocalPosition: {x: 2.5496435, y: 5.4105854, z: -4.584007}
+  m_LocalRotation: {x: 0.2080877, y: -0.4141275, z: 0.09784869, w: 0.8806949}
+  m_LocalPosition: {x: 5.190035, y: 3.3727741, z: -4.2983847}
   m_LocalScale: {x: 0.75357944, y: 0.7535795, z: 0.7535794}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -556,7 +556,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: -29.083002
+    Value: -50.36846
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -566,7 +566,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 45.88834
+    Value: 26.587704
     Center: 25
     Range: {x: 10, y: 70}
     Wrap: 0
@@ -1276,8 +1276,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5283130372036161664}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08409171, y: 0.29350755, z: -0.025928777, w: 0.9518979}
-  m_LocalPosition: {x: -4.177976, y: 1.32113, z: -6.130848}
+  m_LocalRotation: {x: -0.19841757, y: 0.78859663, z: -0.4839529, w: -0.32331955}
+  m_LocalPosition: {x: 2.3955379, y: 6.7188535, z: 2.430356}
   m_LocalScale: {x: 0.75357944, y: 0.7535795, z: 0.7535794}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1363,7 +1363,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 34.273212
+    Value: -135.4134
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1373,7 +1373,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 10.09693
+    Value: 63.07396
     Center: 25
     Range: {x: 10, y: 70}
     Wrap: 0
@@ -7329,6 +7329,18 @@ PrefabInstance:
       propertyPath: m_MatchWidthOrHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1832222738183471608, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e2b8146a93afb8428546b50d63176a5, type: 2}
+    - target: {fileID: 1832222738183471608, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9164766832197407221, guid: 4e2b8146a93afb8428546b50d63176a5, type: 2}
+    - target: {fileID: 1832222738183471608, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1968634550614811968, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
       propertyPath: playerMovement
       value: 
@@ -7476,10 +7488,6 @@ PrefabInstance:
     - target: {fileID: 8009085980587806768, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 8009085980587806768, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 157
       objectReference: {fileID: 0}
     - target: {fileID: 8009085980587806768, guid: aa576c5c42b654316b0d3044b34abc61, type: 3}
       propertyPath: m_ConstrainProportionsScale

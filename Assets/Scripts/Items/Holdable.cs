@@ -13,6 +13,7 @@ public enum HoldableStatus
 [RequireComponent(typeof(Outline))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(SoundPlayer))]
 public class Holdable : MonoBehaviour
 {
     public HoldableStatus heldStatus;
@@ -115,6 +116,8 @@ public class Holdable : MonoBehaviour
         controlUI.SetHoldableTarget(null);
         AssignStaticHints(true);
         gameObject.layer = LayerMask.NameToLayer("Held");
+
+        GetComponent<SoundPlayer>().PlaySound();
     }
 
     public virtual void OnThrow(float physicsIgnoreTime)
@@ -134,6 +137,7 @@ public class Holdable : MonoBehaviour
         AssignStaticHints(false); // needs holdingbody (playerthrow)
         HoldingBody = null;
         gameObject.layer = LayerMask.NameToLayer("Interactable");
+        GetComponent<SoundPlayer>().PlaySound();
     }
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
