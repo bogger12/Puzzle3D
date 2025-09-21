@@ -5,26 +5,26 @@ public class RemoteActivate : MonoBehaviour
 
     public Activateable activateable;
 
-    public bool SetActive(bool active)
+    public virtual void SetActive(bool active)
     {
         if (activateable == null)
         {
-            Debug.LogError("You need to set an activateable object for this RemoteActivate");
-            return false;
+            Debug.LogWarning("You need to set an activateable object for this RemoteActivate");
+            return;
         }
 #if UNITY_EDITOR
         lineColor = active ? Color.green : Color.red;
 #endif
-        return activateable.SetActive(active);
+        activateable.SetActive(active);
     }
-    public bool GetActive()
+    public virtual bool GetActive()
     {
         return activateable.GetActive();
     }
 
 #if UNITY_EDITOR
-    private Color lineColor = Color.red;
-    void OnDrawGizmos()
+    protected Color lineColor = Color.red;
+    protected virtual void OnDrawGizmos()
     {
         if (activateable != null)
         {

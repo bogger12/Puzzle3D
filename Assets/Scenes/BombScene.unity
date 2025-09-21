@@ -22965,6 +22965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Keyhole (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4082299191360375404, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
+      propertyPath: activateable
+      value: 
+      objectReference: {fileID: 171865928}
     - target: {fileID: 4892254394839764306, guid: 36b983ac67c9546588dd9ef74aa4e9ee, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -28494,10 +28498,12 @@ MonoBehaviour:
   heldStatus: 0
   allowRotationCarryOver: 1
   freezeRotationDuringCarry: 0
+  matchPlayerRotation: 0
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
   canBeHeld: 1
+  followSpeed: 1
 --- !u!1 &4214631137537964068
 GameObject:
   m_ObjectHideFlags: 0
@@ -28979,10 +28985,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wind
       objectReference: {fileID: 0}
-    - target: {fileID: 7740080237364377618, guid: 4d5669f3c144f48b5b8ab6f98634c983, type: 3}
-      propertyPath: playerPushForce
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29103,11 +29105,12 @@ MonoBehaviour:
   heldStatus: 0
   allowRotationCarryOver: 1
   freezeRotationDuringCarry: 0
+  matchPlayerRotation: 0
   lockItemToPlayer: 0
   customHeldRotation: 0
   heldRotation: {x: 0, y: 0, z: 0, w: 1}
   canBeHeld: 1
-  inKeyHole: 0
+  followSpeed: 1
 --- !u!95 &6496156899181014206
 Animator:
   serializedVersion: 7

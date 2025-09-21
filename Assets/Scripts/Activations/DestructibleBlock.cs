@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class DestructibleBlock : MonoBehaviour
+public class DestructibleBlock : SpawnParticlesOnDestroy
 {
 
-    public GameObject particles;
     public float speedToSet = 10;
 
-    public void DestroyBlockFrom(Vector3 bombPosition)
+    public GameObject DestroyBlockFrom(Vector3 bombPosition)
     {
         GameObject blockParticles = Instantiate(particles, transform.position, Quaternion.identity);
         ParticleSystem destructibleBlockParticles = blockParticles.GetComponent<ParticleSystem>();
@@ -15,5 +14,6 @@ public class DestructibleBlock : MonoBehaviour
         var main = destructibleBlockParticles.main;
         main.startSpeed = speedToSet;
         Destroy(gameObject);
+        return blockParticles;
     }
 }

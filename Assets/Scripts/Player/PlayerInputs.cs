@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerInputs : MonoBehaviour
 {
     [Header("Player (0 or 1)")]
     public int playerIndex; // set in inspector (0 = P1, 1 = P2)
 
-    public InputActionAsset playerInput;
+    private PlayerInput playerInput;
+    public InputDevice assignedDevice;
+
+    public InputActionAsset playerInputAsset;
     [HideInInspector]
     public InputActionReference move;
     [HideInInspector]
@@ -16,10 +20,17 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector]
     public InputActionReference holdThrow;
 
+    void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        playerIndex = playerInput.playerIndex;
+        assignedDevice = playerInput.devices[0]; 
+        Debug.Log($"Player {playerIndex + 1} joined using {assignedDevice.displayName}");
+    }
     void Start()
     {
         string mapName = playerIndex == 0 ? "Player1" : "Player2";
-        var map = playerInput.FindActionMap(mapName);
+        var map = playerInputAsset.FindActionMap(mapName);
 
         move = InputActionReference.Create(map.FindAction("Move"));
         look = InputActionReference.Create(map.FindAction("Look"));

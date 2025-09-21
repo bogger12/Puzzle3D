@@ -125,7 +125,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 32.6
     Center: 17.5
-    Range: {x: -10, y: 45}
+    Range: {x: 10, y: 70}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -190,11 +190,11 @@ MonoBehaviour:
   TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  MinimumDistanceFromTarget: 5
+  MinimumDistanceFromTarget: 0.01
   AvoidObstacles:
     Enabled: 1
     DistanceLimit: 0
-    MinimumOcclusionTime: 0.2
+    MinimumOcclusionTime: 0.1
     CameraRadius: 0.4
     UseFollowTarget:
       Enabled: 0

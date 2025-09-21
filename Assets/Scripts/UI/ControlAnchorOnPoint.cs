@@ -59,12 +59,12 @@ public class ControlAnchorOnPoint : AnchorOn3DPoint
     //         SetLongPressShown(holdable.GetIsLongPress());
     //     }
     // }
-    public void SetTargetAndTextsAuto(Holdable holdable, PlayerInputs playerInputs)
+    public void SetTargetAndTextsAuto(Holdable holdable, PlayerInputStore playerInputStore)
     {
         SetHoldableTarget(holdable);
         if (holdable != null)
         {
-            SetButtonText(playerInputs.GetButtonText(playerInputs.holdThrow));
+            SetButtonText(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]));
             SetHintText(holdable.GetControlHint());
             SetLongPressShown(holdable.GetIsLongPress());
         }

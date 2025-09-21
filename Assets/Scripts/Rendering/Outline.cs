@@ -17,7 +17,7 @@ public class Outline : MonoBehaviour
     private Dictionary<MeshRenderer, Material[]> initialMaterials = new Dictionary<MeshRenderer, Material[]>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
+    protected void Awake()
     {
         localMaterialInstance = new Material(outlineMaterial);
         if (applyToChildren) meshRenderers = GetComponentsInChildren<MeshRenderer>();

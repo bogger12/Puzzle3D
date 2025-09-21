@@ -31,6 +31,7 @@ public class Holdable : MonoBehaviour
 
     public bool allowRotationCarryOver = true;
     public bool freezeRotationDuringCarry = false;
+    public bool matchPlayerRotation = false;
     public bool lockItemToPlayer = false;
     public bool customHeldRotation = false;
     public Quaternion heldRotation = Quaternion.identity;
@@ -38,6 +39,7 @@ public class Holdable : MonoBehaviour
     public Rigidbody rb { get; protected set; }
 
     public bool canBeHeld = true;
+    public float followSpeed = 1;
 
     // Original Values
     private float originalMass;
@@ -76,6 +78,15 @@ public class Holdable : MonoBehaviour
             }
             rb.MovePosition(moveTo);
         }
+        else if (heldStatus == HoldableStatus.Held)
+        {
+            // lerp pos to holder
+            Vector3 moveTo = Vector3.Lerp(rb.position, holdPoint.position, 20 * Time.fixedDeltaTime);
+            rb.MovePosition(moveTo);
+            if (matchPlayerRotation) rb.MoveRotation(HoldingBody.rotation);
+            if (customHeldRotation) rb.MoveRotation(HoldingBody.rotation * heldRotation);
+
+        }
     }
 
     public virtual void HeldBy(Rigidbody holdingBody, Transform holdAnchor)
@@ -84,6 +95,7 @@ public class Holdable : MonoBehaviour
         this.HoldingBody = holdingBody;
 
         rb.position = holdAnchor.position;
+        holdPoint = holdAnchor;
 
         // Store original values
         originalFreezeRotation = rb.freezeRotation;
@@ -91,34 +103,18 @@ public class Holdable : MonoBehaviour
 
         originalRotation = rb.rotation;
         if (customHeldRotation) rb.rotation = holdingBody.rotation * heldRotation;
+        if (matchPlayerRotation) rb.rotation = holdingBody.rotation;
         rb.transform.rotation = rb.rotation;
 
         originalMass = rb.mass;
         rb.mass = 0f; //TODO: find alternative
-
-
-        // Add joint to object
-        holdJoint = gameObject.AddComponent<ConfigurableJoint>();
-
-        holdJoint.connectedBody = holdingBody; // player rigidbody
-        holdJoint.autoConfigureConnectedAnchor = false;
-        holdJoint.anchor = Vector3.zero;
-        holdJoint.connectedAnchor = holdAnchor.localPosition;
-        holdJoint.xMotion = ConfigurableJointMotion.Locked;
-        holdJoint.yMotion = ConfigurableJointMotion.Locked;
-        holdJoint.zMotion = ConfigurableJointMotion.Locked;
-        if (lockItemToPlayer)
-        {
-            holdJoint.angularXMotion = ConfigurableJointMotion.Locked;
-            holdJoint.angularYMotion = ConfigurableJointMotion.Locked;
-            holdJoint.angularZMotion = ConfigurableJointMotion.Locked;
-        }
 
         SetBodyDocile(holdingBody, true);
         controlUI = playerThrow.controlUI;
         // controlUI.SetTargetAndTexts(this, currentPlayerInputs.GetButtonText(currentPlayerInputs.holdThrow), GetControlHint());
         controlUI.SetHoldableTarget(null);
         AssignStaticHints(true);
+        gameObject.layer = LayerMask.NameToLayer("Held");
     }
 
     public virtual void OnThrow(float physicsIgnoreTime)
@@ -126,7 +122,7 @@ public class Holdable : MonoBehaviour
         SetBodyDocile(HoldingBody, false, physicsIgnoreTime);
         heldStatus = HoldableStatus.NotHeld;
         RemoveFromHoldingBody();
-        Destroy(holdJoint);
+        // Destroy(holdJoint);
 
         rb.freezeRotation = originalFreezeRotation;
         if (!allowRotationCarryOver) rb.rotation = originalRotation;
@@ -137,6 +133,7 @@ public class Holdable : MonoBehaviour
         controlUI = null;
         AssignStaticHints(false); // needs holdingbody (playerthrow)
         HoldingBody = null;
+        gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
     public virtual void OnInteractDrop(Transform holdPoint, Transform dropPoint, float dropTime)
@@ -156,6 +153,7 @@ public class Holdable : MonoBehaviour
     {
         Collider c = holdingBody.GetComponent<Collider>();
         rb.useGravity = !docile;
+        rb.isKinematic = docile;
 
         if (docile)
         {
@@ -212,9 +210,9 @@ public class Holdable : MonoBehaviour
         controlHintsManager.ResetHints();
         if (display)
         {
-            PlayerInputs playerInputs = playerThrow.playerInputs;
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Drop", false);
-            controlHintsManager.AssignHint(playerInputs.GetButtonText(playerInputs.holdThrow), "Throw", true);
+            PlayerInputStore playerInputStore = playerThrow.playerInputStore;
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Drop", false);
+            controlHintsManager.AssignHint(playerInputStore.GetButtonText(playerInputStore.playerInput.actions["Pickup_Throw"]), "Throw", true);
         }
     }
 }

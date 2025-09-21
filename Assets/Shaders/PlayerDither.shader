@@ -3,6 +3,8 @@ Shader "Lit/Player Dithered Lit"
     Properties
     {
         [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
+        [NoScaleOffset] _ColorRamp ("Color Ramp", 2D) = "grey" {}
+        _Color ("Color", Color) = (1,1,1,1)
         _DitherValue ("DitherValue", Float) = 0.5
         _DitheredColor ("DitheredColor", Color) = (1,1,1,1)
         _ShadeThreshold ("ShadeThreshold", Float) = 0.3
@@ -15,6 +17,11 @@ Shader "Lit/Player Dithered Lit"
 
         Pass
         {
+            Stencil {
+                Ref 1
+                Comp Always
+                Pass Replace
+            }
             Tags {"LightMode"="ForwardBase" "Queue"="Geometry"}
             ZWrite On
 
@@ -63,6 +70,8 @@ Shader "Lit/Player Dithered Lit"
             }
 
             sampler2D _MainTex;
+            sampler2D _ColorRamp;
+            float3 _Color;
 
             // Cel Shading
             float _ShadeThreshold;
@@ -95,14 +104,16 @@ Shader "Lit/Player Dithered Lit"
 
                 float3 ambient = 0.1;
 
-                float lighting = (diff * shadow + ambient + spec * shadow);
+                float lighting = saturate(diff * shadow + ambient + spec * shadow);
 
                 // Cel Shading Quantization
-                if (lighting < _ShadeThreshold) lighting = 0.1;
-                else if (lighting >= _HighlightThreshold) lighting = 1;
-                else lighting = 0.5;
+                // if (lighting < _ShadeThreshold) lighting = 0.1;
+                // else if (lighting >= _HighlightThreshold) lighting = 1;
+                // else lighting = 0.5;
+                fixed4 ramp = tex2D(_ColorRamp, float2(lighting,0));
+                // return ramp;
 
-                col.rgb *= _LightColor0.rgb * lighting;
+                col.rgb *= _LightColor0.rgb * _Color * ramp;
                 return col;
             }
             ENDHLSL
@@ -162,6 +173,9 @@ Shader "Lit/Player Dithered Lit"
             }
 
             sampler2D _MainTex;
+            sampler2D _ColorRamp;
+
+            float3 _Color;
 
             // Cel Shading
             float _ShadeThreshold;
@@ -192,7 +206,7 @@ Shader "Lit/Player Dithered Lit"
                 float specularExponent = exp2(0.5*8) + 2;
                 spec = pow(spec, specularExponent);
 
-                float3 ambient = 0.1;
+                float3 ambient = 0.0;
 
                 fixed atten = saturate(LIGHT_ATTENUATION(i)*_ForwardAddMultiplier);
                 fixed shadow = SHADOW_ATTENUATION(i);
@@ -202,11 +216,12 @@ Shader "Lit/Player Dithered Lit"
                 float lighting = (diff * shadow * atten + ambient + spec * shadow * atten);
 
                 // Cel Shading Quantization
-                if (lighting < _ShadeThreshold) lighting = 0.1;
-                else if (lighting >= _HighlightThreshold) lighting = 1;
-                else lighting = 0.5;
+                // if (lighting < _ShadeThreshold) lighting = 0.1;
+                // else if (lighting >= _HighlightThreshold) lighting = 1;
+                // else lighting = 0.5;
+                fixed4 ramp = tex2D(_ColorRamp, float2(lighting,0));
 
-                col.rgb *= _LightColor0.rgb * lighting;
+                col.rgb *= _LightColor0.rgb * _Color * ramp;
                 return col;
             }
             ENDHLSL
@@ -217,12 +232,11 @@ Shader "Lit/Player Dithered Lit"
             ZWrite Off
             ZTest Greater
             // This tests if 10 is Greater than the current value of the stencil buffer
-            Stencil
-            {
-                Ref 10
-                Comp Greater
-                Pass Replace
-            } 
+            Stencil {
+                Ref 1
+                Comp NotEqual    // only draw where stencil is not 1
+                Pass Keep
+            }
 
             HLSLPROGRAM
             #pragma vertex vert

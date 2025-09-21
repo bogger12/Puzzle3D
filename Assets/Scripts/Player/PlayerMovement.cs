@@ -2,7 +2,8 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerInputs))]
+[RequireComponent(typeof(PlayerThrow))]
+[RequireComponent(typeof(PlayerInputStore))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -34,10 +35,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection;
 
     private Vector3 groundNormal;
+    [Header("Incline Movement")]
     public float maxGroundAngle = 45;
     public bool useNormalOfGround = true;
-    Vector3 upAxis, rightAxis, forwardAxis;
-    Vector3 desiredVelocity;
+    public float hillSpeedBoostMult = 5;
+
+    [HideInInspector]
+    public Vector3 upAxis, rightAxis, forwardAxis;
+    [HideInInspector]
+    public Vector3 desiredVelocity;
     Vector3 accumulatedVelocity = Vector3.zero;
     [Range(0f, 1f)]
     public float accumulatedVelocityDragMult = 0.9f;
@@ -50,12 +56,18 @@ public class PlayerMovement : MonoBehaviour
     private float currentJumps;
 
     // Input Component
-    private PlayerInputs playerInputs;
+    private PlayerInputStore playerInputStore;
+    private PlayerThrow playerThrow;
+
+    private Vector3 xAxis, zAxis;
+    [HideInInspector]
+    public Vector3 movementUpAxis;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerInputs = GetComponent<PlayerInputs>();
+        playerInputStore = GetComponent<PlayerInputStore>();
+        playerThrow = GetComponent<PlayerThrow>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         currentJumps = numJumps;
@@ -68,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float verticalSpeed = Vector3.Dot(rb.linearVelocity, upAxis);
         Vector3 gravity = Vector3.down * gravityAcceleration;
+        // gravity -= gravity * (1-Vector3.Dot(groundNormal, Vector3.up)) * hillSpeedBoostMult;
+        // Debug.Log("Gravity: " + gravity);
 
         AdjustVelocity();
 
@@ -83,21 +97,23 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded = CheckIsGrounded();
 
 
-        Vector2 playerInput = playerInputs.move.action.ReadValue<Vector2>();
+        Vector2 playerInput = playerInputStore.playerInput.actions["Move"].ReadValue<Vector2>();
         // playerInput.x = Input.GetAxis("Horizontal");
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        Vector3 movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
+        movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
 
         rightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, upAxis);
         forwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, upAxis);
+        
+        float hillSpeedBoost = hillSpeedBoostMult * (1-Vector3.Dot(groundNormal, Vector3.up));
+        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * (movementSpeed + hillSpeedBoost);
+        // Debug.Log("Total Speed: " + (movementSpeed + hillSpeedBoost));
 
-        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
+        desiredJump |= playerInputStore.playerInput.actions["Jump"].WasPressedThisFrame();
 
-        desiredJump |= playerInputs.jump.action.WasPressedThisFrame();
-
-        Debug.DrawLine(transform.position, transform.position + movementUpAxis * 5, Color.yellow);
+        Debug.DrawRay(transform.position, movementUpAxis * 2, Color.yellow);
         Debug.DrawRay(transform.position + movementUpAxis * 1, moveDirection * 5, Color.red);
 
         // DoDebug();
@@ -116,19 +132,19 @@ public class PlayerMovement : MonoBehaviour
             movementForwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, movementUpAxis);
         }
 
-        Vector3 xAxis = Vector3.ProjectOnPlane(movementRightAxis, upAxis).normalized;
-        Vector3 zAxis = Vector3.ProjectOnPlane(movementForwardAxis, upAxis).normalized;
+        xAxis = Vector3.ProjectOnPlane(movementRightAxis, movementUpAxis).normalized;
+        zAxis = Vector3.ProjectOnPlane(movementForwardAxis, movementUpAxis).normalized;
 
 
 
-        Debug.DrawRay(transform.position, xAxis * 5, Color.red);
-        Debug.DrawRay(transform.position, zAxis * 5, Color.blue);
+        Debug.DrawRay(transform.position, xAxis * 2, Color.red);
+        Debug.DrawRay(transform.position, zAxis * 2, Color.blue);
 
 
         float currentX = Vector3.Dot(rb.linearVelocity, xAxis);
         float currentZ = Vector3.Dot(rb.linearVelocity, zAxis);
 
-        bool isDecelerating = desiredVelocity.magnitude < rb.linearVelocity.magnitude;
+        bool isDecelerating = (desiredVelocity + accumulatedVelocity).magnitude < rb.linearVelocity.magnitude;
         float acceleration = isDecelerating ? (IsGrounded ? maxDeceleration : maxAirDeceleration) :
             (IsGrounded ? maxAcceleration : maxAirAcceleration);
         float maxSpeedChange = acceleration * Time.deltaTime;
@@ -142,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
         accumulatedVelocity *= accumulatedVelocityDragMult;
         accumulatedVelocity = Vector3.ClampMagnitude(accumulatedVelocity, acceleration);
+        // Debug.Log("accumulatedVelocity = " + accumulatedVelocity);
 
         rb.linearVelocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ) + accumulatedVelocity;
 
@@ -153,13 +170,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 castFrom = transform.position + transform.up * 1f;
         bool didHit = Physics.SphereCast(castFrom, 0.5f, -transform.up, out RaycastHit hit, groundDetectionDistance + 0.5f, groundDetectionLayer);
-        if (Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
+        // if (didHit && Vector3.Angle(groundNormal, Vector3.up) >= maxGroundAngle) groundNormal = hit.normal;
+        didHit &= hit.rigidbody != rb;
+        groundNormal = didHit ? hit.normal : Vector3.up;
         return didHit;
     }
 
     void Jump(float verticalSpeed)
     {
-        if (playerInputs.jump.action.IsPressed())
+        if (playerInputStore.playerInput.actions["Jump"].IsPressed())
         {
 
             if (currentJumps > 0 && desiredJump)
@@ -189,14 +208,43 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateCharacter()
     {
-        if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
+        Quaternion newRotation = rb.rotation;
+        if (!IsGrounded && playerThrow.HeldBody != null && playerThrow.HeldBody.TryGetComponent<HoldableFlower>(out HoldableFlower flower))
+        {
+            newRotation = RotatePlayerFromFlower(flower.rotationMult, flower.rollRotationSpeed, flower.facingRotationSpeed);
+        }
+        else if (desiredVelocity.magnitude != 0 && rb.linearVelocity.magnitude > 0.001f)
         {
             float rotationSpeed = IsGrounded ? groundedRotationSpeed : airRotationSpeed;
             Quaternion targetRotationMove = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(desiredVelocity, Vector3.up);
-            Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
-
-            rb.MoveRotation(currentRotationNormal);
+            newRotation = Quaternion.Slerp(transform.rotation, targetRotationMove, rotationSpeed * Time.deltaTime);
         }
+        rb.MoveRotation(newRotation);
+    }
+
+    Vector3 currentDesiredVelocity = Vector3.zero;
+    Vector3 currentHorizontalVelocity = Vector3.zero;
+    public Quaternion RotatePlayerFromFlower(float rotationMult, float rollRotationSpeed, float facingRotationSpeed)
+    {
+        // Get difference between current velocity and target velocity direction
+
+        if (desiredVelocity.magnitude>0.001)
+            currentDesiredVelocity = desiredVelocity.x * xAxis + desiredVelocity.z * zAxis;
+
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, upAxis);
+        if (horizontalVelocity.magnitude > 0.001) currentHorizontalVelocity = horizontalVelocity;
+
+        Vector3 currentDesiredVelocityRight = Quaternion.AngleAxis(-90, Vector3.up) * currentDesiredVelocity;
+
+        float rollAngle = currentHorizontalVelocity.magnitude * rotationMult;
+
+        Quaternion facingRotation = Quaternion.LookRotation(forwardAxis, upAxis) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+        Quaternion flowerAngle = Quaternion.AngleAxis(rollAngle, -currentDesiredVelocityRight) * Quaternion.LookRotation(currentHorizontalVelocity, Vector3.up);
+
+        Quaternion currentRotationNormal = Quaternion.Slerp(transform.rotation, facingRotation, facingRotationSpeed * Time.deltaTime);
+        currentRotationNormal = Quaternion.Slerp(currentRotationNormal, flowerAngle, rollRotationSpeed * Time.deltaTime);
+
+        return currentRotationNormal;
     }
 
 

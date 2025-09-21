@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerInputs))]
+[RequireComponent(typeof(PlayerInputStore))]
 public class PlayerThrow : MonoBehaviour
 {
 
     // Input Component
-    public PlayerInputs playerInputs;
+    public PlayerInputStore playerInputStore;
     public Holdable HeldBodyHoldable { get; private set; } = null;
     private Rigidbody _heldBody;
     public Rigidbody HeldBody
@@ -24,6 +24,7 @@ public class PlayerThrow : MonoBehaviour
     }
     public Transform holdAnchor;
     public Transform dropAnchor;
+    public bool useDropAnchor = true;
     public float dropTime = 0.2f;
 
     public Vector3 throwDirectionForward = new Vector3(0, 0.5f, 0.5f);
@@ -53,7 +54,7 @@ public class PlayerThrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerInputs = GetComponent<PlayerInputs>();
+        playerInputStore = GetComponent<PlayerInputStore>();
 
 #if UNITY_EDITOR
         // Set UIThrowProgressImage Material to make sure we aren't modifying the asset
@@ -73,7 +74,7 @@ public class PlayerThrow : MonoBehaviour
         float throwProgress = Mathf.Clamp01(timeSincePressed / maxThrowSeconds);
 
         // Checking key up first so timeSincePressed = 0 not done before keydown
-        if (playerInputs.holdThrow.action.WasReleasedThisFrame())
+        if (playerInputStore.playerInput.actions["Pickup_Throw"].WasReleasedThisFrame())
         {
             if (nearest != null && HeldBody == null && nearest.attachedRigidbody != null)
             {
@@ -114,14 +115,15 @@ public class PlayerThrow : MonoBehaviour
                 {
                     if (holdable.heldStatus == HoldableStatus.Held)
                     {
-                        holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
+                        if (useDropAnchor) holdable.OnInteractDrop(holdAnchor, dropAnchor, dropTime);
+                        else holdable.OnThrow(dropTime);
                     }
                 }
                 timeSincePressed = 0;
             }
         }
 
-        if (playerInputs.holdThrow.action.IsPressed())
+        if (playerInputStore.playerInput.actions["Pickup_Throw"].IsPressed())
         {
             // Setting the throw strength
             Vector3 throwDirection = Vector3.Normalize(rb.rotation * throwDirectionForward);
@@ -152,7 +154,7 @@ public class PlayerThrow : MonoBehaviour
         Holdable closest = null;
         foreach (Collider c in colliders)
         {
-            if (c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
+            if (c != null && c.gameObject.TryGetComponent<Outline>(out Outline outlineScript) && c.gameObject.TryGetComponent<Holdable>(out Holdable holdable))
             {
                 bool allowTestForClosest = holdable.heldStatus == HoldableStatus.NotHeld && HeldBody == null && holdable.canBeHeld;
                 if (allowTestForClosest && (closest == null || Vector3.Distance(holdable.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position)))
@@ -164,7 +166,7 @@ public class PlayerThrow : MonoBehaviour
             }
             else collidersList.Remove(c);
         }
-        if (HeldBody == null) controlUI.SetTargetAndTextsAuto(closest, playerInputs);
+        if (HeldBody == null) controlUI.SetTargetAndTextsAuto(closest, playerInputStore);
         // else if (controlUI.anchor != HeldBody.transform)
         // {
         //     controlUI.SetTargetAndTextsAuto(HeldBodyHoldable, playerInputs);

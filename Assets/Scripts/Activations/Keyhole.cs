@@ -11,8 +11,11 @@ public enum LockStates
 
 
 [RequireComponent(typeof(Collider))]
-public class Keyhole : RemoteActivate
+[RequireComponent(typeof(RemoteActivate))]
+public class Keyhole : MonoBehaviour
 {
+
+    private RemoteActivate remoteActivate;
 
     public Transform keyAnchor;
     private Outline outline;
@@ -35,6 +38,7 @@ public class Keyhole : RemoteActivate
     void Start()
     {
         // animator = GetComponent<Animator>();
+        remoteActivate = GetComponent<RemoteActivate>();
         outline = GetComponentInParent<Outline>();
     }
 
@@ -51,9 +55,8 @@ public class Keyhole : RemoteActivate
 
         if (!setActiveOnlyWhenFinishedAnim)
         {
-            Debug.Log("Set " + activateable.name + " to " + setValue);
             LockState = LockStates.Unlocked;
-            SetActive(setValue);
+            remoteActivate.SetActive(setValue);
             if (disableOutlineOnUnlock) outline.Enabled = false;
         }
         else LockState = LockStates.Unlocking;
@@ -66,9 +69,8 @@ public class Keyhole : RemoteActivate
         FinishedUnlockAnim = true;
         if (setActiveOnlyWhenFinishedAnim)
         {
-            Debug.Log("Set " + activateable.name + " to " + setValue);
             LockState = LockStates.Unlocked;
-            SetActive(setValue);
+            remoteActivate.SetActive(setValue);
         }
         // outline.Enabled = false;
     }
@@ -78,7 +80,7 @@ public class Keyhole : RemoteActivate
         Debug.Log("Locked.");
         LockState = LockStates.Locked;
         FinishedUnlockAnim = false;
-        SetActive(!setValue);
+        remoteActivate.SetActive(!setValue);
     }
 
     void OnTriggerEnter(Collider other)
