@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class DeleteDefaultCameraOnJoin : MonoBehaviour
 {
-    private Camera defaultCamera;
+    public Camera defaultCamera;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        defaultCamera = FindObjectsByType<Camera>(FindObjectsSortMode.None).FirstOrDefault();
+        // defaultCamera = FindObjectsByType<Camera>(FindObjectsSortMode.None).FirstOrDefault();
     }
 
     // Update is called once per frame

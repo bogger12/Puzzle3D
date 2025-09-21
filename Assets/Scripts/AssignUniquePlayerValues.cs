@@ -8,6 +8,9 @@ public class AssignUniquePlayerValues : MonoBehaviour
     public CinemachineCamera cinemachineCamera1;
     public CinemachineCamera cinemachineCamera2;
 
+    public SkinnedMeshRenderer meshRenderer;
+    public Material player2Material;
+
     private int useSpecificCameraOnStart = -1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,6 +18,7 @@ public class AssignUniquePlayerValues : MonoBehaviour
     {
         int playerindex = GetComponent<PlayerInputStore>().playerIndex;
         OutputChannels channelToUse = (OutputChannels)(2 << playerindex);
+
         if (useSpecificCameraOnStart != -1) playerindex = useSpecificCameraOnStart;
         cinemachineBrain.ChannelMask = channelToUse;
         cinemachineCamera1.gameObject.SetActive(playerindex == 0);
@@ -25,7 +29,10 @@ public class AssignUniquePlayerValues : MonoBehaviour
 
         Debug.Log("Channel = " + channelToUse);
 
-        if (playerindex > 0 || useSpecificCameraOnStart != -1) Destroy(GetComponent<AudioListener>());
+        if (playerindex > 0 || useSpecificCameraOnStart != -1) {
+            Destroy(cinemachineBrain.GetComponent<AudioListener>());
+            AssignP2Material();
+        }
     }
 
     // Update is called once per frame
@@ -51,5 +58,13 @@ public class AssignUniquePlayerValues : MonoBehaviour
     public void SetUseSpeciifCameraOnStart(int cameraNum)
     {
         useSpecificCameraOnStart = cameraNum;
+    }
+
+
+    public void AssignP2Material()
+    {
+        // meshRenderer.materials[0] = player2Material;
+        meshRenderer.material = player2Material;
+        Debug.Log("assigning material 2");
     }
 }

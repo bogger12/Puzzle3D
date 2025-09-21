@@ -19,7 +19,7 @@ public class ButtonMeasureStop : MonoBehaviour
         remoteActivate = GetComponent<RemoteActivate>();
         initialRelativePos = transform.position - frame.position;
         rb = GetComponent<Rigidbody>();
-        Debug.Log(initialRelativePos);
+        // Debug.Log(initialRelativePos);
     }
 
     // Update is called once per frame
