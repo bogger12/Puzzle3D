@@ -21,7 +21,7 @@ public class ListenForSecondKeyboard : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        playerInputManager.JoinPlayerFromAction(ctx);
+        // playerInputManager.JoinPlayerFromAction(ctx);
         Debug.Log("Tyring to join");
     }
 
@@ -30,8 +30,8 @@ public class ListenForSecondKeyboard : MonoBehaviour
     {
         // Check for any keayboard inputs
         bool player1pressed = player1Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
-        bool player2pressed = player2Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
-        if (playerInputManager.playerCount == 1 && (player1pressed || player2pressed))
+        // bool player2pressed = player2Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
+        if (playerInputManager.playerCount == 1 && player1pressed)
         {
             PlayerInput newPlayer = playerInputManager.JoinPlayer(1, -1, "Keyboard2", Keyboard.current);
             newPlayer.GetComponent<AssignUniquePlayerValues>().UseSpecificCamera(0, 1);
