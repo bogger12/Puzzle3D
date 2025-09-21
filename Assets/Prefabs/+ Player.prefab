@@ -342,8 +342,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483316865614344257}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.106826656, y: 0.08316934, z: -0.008967632, w: 0.9907525}
-  m_LocalPosition: {x: -0.55703205, y: 0.7288903, z: -3.29403}
+  m_LocalRotation: {x: 0.07597801, y: -0.48808715, z: 0.042702105, w: 0.8684324}
+  m_LocalPosition: {x: 6.339504, y: 1.308577, z: -3.8583004}
   m_LocalScale: {x: 0.75357944, y: 0.75357944, z: 0.75357944}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1664,6 +1664,7 @@ GameObject:
   - component: {fileID: -2669861723364262524}
   - component: {fileID: 1659574039226658150}
   - component: {fileID: 2795209397910424598}
+  - component: {fileID: 4707845403602902869}
   m_Layer: 6
   m_Name: + Player
   m_TagString: Player
@@ -1959,6 +1960,23 @@ MonoBehaviour:
   cinemachineCamera2: {fileID: 2774288858143842062}
   meshRenderer: {fileID: 7801167858053961252}
   player2Material: {fileID: 2100000, guid: b69d61d675bf1404ea20bc7e58d12281, type: 2}
+--- !u!114 &4707845403602902869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338891691979222974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67c232ff91aedd44a94addead15a0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionDistance: 1.1
+  platformLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  platformLastPos: {x: 0, y: 0, z: 0}
 --- !u!1 &7203985385138426664
 GameObject:
   m_ObjectHideFlags: 0
