@@ -33,6 +33,11 @@ public abstract class Burnable : MonoBehaviour
 
     public virtual void StartBurn()
     {
+        Debug.Log(gameObject.name + " is burnign");
+        if (TryGetComponent<PlaySoundOnBurn>(out PlaySoundOnBurn burnSound))
+        {
+            burnSound.PlaySound();
+        }
         burning = true;
     }
 

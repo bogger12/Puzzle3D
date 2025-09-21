@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class SoundPlayer : MonoBehaviour
+public class PlaySoundOnBurn : MonoBehaviour
 {
 
     public AudioClip[] clips;
@@ -22,13 +22,10 @@ public class SoundPlayer : MonoBehaviour
 
     public void PlaySound()
     {
-        int index = Random.Range(0, clips.Length-1);
+        int index = Random.Range(0, clips.Length - 1);
         // Debug.Log("Playing sound " + index);
-        audioSource.PlayOneShot(clips[index]);
+        audioSource.resource = clips[index];
+        audioSource.Play();
     }
 
-    public void PlaySound(int index)
-    {
-        audioSource.PlayOneShot(clips[index]);
-    }
 }

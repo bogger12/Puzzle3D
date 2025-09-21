@@ -23,7 +23,7 @@ public class PlaySoundOnCollide : MonoBehaviour
     public void PlaySound()
     {
         int index = Random.Range(0, clips.Length - 1);
-        Debug.Log("Playing sound " + index);
+        // Debug.Log("Playing sound " + index);
         audioSource.resource = clips[index];
         audioSource.Play();
     }
