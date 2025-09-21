@@ -34,7 +34,9 @@ public class ListenForSecondKeyboard : MonoBehaviour
         if (playerInputManager.playerCount == 1 && player1pressed)
         {
             PlayerInput newPlayer = playerInputManager.JoinPlayer(1, -1, "Keyboard2", Keyboard.current);
-            newPlayer.GetComponent<AssignUniquePlayerValues>().UseSpecificCamera(0, 1);
+            // newPlayer.GetComponent<AssignUniquePlayerValues>().UseSpecificCamera(0, 1);
+            newPlayer.GetComponent<AssignUniquePlayerValues>().SetUseSpeciifCameraOnStart(0);
+            Debug.Log("P2 has keyboard");
         }
     }
 }
