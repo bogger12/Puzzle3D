@@ -34,7 +34,7 @@ public abstract class BurnableBurnsAdjacent : Burnable
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger) return;
+        // if (other.isTrigger) return;
         Burnable burnable = other.GetComponentInChildren<Burnable>();
         if (burning && burnable!=null)
         {
@@ -51,7 +51,7 @@ public abstract class BurnableBurnsAdjacent : Burnable
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.isTrigger) return;
+        // if (other.isTrigger) return;
         Burnable burnable = other.GetComponentInChildren<Burnable>();
         if (burnable!=null)
         {
