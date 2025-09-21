@@ -12,6 +12,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerMovement playerMovement;
     private Rigidbody rb;
 
+    public AnimationCurve speedRemap;
+
     private Vector3 currentVelocityDirection = Vector3.zero;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +43,7 @@ public class PlayerAnimation : MonoBehaviour
         characterAnimator.SetFloat("Horizontal", horizontal);
 
         float speedRatio = isMoving ? horizontalVelocity.magnitude / playerMovement.movementSpeed : 0;
-        characterAnimator.SetFloat("Speed", speedRatio);
+        characterAnimator.SetFloat("Speed", speedRemap.Evaluate(speedRatio));
         
 
     }
