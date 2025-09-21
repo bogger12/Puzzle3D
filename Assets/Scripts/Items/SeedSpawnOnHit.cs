@@ -22,13 +22,14 @@ public class SeedSpawnOnHit : MonoBehaviour
 
     }
 
-    public void Spawn(Vector3 spawnPosition, Vector3 normal)
+    public void Spawn(Transform spawnParent, Vector3 spawnPosition, Vector3 normal)
     {
         Quaternion rotation = rotateToNormal ? Quaternion.FromToRotation(Vector3.up, normal) : spawnRotationOverride;
         Debug.Log("should be at: " + spawnPosition);
         GameObject spawnedPlatform = Instantiate(spawnObject, spawnPosition, rotation);
         GameObject spawnedParticles = Instantiate(spawnParticles, spawnPosition, rotation);
         Debug.Log("New Position: " + spawnedPlatform.transform.position);
+        spawnedPlatform.transform.parent = spawnParent.transform;
         if (destroySeedOnPlant) Destroy(gameObject);
         // Debug.Break();
         // spawnObject.GetComponent<Animator>().SetBool("grow", true);

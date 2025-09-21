@@ -47,7 +47,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2672877007569881248}
-  m_Mesh: {fileID: -364564526506816927, guid: eb60e74b4898c4986926ce6d98014361, type: 3}
+  m_Mesh: {fileID: -364564526506816927, guid: f02ddd9195984094c8a301954323a207, type: 3}
 --- !u!23 &3120220502507369325
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -71,8 +71,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8375765414521573622, guid: eb60e74b4898c4986926ce6d98014361, type: 3}
-  - {fileID: -4006148316881293267, guid: eb60e74b4898c4986926ce6d98014361, type: 3}
+  - {fileID: 2100000, guid: b05104c310243db4aa35b33cf7bfa839, type: 2}
+  - {fileID: 2100000, guid: 7c0e81eb5cf4a9c4b815ebbc61808a45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157,10 +157,12 @@ MonoBehaviour:
   heldStatus: 0
   allowRotationCarryOver: 0
   freezeRotationDuringCarry: 0
+  matchPlayerRotation: 0
   lockItemToPlayer: 1
   customHeldRotation: 1
   heldRotation: {x: 0.25881904, y: 0, z: 0, w: 0.9659258}
   canBeHeld: 1
+  followSpeed: 1
   playerUpwardsGravityMult: 0.4
   selfUpwardsGravityMult: 0.7
   playerMaxDownwardVelocity: 0.3

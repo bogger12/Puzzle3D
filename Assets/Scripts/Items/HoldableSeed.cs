@@ -36,7 +36,7 @@ public class HoldableSeed : Holdable
             ContactPoint contact = collision.GetContact(0);
             Vector3 collisionNormal = contact.normal; // Dunno if i should get first one
             Debug.DrawRay(contact.point, collisionNormal * 5f, Color.red, 5f);
-            spawnOnHit.Spawn(contact.point, collisionNormal);
+            spawnOnHit.Spawn(collision.transform, contact.point, collisionNormal);
         }
     }
 }
