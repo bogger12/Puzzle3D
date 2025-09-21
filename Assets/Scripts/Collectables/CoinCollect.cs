@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinCollect : MonoBehaviour
 {
 
-    public SpawnParticlesOnDestroy coinParticles;
+    private SpawnParticlesOnDestroy coinParticles;
     private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +19,6 @@ public class CoinCollect : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         bool finishedCoinShrinkAnimation = stateInfo.IsName("CoinShrink") && stateInfo.normalizedTime >= 1f && !stateInfo.loop;
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " " + stateInfo.normalizedTime + " " + stateInfo.loop);
         if (finishedCoinShrinkAnimation)
         {
             coinParticles.DestroyAndSpawnParticles();

@@ -91,7 +91,7 @@ Material:
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
-    - _NoiseScale: 0.13
+    - _NoiseScale: 0.05
     - _RimPower: 1.7
     - _Scale: 0.1
     - _SideScale: 0.09

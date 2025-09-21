@@ -5,7 +5,7 @@ Shader "Toon/Lit Tri Planar Normal" {
 		_TopColor("Top Color", Color) = (1,1,1,1)
 		// _NormalT("Top Normal", 2D) = "bump" {}
 		_MainTexSide("Side/Bottom Texture", 2D) = "white" {}
-		_TopColor("Side Color", Color) = (1,1,1,1)
+		_SideColor("Side Color", Color) = (1,1,1,1)
 		// _Normal("Side/Bottom Normal", 2D) = "bump" {}
 		// _Ramp("Toon Ramp (RGB)", 2D) = "gray" {}
 		_Noise("Noise", 2D) = "white" {}
@@ -54,6 +54,8 @@ Shader "Toon/Lit Tri Planar Normal" {
 	float _RimPower;
 	float  _TopSpread, _EdgeWidth;
 	float _Scale, _SideScale, _NoiseScale;
+
+	float3 _TopColor, _SideColor;
 
 	struct Input {
 		float2 uv_MainTex : TEXCOORD0;
@@ -129,11 +131,11 @@ Shader "Toon/Lit Tri Planar Normal" {
 		// if dot product is higher than the top spread slider, multiplied by triplanar mapped top texture
 		// step is replacing an if statement to avoid branching :
 		// if (worldNormalDotNoise > _TopSpread{ o.Albedo = toptexture}
-		float3 topTextureResult = step(_TopSpread + _EdgeWidth, worldNormalDotNoise) * toptexture;
+		float3 topTextureResult = step(_TopSpread + _EdgeWidth, worldNormalDotNoise) * toptexture * _TopColor;
 		float3 topNormalResult = step(_TopSpread, worldNormalDotNoise) * toptextureNormal;
 
 		// if dot product is lower than the top spread slider, multiplied by triplanar mapped side/bottom texture
-		float3 sideTextureResult = step(worldNormalDotNoise, _TopSpread) * sidetexture;
+		float3 sideTextureResult = step(worldNormalDotNoise, _TopSpread) * sidetexture * _SideColor;
 		float3 sideNormalResult = step(worldNormalDotNoise, _TopSpread) * sidetextureNormal;
 
 		// if dot product is in between the two, make the texture darker

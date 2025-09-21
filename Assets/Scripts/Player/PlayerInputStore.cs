@@ -7,6 +7,7 @@ public class PlayerInputStore : MonoBehaviour
     [Header("Player (0 or 1)")]
     public int playerIndex; // set in inspector (0 = P1, 1 = P2)
 
+    [HideInInspector]
     public PlayerInput playerInput;
     public InputDevice assignedDevice;
 

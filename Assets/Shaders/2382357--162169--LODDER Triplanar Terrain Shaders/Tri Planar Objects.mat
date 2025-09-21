@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexSide:
-        m_Texture: {fileID: 2800000, guid: 34d19cf1cf3000048902f569231fef7d, type: 3}
+        m_Texture: {fileID: 2800000, guid: cb9254ade89f635449831a6e19854cc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise:
@@ -49,17 +49,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EdgeWidth: 0.432
+    - _EdgeWidth: 0.032
     - _NoiseScale: 0.13
-    - _RimPower: 1.7
+    - _RimPower: 0.8
     - _Scale: 0.1
     - _SideScale: 0.09
     - _TopSpread: 0.37
     m_Colors:
-    - _Color: {r: 0.6226415, g: 0.5980215, b: 0.5198469, a: 1}
-    - _EdgeColor: {r: 1, g: 0.91494215, b: 0.7971698, a: 1}
-    - _RimColor: {r: 0.6698113, g: 0.23113284, b: 0.1484959, a: 1}
-    - _RimColor2: {r: 0.764151, g: 0.20997427, b: 0, a: 1}
-    - _TopColor: {r: 1, g: 0.8928968, b: 0.08962262, a: 1}
+    - _Color: {r: 0.62352943, g: 0.59607846, b: 0.52156866, a: 1}
+    - _EdgeColor: {r: 0.9245283, g: 0.50373626, b: 0.34451762, a: 1}
+    - _RimColor: {r: 1, g: 0.15686275, b: 0, a: 1}
+    - _RimColor2: {r: 0.6431373, g: 0.21568628, b: 0.050980393, a: 1}
+    - _SideColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TopColor: {r: 1, g: 0.89411765, b: 0.09019608, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

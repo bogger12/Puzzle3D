@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerCoinCollector : MonoBehaviour
 {
 
     private int numCoins = 0;
+
+    public TextMeshProUGUI text;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,5 +23,6 @@ public class PlayerCoinCollector : MonoBehaviour
     public void AddCoin()
     {
         numCoins++;
+        text.SetText(numCoins.ToString());
     }
 }

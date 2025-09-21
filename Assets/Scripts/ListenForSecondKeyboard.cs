@@ -13,16 +13,6 @@ public class ListenForSecondKeyboard : MonoBehaviour
     void Start()
     {
         playerInputManager = GetComponent<PlayerInputManager>();
-
-        var moveAction = player1Input.FindActionMap("PlayerAlt", true)["Move"];
-
-        moveAction.performed += OnMove;
-    }
-
-    private void OnMove(InputAction.CallbackContext ctx)
-    {
-        // playerInputManager.JoinPlayerFromAction(ctx);
-        Debug.Log("Tyring to join");
     }
 
     // Update is called once per frame
