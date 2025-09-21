@@ -33,13 +33,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DitherValue: 0.13
+    - _DitherValue: 0.61
     - _ForwardAddMultiplier: 10
     - _HighlightThreshold: 0.9
     - _ShadeThreshold: 0.3
     - __HighlightThreshold: 0.4
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DitheredColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+    - _DitheredColor: {r: 0.3018868, g: 0.11249555, b: 0.20050019, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
