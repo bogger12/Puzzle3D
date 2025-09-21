@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3838728589637004038}
   - component: {fileID: 6117165777653994019}
   - component: {fileID: 6313102406846157794}
+  - component: {fileID: 7077998922299076271}
   m_Layer: 7
   m_Name: BurnableBlock
   m_TagString: Untagged
@@ -5115,6 +5116,21 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 21f10bad4e17aee4497f8f48dc4c89d4, type: 3}
   - {fileID: 8300000, guid: 24d1ac40f0f153648aa32dd5422af861, type: 3}
+--- !u!114 &7077998922299076271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953930257116042867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de37b3cbcfd55fe4fb45db6c77b233f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 035366aebf6a95a48823f956cf627151, type: 3}
+  - {fileID: 8300000, guid: ab6ad409d3a19364094c983398cf25ec, type: 3}
 --- !u!1 &3762954457794346353
 GameObject:
   m_ObjectHideFlags: 0

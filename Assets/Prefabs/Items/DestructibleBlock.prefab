@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 9105089303652775782}
   - component: {fileID: 2164902838910453808}
   - component: {fileID: 8607754091123585893}
+  - component: {fileID: 398301722748874275}
   m_Layer: 7
   m_Name: DestructibleBlock
   m_TagString: Untagged
@@ -303,3 +304,18 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 21f10bad4e17aee4497f8f48dc4c89d4, type: 3}
   - {fileID: 8300000, guid: 24d1ac40f0f153648aa32dd5422af861, type: 3}
+--- !u!114 &398301722748874275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224201714972496465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de37b3cbcfd55fe4fb45db6c77b233f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: d03efbd458cd835419560a16339c6d3c, type: 3}
+  - {fileID: 8300000, guid: f9f563a6d212d474388441682ab3ce3f, type: 3}
