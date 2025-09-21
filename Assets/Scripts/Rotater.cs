@@ -15,6 +15,7 @@ public class Rotater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dolly.CameraPosition = (Time.time * speed) % 1;
+        // dolly.CameraPosition = (Time.time * speed) % 1;
+        dolly.CameraPosition = (Time.time * speed);
     }
 }
