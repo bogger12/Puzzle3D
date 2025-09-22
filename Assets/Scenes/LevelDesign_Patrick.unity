@@ -4280,8 +4280,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 142.66495, y: 1, z: 101.25043}
-  m_Center: {x: -17.350418, y: 0, z: -11.32756}
+  m_Size: {x: 142.66495, y: 1, z: 143.10849}
+  m_Center: {x: -17.350418, y: 0, z: -32.2566}
 --- !u!23 &282803689
 MeshRenderer:
   m_ObjectHideFlags: 0
