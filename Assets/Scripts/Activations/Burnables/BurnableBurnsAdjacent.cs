@@ -19,7 +19,7 @@ public abstract class BurnableBurnsAdjacent : Burnable
     }
     public override void StartBurn()
     {
-        burning = true;
+        base.StartBurn();
         // Start burning nearby objects
         
         if (burnablesInsideBurnVolume.Count>0) foreach (Burnable b in burnablesInsideBurnVolume)
