@@ -9,6 +9,10 @@ public abstract class Activateable : MonoBehaviour
     public virtual void SetActive(bool active)
     {
         this.active = active;
+        if (active && TryGetComponent<PlaySoundOnActivate>(out PlaySoundOnActivate playSound))
+        {
+            playSound.PlaySound();
+        }
     }
     public virtual bool GetActive()
     {
