@@ -167,7 +167,7 @@ MonoBehaviour:
   followSpeed: 1
   playerUpwardsGravityMult: 0.4
   selfUpwardsGravityMult: 0.7
-  playerMaxDownwardVelocity: 0.3
+  playerMaxDownwardVelocity: 0.8
   selfMaxDownwardVelocity: 1.5
   boostDuringJumpUp: 1
   onlyGlideWhileButtonPress: 1

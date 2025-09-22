@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457446129204440408}
-  m_Mesh: {fileID: 1368061016302227357, guid: 09e65ebd7ec00429391eeaf38b5da153, type: 3}
+  m_Mesh: {fileID: 1368061016302227357, guid: e2985e99e20cc4bbbbe456ffaf73090e, type: 3}
 --- !u!23 &4892254394839764306
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2709353783093401111, guid: 09e65ebd7ec00429391eeaf38b5da153, type: 3}
+  - {fileID: -2709353783093401111, guid: e2985e99e20cc4bbbbe456ffaf73090e, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72a408068a7041038debe24a2ec413a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMaterial: {fileID: 0}
+  outlineMaterial: {fileID: 2100000, guid: f3e6483fd24b14e64a8efb719d1d2dcb, type: 2}
   enabled: 0
   applyToChildren: 1
 --- !u!1 &7825441832007190688
@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 8827015021337700196}
   - component: {fileID: 6127308510553030889}
   - component: {fileID: 7250113023824276817}
+  - component: {fileID: 4082299191360375404}
   m_Layer: 0
   m_Name: KeyZone
   m_TagString: Untagged
@@ -170,7 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec337306a60124ac3ae81366958481b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateable: {fileID: 0}
   keyAnchor: {fileID: 8163901262865050540}
   noKeyColor: {r: 1, g: 0, b: 0, a: 1}
   hasKeyColor: {r: 0, g: 1, b: 0, a: 1}
@@ -179,6 +179,19 @@ MonoBehaviour:
   setActiveOnlyWhenFinishedAnim: 1
   allowKeyPickup: 0
   setValue: 1
+--- !u!114 &4082299191360375404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7825441832007190688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7fa0740ba7a4cc5a585f78a2287ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateable: {fileID: 0}
 --- !u!1 &8608277387890819619
 GameObject:
   m_ObjectHideFlags: 0
