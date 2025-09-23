@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyToLoad: 13
-  sceneToLoad: LevelDesign_Patrick
+  sceneToLoad: MainScene
 --- !u!1 &962462361
 GameObject:
   m_ObjectHideFlags: 0

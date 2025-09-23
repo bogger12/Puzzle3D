@@ -1,0 +1,49 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WindPusher : MonoBehaviour
+{
+
+    public float pushForce;
+    public float playerPushForce;
+
+    public float maxObjectSpeed = 10f;
+    public bool pushHeldItem = false;
+
+    public Vector3 customDirection = Vector3.zero;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.attachedRigidbody != null && (pushHeldItem || !(other.TryGetComponent<Holdable>(out Holdable holdable) && holdable.heldStatus == HoldableStatus.Held)))
+        {
+            float maxSpeed = maxObjectSpeed;
+            PlayerMovement movement = other.GetComponent<PlayerMovement>();
+            // if (movement != null)
+            //     maxSpeed = movement.movementSpeed;
+            Vector3 direction = Vector3.Normalize(customDirection != Vector3.zero ? customDirection : transform.up);
+
+            // float speed = pushForce;
+            // other.attachedRigidbody.MovePosition(other.attachedRigidbody.position + speed * Time.deltaTime * direction);
+            Debug.Log("Current velocity: " + other.attachedRigidbody.linearVelocity);
+            if (Vector3.Dot(other.attachedRigidbody.linearVelocity,direction) < maxSpeed) // Useless if
+            {
+                Debug.Log("adding force");
+                if (movement != null) movement.AddVelocity(playerPushForce * Time.deltaTime * direction);
+                else other.attachedRigidbody.AddForce(pushForce * Time.deltaTime * direction, ForceMode.Acceleration);
+            }
+        }
+    }
+
+}
