@@ -20,7 +20,7 @@ public class LeverMeasure : MonoBehaviour
     void Update()
     {
         bool currentStatus = hinge.angle > 0;
-        VisualVarDisplay.SetDebugBool("lever", currentStatus);
+        // VisualVarDisplay.SetDebugBool("lever", currentStatus);
         if (currentStatus != lastStatus) remoteActivate.SetActive(currentStatus);
         lastStatus = currentStatus;
     }

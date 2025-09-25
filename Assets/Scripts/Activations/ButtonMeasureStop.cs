@@ -35,7 +35,7 @@ public class ButtonMeasureStop : MonoBehaviour
 
         // Activate something based on button press (and show debug visual)
         bool currentPressed = Mathf.Abs(yDistance) > pressedThreshold;
-        VisualVarDisplay.SetDebugBool("button", currentPressed);
+        // VisualVarDisplay.SetDebugBool("button", currentPressed);
         if (lastPressed != currentPressed) remoteActivate.SetActive(currentPressed);
         lastPressed = currentPressed;
         
