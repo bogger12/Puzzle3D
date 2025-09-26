@@ -102,12 +102,12 @@ public class PlayerMovement : MonoBehaviour
         // playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;        
+        movementUpAxis = useNormalOfGround ? groundNormal : Vector3.up;
 
         rightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, upAxis);
         forwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, upAxis);
-        
-        float hillSpeedBoost = hillSpeedBoostMult * (1-Vector3.Dot(groundNormal, Vector3.up));
+
+        float hillSpeedBoost = hillSpeedBoostMult * (1 - Vector3.Dot(groundNormal, Vector3.up));
         desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * (movementSpeed + hillSpeedBoost);
         // Debug.Log("Total Speed: " + (movementSpeed + hillSpeedBoost));
 
@@ -127,7 +127,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementRightAxis = rightAxis;
         Vector3 movementForwardAxis = forwardAxis;
 
-        if (useNormalOfGround) {
+        if (useNormalOfGround)
+        {
             movementRightAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.right : Vector3.right, movementUpAxis);
             movementForwardAxis = Vector3.ProjectOnPlane(playerInputSpace ? playerInputSpace.forward : Vector3.forward, movementUpAxis);
         }
@@ -228,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get difference between current velocity and target velocity direction
 
-        if (desiredVelocity.magnitude>0.001)
+        if (desiredVelocity.magnitude > 0.001)
             currentDesiredVelocity = desiredVelocity.x * xAxis + desiredVelocity.z * zAxis;
 
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, upAxis);

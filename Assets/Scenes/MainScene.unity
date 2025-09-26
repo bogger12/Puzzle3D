@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 03e3b74d8e747854886f44363b7709f4
+  m_OcclusionCullingData: {fileID: 36300000, guid: 92ba9a8972b975346a7cd56fb0e25a0a, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -36021,7 +36021,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6626400464946791155, guid: 2425559cb6d8e2e409106ee4a1dec21c, type: 3}
 --- !u!64 &1716023607

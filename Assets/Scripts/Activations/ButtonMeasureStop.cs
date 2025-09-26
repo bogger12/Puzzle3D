@@ -38,6 +38,6 @@ public class ButtonMeasureStop : MonoBehaviour
         // VisualVarDisplay.SetDebugBool("button", currentPressed);
         if (lastPressed != currentPressed) remoteActivate.SetActive(currentPressed);
         lastPressed = currentPressed;
-        
+
     }
 }
