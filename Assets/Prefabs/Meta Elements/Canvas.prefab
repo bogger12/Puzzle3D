@@ -1525,6 +1525,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4969031571821362924}
     m_Modifications:
+    - target: {fileID: 755434222987048739, guid: b5991109ba62c46aab41d1ed7ebcd332, type: 3}
+      propertyPath: oscillationSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1891856895788046386, guid: b5991109ba62c46aab41d1ed7ebcd332, type: 3}
       propertyPath: m_Name
       value: ControlHint

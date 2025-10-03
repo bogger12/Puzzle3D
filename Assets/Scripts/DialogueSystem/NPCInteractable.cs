@@ -6,57 +6,25 @@ public class NPCInteractable : MonoBehaviour
 
   private DialogueData dialogueData;
   private int currentLineIndex = 0;
-  private SpeechBubble activeBubble; // track bubble
+  [HideInInspector]
+  public GameObject currentBubble; // track bubble
 
-  public GameObject speechBubblePrefab;
+  public GameObject speechBubbleObject;
+  public Transform bubbleAnchor;
 
-  private void Start()
+  public void LoadDialogue()
   {
     dialogueData = DialogueLoader.Load(npcId);
   }
 
-  public void Interact(Transform playerCamera)
+  public void SpawnSpeechBubble(Canvas canvas)
   {
-    if (dialogueData == null || dialogueData.lines.Length == 0)
-    {
-      Debug.LogWarning($"No dialogue available for {npcId}");
-      return;
-    }
+    currentBubble = Instantiate(speechBubbleObject, canvas.transform);
+    currentBubble.GetComponent<AnchorOn3DPoint>().anchor = bubbleAnchor;
+  }
 
-    if (currentLineIndex >= dialogueData.lines.Length)
-    {
-      if (activeBubble != null)
-      {
-        Destroy(activeBubble.gameObject);
-        activeBubble = null;
-      }
-      currentLineIndex = 0;
-      return;
-    }
-
-    DialogueLine line = dialogueData.lines[currentLineIndex];
-
-    if (!System.Enum.TryParse(line.icon, out SpeechBubble.IconType iconType))
-    {
-      iconType = SpeechBubble.IconType.Neutral;
-    }
-
-    if (activeBubble == null)
-    {
-      GameObject bubble = Instantiate(speechBubblePrefab, transform);
-      activeBubble = bubble.GetComponent<SpeechBubble>();
-      activeBubble.Initialise(
-          new Vector3(0, 2f),
-          iconType,
-          line.text,
-          playerCamera // ✅ now we pass in the correct camera
-      );
-    }
-    else
-    {
-      activeBubble.Setup(iconType, line.text);
-    }
-
-    currentLineIndex++;
+  public void DeleteCurrentBubble()
+  {
+    Destroy(currentBubble);
   }
 }

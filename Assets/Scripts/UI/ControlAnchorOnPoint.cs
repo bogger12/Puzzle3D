@@ -7,7 +7,7 @@ public class ControlAnchorOnPoint : AnchorOn3DPoint
     // public Holdable currentHoldable { get; protected set; } = null;
 
     [Header("Oscillate Animation")]
-    [Range(0,10)]
+    [Range(0, 10)]
     public float oscillationSpeed = 1;
     public Vector2 sizeRange = new Vector2(0.5f, 1f);
 
@@ -23,6 +23,7 @@ public class ControlAnchorOnPoint : AnchorOn3DPoint
     }
     protected void Update()
     {
+        // base.Update();
         if (oscillationSpeed > 0)
         {
             float currentSize = Mathf.Lerp(sizeRange.x, sizeRange.y, Mathf.Sin(Time.time * oscillationSpeed) / 2f + 0.5f);
