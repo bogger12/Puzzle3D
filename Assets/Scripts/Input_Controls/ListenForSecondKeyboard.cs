@@ -19,8 +19,10 @@ public class ListenForSecondKeyboard : MonoBehaviour
     void Update()
     {
         // Check for any keayboard inputs
+        // bool player1pressed = player1Input.FindActionMap("Player", true)["Move"].ReadValue<Vector2>().magnitude > 0;
         bool player1pressed = player1Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
         // bool player2pressed = player2Input.FindActionMap("PlayerAlt", true)["Move"].ReadValue<Vector2>().magnitude > 0;
+        // Debug.Log(player1pressed + " " + player2pressed);
         if (playerInputManager.playerCount == 1 && player1pressed)
         {
             PlayerInput newPlayer = playerInputManager.JoinPlayer(1, -1, "Keyboard2", Keyboard.current);

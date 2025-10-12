@@ -342,8 +342,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483316865614344257}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2939909, y: 0.5431135, z: -0.21071441, w: 0.75775754}
-  m_LocalPosition: {x: -5.269031, y: 5.0823755, z: -1.7874458}
+  m_LocalRotation: {x: 0.19427133, y: 0.2729551, z: -0.056380965, w: 0.9405187}
+  m_LocalPosition: {x: -3.5648532, y: 4.0376525, z: -5.6243987}
   m_LocalScale: {x: 0.75357944, y: 0.75357944, z: 0.75357944}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,8 +469,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926637139477114127}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2080877, y: -0.4141275, z: 0.09784869, w: 0.8806949}
-  m_LocalPosition: {x: 5.190035, y: 3.3727741, z: -4.2983847}
+  m_LocalRotation: {x: 0.1942715, y: 0.27295548, z: -0.056381088, w: 0.94051856}
+  m_LocalPosition: {x: -3.5648532, y: 4.0376525, z: -5.6243987}
   m_LocalScale: {x: 0.75357944, y: 0.7535795, z: 0.7535794}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -541,22 +541,22 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  OrbitStyle: 0
+  OrbitStyle: 1
   Radius: 10
   Orbits:
     Top:
-      Radius: 2
-      Height: 5
+      Radius: 8.87
+      Height: 7.47
     Center:
-      Radius: 4
-      Height: 2.25
+      Radius: 8.52
+      Height: 4.2
     Bottom:
-      Radius: 2.5
+      Radius: 6
       Height: 0.1
-    SplineCurvature: 0.5
-  RecenteringTarget: 2
+    SplineCurvature: 0
+  RecenteringTarget: 0
   HorizontalAxis:
-    Value: -50.36846
+    Value: 32.36736
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -566,7 +566,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 26.587704
+    Value: 48.90413
     Center: 25
     Range: {x: 10, y: 70}
     Wrap: 0
@@ -598,7 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0, y: 0.12}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
@@ -608,7 +608,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 0.5}
+  Damping: {x: 1, y: 0.3}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -1276,8 +1276,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5283130372036161664}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2939909, y: 0.5431135, z: -0.21071441, w: 0.75775754}
-  m_LocalPosition: {x: -5.269031, y: 5.0823755, z: -1.7874458}
+  m_LocalRotation: {x: 0.19427133, y: 0.2729551, z: -0.056380946, w: 0.9405187}
+  m_LocalPosition: {x: -3.5648532, y: 4.0376525, z: -5.6243987}
   m_LocalScale: {x: 0.75357944, y: 0.7535795, z: 0.7535794}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1348,22 +1348,22 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  OrbitStyle: 0
+  OrbitStyle: 1
   Radius: 10
   Orbits:
     Top:
-      Radius: 2
-      Height: 5
+      Radius: 8.87
+      Height: 7.47
     Center:
-      Radius: 4
-      Height: 2.25
+      Radius: 8.52
+      Height: 4.2
     Bottom:
-      Radius: 2.5
+      Radius: 6
       Height: 0.1
-    SplineCurvature: 0.5
-  RecenteringTarget: 2
+    SplineCurvature: 0
+  RecenteringTarget: 0
   HorizontalAxis:
-    Value: 71.26123
+    Value: 32.36736
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1373,7 +1373,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 42.41
+    Value: 48.90413
     Center: 25
     Range: {x: 10, y: 70}
     Wrap: 0
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0, y: 0.12}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
@@ -1415,7 +1415,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 0.5}
+  Damping: {x: 1, y: 0.3}
   Lookahead:
     Enabled: 0
     Time: 0
