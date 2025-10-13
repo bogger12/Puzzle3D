@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Player1",
     "maps": [
         {
@@ -529,7 +530,7 @@
                     "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard2;Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -551,7 +552,7 @@
                     "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard2;Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -573,7 +574,7 @@
                     "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard&Mouse;Keyboard2",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -595,7 +596,7 @@
                     "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard&Mouse;Keyboard2",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true

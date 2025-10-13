@@ -3727,7 +3727,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -4055,7 +4055,7 @@ Transform:
   m_GameObject: {fileID: 255117653}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -70, z: 2.1399994}
+  m_LocalPosition: {x: 0, y: -70, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5866,7 +5866,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -7877,7 +7877,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -8298,7 +8298,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -12462,8 +12462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e35ccfc7cd747e4cab1f64a7ee3aefd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Input: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
-  player2Input: {fileID: -944628639613478452, guid: 82b5bbabace7ad64d856f21873786127, type: 3}
+  player2PressToJoin: 50
 --- !u!114 &670806755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17635,7 +17634,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -17780,7 +17779,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -19444,7 +19443,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -19579,7 +19578,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -20816,7 +20815,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -22818,7 +22817,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -23767,7 +23766,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -28668,7 +28667,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -29145,7 +29144,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -32186,7 +32185,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -32434,6 +32433,99 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5bb088d2e6b84200aacf105dbbbef64, type: 3}
+--- !u!1 &1569407426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569407429}
+  - component: {fileID: 1569407428}
+  - component: {fileID: 1569407427}
+  m_Layer: 0
+  m_Name: Terrain_(0.00, -70.00, -500.00)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!154 &1569407427
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569407426}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_TerrainData: {fileID: 15600000, guid: 829c7207b1be8834fb1f5889f4e298fb, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &1569407428
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569407426}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 829c7207b1be8834fb1f5889f4e298fb, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 200
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMinimumLODSimplification: 0
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_IgnoreQualitySettings: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ReceiveGI: 1
+  m_ScaleInLightmap: 0.0512
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+  m_EnableHeightmapRayTracing: 1
+  m_EnableTreesAndDetailsRayTracing: 0
+  m_TreeMotionVectorModeOverride: 3
+--- !u!4 &1569407429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569407426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -70, z: -500}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1573515323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32444,7 +32536,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -33964,7 +34056,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -36151,7 +36243,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -38089,7 +38181,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -41368,7 +41460,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -41745,7 +41837,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164902838910453808, guid: ff12afc907da24dc1a2c097175f2e09b, type: 3}
       propertyPath: MaxDistance
@@ -44271,3 +44363,4 @@ SceneRoots:
   - {fileID: 1082618517}
   - {fileID: 1148181271}
   - {fileID: 964302941}
+  - {fileID: 1569407429}

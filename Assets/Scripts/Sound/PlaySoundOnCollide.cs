@@ -22,13 +22,14 @@ public class PlaySoundOnCollide : MonoBehaviour
 
     public void PlaySound()
     {
-        int index = Random.Range(0, clips.Length - 1);
+        int index = Random.Range(0, clips.Length);
         // Debug.Log("Playing sound " + index);
         audioSource.resource = clips[index];
         audioSource.Play();
     }
-    
-    private void OnCollisionEnter(Collision other) {
+
+    private void OnCollisionEnter(Collision other)
+    {
         PlaySound();
     }
 
